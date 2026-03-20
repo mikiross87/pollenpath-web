@@ -69,12 +69,7 @@
         "priceCurrency": "USD",
         "name": "Pro Monthly"
       }
-    ],
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "worstRating": 1,
-      "bestRating": 5
-    }
+    ]
   }
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -332,13 +327,88 @@
       margin: 0 auto;
       border-radius: 32px;
       overflow: hidden;
+      background: linear-gradient(170deg, #2A5E42 0%, #1A3A2A 50%, #141A16 100%);
       box-shadow: 0 24px 80px rgba(0,0,0,0.15);
+      display: flex;
+      flex-direction: column;
+    }
+    .hero-device-caption {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 40px 32px 24px;
+      min-height: 220px;
+    }
+    .hero-device-caption h3 {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #82D4A8;
+      text-align: center;
+      line-height: 1.1;
+    }
+    .hero-device-caption p {
+      font-size: 16px;
+      color: #B8D4C2;
+      text-align: center;
+      line-height: 1.4;
     }
     .hero-device img {
       width: 100%;
       height: auto;
       display: block;
     }
+
+    /* ── Mobile Menu ── */
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      color: var(--fg);
+    }
+    .nav-hamburger svg { width: 24px; height: 24px; }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: var(--bg);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .mobile-menu.open {
+      display: flex;
+      opacity: 1;
+    }
+    .mobile-menu a {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--fg);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--primary); }
+    .mobile-menu-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      color: var(--fg);
+    }
+    .mobile-menu-close svg { width: 24px; height: 24px; }
 
     /* ── Features ── */
     .features {
@@ -427,17 +497,64 @@
     .screenshot-card {
       flex-shrink: 0;
       width: 230px;
-      border-radius: 24px;
+      height: 498px;
+      border-radius: 32px;
       overflow: hidden;
       box-shadow: 0 8px 32px rgba(0,0,0,0.1);
       transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
     }
     .screenshot-card:hover { transform: translateY(-8px) scale(1.02); }
+    .screenshot-card:focus-within { outline: 2px solid var(--primary); outline-offset: 4px; }
+    .screenshot-caption {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      height: 260px;
+      padding: 40px 32px 24px;
+    }
+    .screenshot-caption h3 {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      text-align: center;
+      line-height: 1.1;
+    }
+    .screenshot-caption p {
+      font-size: 14px;
+      text-align: center;
+      line-height: 1.4;
+    }
+    .screenshot-card .device-slot {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
     .screenshot-card img {
       width: 100%;
       height: auto;
       display: block;
     }
+    /* Card gradient themes */
+    .screenshot-card.card-green { background: linear-gradient(170deg, #2A5E42 0%, #1A3A2A 50%, #141A16 100%); }
+    .screenshot-card.card-green .screenshot-caption h3 { color: #82D4A8; }
+    .screenshot-card.card-green .screenshot-caption p { color: #B8D4C2; }
+    .screenshot-card.card-orange { background: linear-gradient(170deg, #3A2820 0%, #2A1E18 50%, #141A16 100%); }
+    .screenshot-card.card-orange .screenshot-caption h3 { color: #E0A878; }
+    .screenshot-card.card-orange .screenshot-caption p { color: #D4B8A8; }
+    .screenshot-card.card-gold { background: linear-gradient(170deg, #3D3218 0%, #2A2410 50%, #141A16 100%); }
+    .screenshot-card.card-gold .screenshot-caption h3 { color: #E0BC5E; }
+    .screenshot-card.card-gold .screenshot-caption p { color: #C4A84E; }
+    .screenshot-card.card-teal { background: linear-gradient(170deg, #1A3832 0%, #162A26 50%, #141A16 100%); }
+    .screenshot-card.card-teal .screenshot-caption h3 { color: #5FAD82; }
+    .screenshot-card.card-teal .screenshot-caption p { color: #9CA89E; }
+    .screenshot-card.card-rust { background: linear-gradient(170deg, #3D2618 0%, #2A1C12 50%, #141A16 100%); }
+    .screenshot-card.card-rust .screenshot-caption h3 { color: #E0926E; }
+    .screenshot-card.card-rust .screenshot-caption p { color: #C4A894; }
 
     /* ── Pricing ── */
     .pricing {
@@ -661,7 +778,11 @@
       .features-grid { grid-template-columns: repeat(2, 1fr); }
       .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
       .nav-links { display: none; }
-      .screenshot-card { width: 200px; }
+      .nav-hamburger { display: block; }
+      .screenshot-card { width: 200px; height: 430px; }
+      .screenshot-caption { height: 220px; padding: 32px 24px 20px; }
+      .screenshot-caption h3 { font-size: 24px; }
+      .screenshot-caption p { font-size: 13px; }
     }
     @media (max-width: 600px) {
       .features-grid { grid-template-columns: 1fr; }
@@ -671,8 +792,13 @@
       footer { padding: 40px 20px; }
       .hero h1 { letter-spacing: -1px; }
       .footer-top { flex-direction: column; gap: 32px; }
-      .screenshot-card { width: 180px; }
+      .screenshot-card { width: 180px; height: 400px; }
+      .screenshot-caption { height: 200px; }
+      .screenshot-caption h3 { font-size: 22px; }
       .screenshots-row { justify-content: flex-start; }
+      .hero-device-caption h3 { font-size: 26px; }
+      .hero-device-caption p { font-size: 14px; }
+      .hero-device-caption { min-height: 180px; padding: 32px 24px 20px; }
     }
   </style>
 </head>
@@ -691,7 +817,21 @@
       <li><a href="terms-of-service.html">Terms</a></li>
     </ul>
     <a href="#pricing" class="nav-cta">Coming Soon</a>
+    <button class="nav-hamburger" aria-label="Open menu" onclick="document.getElementById('mobileMenu').classList.add('open')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
   </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="mobile-menu" role="dialog" aria-label="Navigation menu">
+    <button class="mobile-menu-close" aria-label="Close menu" onclick="document.getElementById('mobileMenu').classList.remove('open')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <a href="#features" onclick="document.getElementById('mobileMenu').classList.remove('open')">Features</a>
+    <a href="#pricing" onclick="document.getElementById('mobileMenu').classList.remove('open')">Pricing</a>
+    <a href="privacy-policy.html">Privacy</a>
+    <a href="terms-of-service.html">Terms</a>
+  </div>
 
   <!-- Hero -->
   <section class="hero">
@@ -701,9 +841,13 @@
       <p class="hero-sub animate animate-delay-3">PollenPath connects your symptoms to real-time pollen, air quality, and weather data &mdash; then uses on-device AI to reveal your personal triggers.</p>
       <div class="hero-ctas animate animate-delay-4">
         <a href="#features" class="btn-primary">Coming Soon</a>
-        <a href="#pricing" class="btn-secondary">See Pricing</a>
+        <a href="#screenshots" class="btn-secondary">Learn More</a>
       </div>
       <div class="hero-device animate animate-delay-5">
+        <div class="hero-device-caption">
+          <h3>Know What's<br>in the Air</h3>
+          <p>Pollen, air quality &amp; weather &mdash; all in one glance</p>
+        </div>
         <img src="img/screenshot-1.webp" alt="PollenPath Dashboard" width="860" height="1864" loading="eager">
       </div>
     </div>
@@ -756,12 +900,42 @@
         <span class="section-label">See It In Action</span>
         <h2 class="section-title">Designed to feel right at home on iOS</h2>
       </div>
-      <div class="screenshots-row">
-        <div class="screenshot-card"><img src="img/screenshot-1.webp" alt="Dashboard" width="860" height="1864" loading="lazy"></div>
-        <div class="screenshot-card"><img src="img/screenshot-2.webp" alt="Symptom Logger" width="860" height="1864" loading="lazy"></div>
-        <div class="screenshot-card"><img src="img/screenshot-3.webp" alt="History" width="860" height="1864" loading="lazy"></div>
-        <div class="screenshot-card"><img src="img/screenshot-4.webp" alt="Insights" width="860" height="1864" loading="lazy"></div>
-        <div class="screenshot-card"><img src="img/screenshot-5.webp" alt="Alerts" width="860" height="1864" loading="lazy"></div>
+      <div class="screenshots-row" role="list" tabindex="0" aria-label="App screenshots">
+        <div class="screenshot-card card-green" role="listitem">
+          <div class="screenshot-caption">
+            <h3>Know What's<br>in the Air</h3>
+            <p>Pollen, air quality &amp; weather &mdash; all in one glance</p>
+          </div>
+          <div class="device-slot"><img src="img/screenshot-1.webp" alt="Dashboard showing pollen index, air quality, and weather" width="860" height="1864" loading="lazy"></div>
+        </div>
+        <div class="screenshot-card card-orange" role="listitem">
+          <div class="screenshot-caption">
+            <h3>Log Symptoms<br>in Seconds</h3>
+            <p>Quick tap-based logging synced to Apple Health</p>
+          </div>
+          <div class="device-slot"><img src="img/screenshot-2.webp" alt="Symptom logger with quick-tap buttons" width="860" height="1864" loading="lazy"></div>
+        </div>
+        <div class="screenshot-card card-gold" role="listitem">
+          <div class="screenshot-caption">
+            <h3>Spot Patterns<br>Over Time</h3>
+            <p>Color-coded calendar with daily symptom &amp; pollen data</p>
+          </div>
+          <div class="device-slot"><img src="img/screenshot-3.webp" alt="History calendar with color-coded days" width="860" height="1864" loading="lazy"></div>
+        </div>
+        <div class="screenshot-card card-teal" role="listitem">
+          <div class="screenshot-caption">
+            <h3>Discover Your<br>Triggers</h3>
+            <p>Smart AI discovers what triggers your symptoms</p>
+          </div>
+          <div class="device-slot"><img src="img/screenshot-4.webp" alt="AI-powered insights showing personal triggers" width="860" height="1864" loading="lazy"></div>
+        </div>
+        <div class="screenshot-card card-rust" role="listitem">
+          <div class="screenshot-caption">
+            <h3>Stay Ahead<br>of Allergies</h3>
+            <p>Smart alerts when pollen spikes in your area</p>
+          </div>
+          <div class="device-slot"><img src="img/screenshot-5.webp" alt="Alert notifications for high pollen levels" width="860" height="1864" loading="lazy"></div>
+        </div>
       </div>
     </div>
   </section>
