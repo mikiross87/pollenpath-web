@@ -342,12 +342,32 @@
     .btn-secondary:hover { border-color: var(--fg-muted); color: var(--fg); }
 
     /* ── Showcase ── */
+    @keyframes float1 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    @keyframes float2 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+    @keyframes float3 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    @keyframes pulseGlow { 0%,100% { opacity: 0.3; } 50% { opacity: 0.6; } }
     .showcase {
       position: relative;
       width: 100%;
       max-width: 960px;
       height: 640px;
       margin: 0 auto;
+    }
+    .showcase::before {
+      content: '';
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212,168,67,0.12) 0%, transparent 70%);
+      animation: pulseGlow 5s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @media (prefers-color-scheme: dark) {
+      .showcase::before { background: radial-gradient(circle, rgba(212,168,67,0.08) 0%, transparent 70%); }
     }
     .showcase-card {
       position: absolute;
@@ -359,10 +379,25 @@
       font-family: var(--font-body);
       opacity: 0;
       animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
     }
     .showcase-card:hover {
-      box-shadow: 0 12px 32px rgba(26, 43, 31, 0.12);
+      box-shadow: 0 16px 40px rgba(26, 43, 31, 0.15);
+      z-index: 10;
+    }
+    /* Subtle floating on different cards */
+    .sc-pollen   { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.1s forwards, float1 6s ease-in-out 1s infinite; }
+    .sc-today    { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.2s forwards, float2 7s ease-in-out 1.5s infinite; }
+    .sc-symptoms { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.3s forwards, float3 5.5s ease-in-out 0.8s infinite; }
+    .sc-corr     { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.2s forwards, float2 6.5s ease-in-out 1.2s infinite; }
+    .sc-ai       { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.3s forwards, float1 7.5s ease-in-out 2s infinite; }
+    .sc-pred     { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.4s forwards, float3 6s ease-in-out 0.5s infinite; }
+    .sc-weather  { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.4s forwards, float2 8s ease-in-out 1.8s infinite; }
+    .sc-trend    { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.5s forwards, float1 7s ease-in-out 1.3s infinite; }
+    @media (prefers-reduced-motion: reduce) {
+      .sc-pollen, .sc-today, .sc-symptoms, .sc-corr, .sc-ai, .sc-pred, .sc-weather, .sc-trend {
+        animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) forwards !important;
+      }
     }
     .showcase-card--gold {
       background: linear-gradient(135deg, #D4A843 0%, #B8922F 100%);
@@ -566,73 +601,21 @@
     .screenshot-card {
       flex-shrink: 0;
       width: 230px;
-      height: 498px;
       border-radius: 32px;
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
     }
-    .screenshot-card:hover { transform: translateY(-8px) scale(1.02); }
-    .screenshot-caption {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 32px 24px 20px;
-      height: 220px;
-      flex-shrink: 0;
+    .screenshot-card:hover {
+      transform: translateY(-12px) scale(1.03);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.2);
     }
-    .screenshot-caption h3 {
-      font-family: var(--font-display);
-      font-size: 26px;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      text-align: center;
-      line-height: 1.15;
-    }
-    .screenshot-caption p {
-      font-size: 14px;
-      text-align: center;
-      line-height: 1.4;
-    }
-    .screenshot-device {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      padding: 0 20px;
-      overflow: hidden;
-    }
-    .screenshot-device img {
-      width: 190px;
-      border-radius: 32px;
-      border: 3px solid rgba(255,255,255,0.15);
+    .screenshot-card img {
+      width: 100%;
+      height: auto;
       display: block;
-      object-fit: cover;
-      object-position: top;
+      border-radius: 32px;
     }
-
-    /* Card color variants */
-    .card-green { background: linear-gradient(170deg, #2A5E42 0%, #1A3A2A 50%, #141A16 100%); }
-    .card-green .screenshot-caption h3 { color: #82D4A8; }
-    .card-green .screenshot-caption p { color: #B8D4C2; }
-
-    .card-orange { background: linear-gradient(170deg, #3A2820 0%, #2A1E18 50%, #141A16 100%); }
-    .card-orange .screenshot-caption h3 { color: #E0A878; }
-    .card-orange .screenshot-caption p { color: #D4B8A8; }
-
-    .card-gold { background: linear-gradient(170deg, #3D3218 0%, #2A2410 50%, #141A16 100%); }
-    .card-gold .screenshot-caption h3 { color: #E0BC5E; }
-    .card-gold .screenshot-caption p { color: #C4A84E; }
-
-    .card-teal { background: linear-gradient(170deg, #1A3832 0%, #162A26 50%, #141A16 100%); }
-    .card-teal .screenshot-caption h3 { color: #5FAD82; }
-    .card-teal .screenshot-caption p { color: #9CA89E; }
-
-    .card-rust { background: linear-gradient(170deg, #3D2618 0%, #2A1C12 50%, #141A16 100%); }
-    .card-rust .screenshot-caption h3 { color: #E0926E; }
-    .card-rust .screenshot-caption p { color: #C4A894; }
 
     /* ── Pricing ── */
     .pricing {
@@ -837,11 +820,7 @@
       .nav-links { display: none; }
       .nav-hamburger { display: block; }
       .mobile-menu { display: flex; }
-      .screenshot-card { width: 200px; height: 430px; }
-      .screenshot-caption { height: 190px; padding: 24px 16px 16px; }
-      .screenshot-caption h3 { font-size: 22px; }
-      .screenshot-caption p { font-size: 13px; }
-      .screenshot-device img { width: 160px; border-radius: 28px; }
+      .screenshot-card { width: 200px; }
     }
     @media (max-width: 600px) {
       .features-grid { grid-template-columns: 1fr; }
@@ -856,10 +835,7 @@
       .sc-today .sc-headline { font-size: 12px; }
       .sc-ai .sc-ai-body { font-size: 11px; }
       .footer-top { flex-direction: column; gap: 32px; }
-      .screenshot-card { width: 180px; height: 390px; }
-      .screenshot-caption { height: 170px; padding: 20px 12px 12px; }
-      .screenshot-caption h3 { font-size: 20px; }
-      .screenshot-device img { width: 146px; border-radius: 24px; }
+      .screenshot-card { width: 160px; }
       .screenshots-row { justify-content: flex-start; }
     }
   </style>
@@ -1050,41 +1026,11 @@
         <h2 class="section-title">Designed to feel right at home on iOS</h2>
       </div>
       <div class="screenshots-row" role="list" aria-label="App screenshots">
-        <div class="screenshot-card card-green" role="listitem">
-          <div class="screenshot-caption">
-            <h3>Know What's<br>in the Air</h3>
-            <p>Pollen, air quality &amp; weather &mdash; all in one glance</p>
-          </div>
-          <div class="screenshot-device"><img src="img/screenshot-1.webp" alt="Dashboard showing pollen index, air quality, and weather" width="860" height="1864" loading="lazy"></div>
-        </div>
-        <div class="screenshot-card card-orange" role="listitem">
-          <div class="screenshot-caption">
-            <h3>Log Symptoms<br>in Seconds</h3>
-            <p>Quick tap-based logging synced to Apple Health</p>
-          </div>
-          <div class="screenshot-device"><img src="img/screenshot-2.webp" alt="Symptom logger with quick-tap buttons" width="860" height="1864" loading="lazy"></div>
-        </div>
-        <div class="screenshot-card card-gold" role="listitem">
-          <div class="screenshot-caption">
-            <h3>Spot Patterns<br>Over Time</h3>
-            <p>Color-coded calendar with daily symptom &amp; pollen data</p>
-          </div>
-          <div class="screenshot-device"><img src="img/screenshot-3.webp" alt="History calendar with color-coded days" width="860" height="1864" loading="lazy"></div>
-        </div>
-        <div class="screenshot-card card-teal" role="listitem">
-          <div class="screenshot-caption">
-            <h3>Discover Your<br>Triggers</h3>
-            <p>Smart AI discovers what triggers your symptoms</p>
-          </div>
-          <div class="screenshot-device"><img src="img/screenshot-4.webp" alt="AI-powered insights showing personal triggers" width="860" height="1864" loading="lazy"></div>
-        </div>
-        <div class="screenshot-card card-rust" role="listitem">
-          <div class="screenshot-caption">
-            <h3>Stay Ahead<br>of Allergies</h3>
-            <p>Smart alerts when pollen spikes in your area</p>
-          </div>
-          <div class="screenshot-device"><img src="img/screenshot-5.webp" alt="Alert notifications for high pollen levels" width="860" height="1864" loading="lazy"></div>
-        </div>
+        <div class="screenshot-card" role="listitem"><img src="img/screenshot-1.webp" alt="Dashboard showing pollen index, air quality, and weather" width="860" height="1864" loading="lazy"></div>
+        <div class="screenshot-card" role="listitem"><img src="img/screenshot-2.webp" alt="Symptom logger with quick-tap buttons" width="860" height="1864" loading="lazy"></div>
+        <div class="screenshot-card" role="listitem"><img src="img/screenshot-3.webp" alt="History calendar with color-coded days" width="860" height="1864" loading="lazy"></div>
+        <div class="screenshot-card" role="listitem"><img src="img/screenshot-4.webp" alt="AI-powered insights showing personal triggers" width="860" height="1864" loading="lazy"></div>
+        <div class="screenshot-card" role="listitem"><img src="img/screenshot-5.webp" alt="Alert notifications for high pollen levels" width="860" height="1864" loading="lazy"></div>
       </div>
     </div>
   </section>
