@@ -1,1 +1,839 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><title>PollenPath Legal</title><style>body{font-family:sans-serif;max-width:600px;margin:100px auto;line-height:1.6;padding:20px;text-align:center;}a{color:#4A7C59;text-decoration:none;display:block;margin:10px 0;}a:hover{text-decoration:underline;}</style></head><body><h1>PollenPath Legal Documents</h1><a href="privacy-policy.html">Privacy Policy</a><a href="terms-of-service.html">Terms of Service</a></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PollenPath — Allergy Tracker for iOS</title>
+  <meta name="description" content="Track allergy symptoms alongside real-time pollen forecasts and air quality data. Discover your personal triggers with on-device AI insights.">
+  <meta property="og:title" content="PollenPath — Allergy Tracker for iOS">
+  <meta property="og:description" content="Finally understand your allergies. Real-time pollen, air quality, and AI-powered insights.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pollenpath.app">
+  <link rel="icon" type="image/png" href="img/icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ── Theme Variables ── */
+    :root {
+      --bg: #FAF8F5;
+      --surface: #FFFFFF;
+      --surface-secondary: #F2EFEB;
+      --fg: #1A2B1F;
+      --fg-secondary: #5A6B5E;
+      --fg-muted: #8A9A8D;
+      --primary: #3A7D5C;
+      --primary-fg: #FFFFFF;
+      --accent: #D4764E;
+      --accent-fg: #FFFFFF;
+      --secondary: #D4A843;
+      --secondary-fg: #2D2410;
+      --success: #3A8F4F;
+      --error: #C94444;
+      --border: #E0DDD8;
+      --border-subtle: #EBE8E3;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-pill: 100px;
+      --font-display: 'Outfit', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #141A16;
+        --surface: #1E2620;
+        --surface-secondary: #283028;
+        --fg: #E8EDE9;
+        --fg-secondary: #9CA89E;
+        --fg-muted: #6B7B6E;
+        --primary: #5FAD82;
+        --primary-fg: #FFFFFF;
+        --accent: #E0926E;
+        --accent-fg: #FFFFFF;
+        --secondary: #E0BC5E;
+        --secondary-fg: #1A1508;
+        --success: #4FA85F;
+        --error: #D45555;
+        --border: #2E3830;
+        --border-subtle: #232D25;
+      }
+    }
+
+    /* ── Base ── */
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--fg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ── Utilities ── */
+    .section-label {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: var(--primary);
+      text-transform: uppercase;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 36px);
+      font-weight: 700;
+      letter-spacing: -1px;
+      color: var(--fg);
+      text-align: center;
+    }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .animate {
+      opacity: 0;
+      animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .animate-delay-1 { animation-delay: 0.1s; }
+    .animate-delay-2 { animation-delay: 0.2s; }
+    .animate-delay-3 { animation-delay: 0.3s; }
+    .animate-delay-4 { animation-delay: 0.4s; }
+    .animate-delay-5 { animation-delay: 0.5s; }
+
+    /* ── Nav ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+      height: 72px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+    .nav-logo img {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+    }
+    .nav-logo span {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--fg);
+      letter-spacing: -0.5px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--fg-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--fg); }
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 24px;
+      border-radius: var(--radius-pill);
+      background: var(--primary);
+      color: var(--primary-fg);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.9; }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative;
+      padding: 80px 40px 60px;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(58, 125, 92, 0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    @media (prefers-color-scheme: dark) {
+      .hero::before {
+        background: radial-gradient(ellipse at 50% 0%, rgba(95, 173, 130, 0.1) 0%, transparent 60%);
+      }
+    }
+    .hero-inner {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      border-radius: var(--radius-pill);
+      background: var(--surface-secondary);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--fg-secondary);
+      margin-bottom: 24px;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5.5vw, 56px);
+      font-weight: 800;
+      letter-spacing: -2px;
+      line-height: 1.1;
+      color: var(--fg);
+      margin-bottom: 20px;
+    }
+    .hero-sub {
+      font-size: 18px;
+      line-height: 1.5;
+      color: var(--fg-secondary);
+      max-width: 640px;
+      margin: 0 auto 32px;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      padding: 14px 32px;
+      border-radius: var(--radius-pill);
+      background: var(--surface-secondary);
+      color: var(--fg);
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+    .btn-primary:hover { background: var(--border); }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      padding: 14px 32px;
+      border-radius: var(--radius-pill);
+      background: transparent;
+      color: var(--fg-secondary);
+      font-size: 16px;
+      font-weight: 500;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--fg-muted); color: var(--fg); }
+    .hero-device {
+      max-width: 320px;
+      margin: 0 auto;
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.15);
+    }
+    .hero-device img {
+      width: 100%;
+      display: block;
+    }
+
+    /* ── Features ── */
+    .features {
+      background: var(--surface);
+      padding: 80px 40px;
+    }
+    .features-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .features-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .features-header .section-label { margin-bottom: 12px; display: block; }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .feature-card {
+      background: var(--bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+    }
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .feature-icon svg { width: 24px; height: 24px; }
+    .feature-icon.green { background: var(--primary); color: var(--primary-fg); }
+    .feature-icon.orange { background: var(--accent); color: var(--accent-fg); }
+    .feature-icon.gold { background: var(--secondary); color: var(--secondary-fg); }
+    .feature-icon.dark { background: #1A2B1F; color: var(--success); }
+    @media (prefers-color-scheme: dark) {
+      .feature-icon.dark { background: #2E3830; }
+    }
+    .feature-card h3 {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--fg);
+      margin-bottom: 8px;
+    }
+    .feature-card p {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--fg-secondary);
+    }
+
+    /* ── Screenshots ── */
+    .screenshots {
+      padding: 80px 40px;
+      background: var(--bg);
+    }
+    .screenshots-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .screenshots-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .screenshots-header .section-label { margin-bottom: 12px; display: block; }
+    .screenshots-row {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      overflow-x: auto;
+      padding-bottom: 16px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .screenshots-row::-webkit-scrollbar { display: none; }
+    .screenshot-card {
+      flex-shrink: 0;
+      width: 230px;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .screenshot-card:hover { transform: translateY(-8px) scale(1.02); }
+    .screenshot-card img {
+      width: 100%;
+      display: block;
+    }
+
+    /* ── Pricing ── */
+    .pricing {
+      background: var(--surface);
+      padding: 80px 40px;
+    }
+    .pricing-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .pricing-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .pricing-header .section-label { margin-bottom: 12px; display: block; }
+    .billing-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin: 0 auto 48px;
+      padding: 4px;
+      border-radius: var(--radius-pill);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      width: fit-content;
+    }
+    .toggle-btn {
+      padding: 10px 24px;
+      border-radius: var(--radius-pill);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--fg-secondary);
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: var(--font-body);
+      transition: all 0.2s;
+    }
+    .toggle-btn.active {
+      background: var(--primary);
+      color: var(--primary-fg);
+      font-weight: 600;
+    }
+    .toggle-save {
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      background: var(--success);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+    .tier-card {
+      background: var(--bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+    }
+    .tier-card.featured {
+      border: 2px solid var(--primary);
+    }
+    .tier-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--primary);
+      color: var(--primary-fg);
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .tier-name {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--fg);
+      margin-bottom: 8px;
+    }
+    .tier-price {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+    .tier-amount {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 800;
+      color: var(--fg);
+      letter-spacing: -1px;
+    }
+    .tier-period {
+      font-size: 14px;
+      color: var(--fg-muted);
+    }
+    .tier-yearly {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--primary);
+      margin-bottom: 8px;
+      display: none;
+    }
+    .tier-desc {
+      font-size: 14px;
+      color: var(--fg-secondary);
+      margin-bottom: 24px;
+    }
+    .tier-divider {
+      height: 1px;
+      background: var(--border-subtle);
+      margin-bottom: 24px;
+    }
+    .tier-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .tier-features li {
+      font-size: 14px;
+      color: var(--fg-secondary);
+    }
+    .tier-features li.highlight {
+      color: var(--fg);
+    }
+    .tier-features li::before {
+      content: '✓';
+      margin-right: 8px;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* Show yearly prices when yearly is active */
+    .pricing-inner.yearly .tier-period-text { display: none; }
+    .pricing-inner.yearly .tier-yearly-text { display: inline; }
+    .pricing-inner.yearly .tier-yearly { display: none; }
+    .pricing-inner:not(.yearly) .tier-yearly-text { display: none; }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--surface-secondary);
+      padding: 48px 40px;
+    }
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 32px;
+    }
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+    .footer-logo img {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+    }
+    .footer-logo span {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--fg);
+      letter-spacing: -0.5px;
+    }
+    .footer-tagline {
+      font-size: 14px;
+      color: var(--fg-muted);
+    }
+    .footer-links {
+      display: flex;
+      gap: 48px;
+    }
+    .footer-col h4 {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--fg);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .footer-col a {
+      display: block;
+      font-size: 14px;
+      color: var(--fg-secondary);
+      text-decoration: none;
+      margin-bottom: 8px;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--fg); }
+    .footer-divider {
+      height: 1px;
+      background: var(--border-subtle);
+      margin-bottom: 24px;
+    }
+    .footer-copyright {
+      font-size: 12px;
+      color: var(--fg-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+      .nav-links { display: none; }
+      .screenshot-card { width: 200px; }
+    }
+    @media (max-width: 600px) {
+      .features-grid { grid-template-columns: 1fr; }
+      nav { padding: 0 20px; }
+      .hero { padding: 60px 20px 40px; }
+      .features, .screenshots, .pricing { padding: 60px 20px; }
+      footer { padding: 40px 20px; }
+      .hero h1 { letter-spacing: -1px; }
+      .footer-top { flex-direction: column; gap: 32px; }
+      .screenshot-card { width: 180px; }
+      .screenshots-row { justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="animate">
+    <a href="/" class="nav-logo">
+      <img src="img/icon.png" alt="PollenPath" width="32" height="32">
+      <span>PollenPath</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="privacy-policy.html">Privacy</a></li>
+      <li><a href="terms-of-service.html">Terms</a></li>
+    </ul>
+    <a href="#pricing" class="nav-cta">Coming Soon</a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge animate animate-delay-1">Coming soon to the App Store</div>
+      <h1 class="animate animate-delay-2">Finally understand your allergies.</h1>
+      <p class="hero-sub animate animate-delay-3">PollenPath connects your symptoms to real-time pollen, air quality, and weather data &mdash; then uses on-device AI to reveal your personal triggers.</p>
+      <div class="hero-ctas animate animate-delay-4">
+        <a href="#features" class="btn-primary">Coming Soon</a>
+        <a href="#pricing" class="btn-secondary">See Pricing</a>
+      </div>
+      <div class="hero-device animate animate-delay-5">
+        <img src="img/screenshot-1.webp" alt="PollenPath Dashboard" width="430" height="932" loading="eager">
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features" id="features">
+    <div class="features-inner">
+      <div class="features-header">
+        <span class="section-label">Why PollenPath</span>
+        <h2 class="section-title">Everything you need to manage allergies</h2>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon green">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>
+          </div>
+          <h3>Real-Time Pollen &amp; Air Quality</h3>
+          <p>Check live pollen levels and air quality for your area. See which trees, grasses, and weeds are active &mdash; and what's coming next.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon orange">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg>
+          </div>
+          <h3>Log Symptoms in Seconds</h3>
+          <p>Quick tap-based logging synced to Apple Health. Track sneezing, congestion, itchy eyes, and dozens more throughout the day.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon gold">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/><path d="M12 18v-3"/></svg>
+          </div>
+          <h3>Discover Your Triggers</h3>
+          <p>On-device AI analyzes your symptom patterns alongside pollen and weather data to reveal personal correlations. No data leaves your device.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon dark">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+          </div>
+          <h3>Privacy First</h3>
+          <p>Health data stays on your device and in Apple Health. Pollen lookups use city-level location only. No analytics, no tracking, no ads.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Screenshots -->
+  <section class="screenshots" id="screenshots">
+    <div class="screenshots-inner">
+      <div class="screenshots-header">
+        <span class="section-label">See It In Action</span>
+        <h2 class="section-title">Designed to feel right at home on iOS</h2>
+      </div>
+      <div class="screenshots-row">
+        <div class="screenshot-card"><img src="img/screenshot-1.webp" alt="Dashboard" width="430" height="932" loading="lazy"></div>
+        <div class="screenshot-card"><img src="img/screenshot-2.webp" alt="Symptom Logger" width="430" height="932" loading="lazy"></div>
+        <div class="screenshot-card"><img src="img/screenshot-3.webp" alt="History" width="430" height="932" loading="lazy"></div>
+        <div class="screenshot-card"><img src="img/screenshot-4.webp" alt="Insights" width="430" height="932" loading="lazy"></div>
+        <div class="screenshot-card"><img src="img/screenshot-5.webp" alt="Alerts" width="430" height="932" loading="lazy"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="pricing" id="pricing">
+    <div class="pricing-inner">
+      <div class="pricing-header">
+        <span class="section-label">Pricing</span>
+        <h2 class="section-title">Start free. Upgrade when you're ready.</h2>
+      </div>
+      <div class="billing-toggle">
+        <button class="toggle-btn active" data-period="monthly">Monthly</button>
+        <button class="toggle-btn" data-period="yearly">Yearly</button>
+        <span class="toggle-save">Save up to 28%</span>
+      </div>
+      <div class="pricing-grid">
+        <!-- Free -->
+        <div class="tier-card">
+          <div class="tier-name">Free</div>
+          <div class="tier-price">
+            <span class="tier-amount">$0</span>
+          </div>
+          <p class="tier-desc">Get started with symptom tracking</p>
+          <div class="tier-divider"></div>
+          <ul class="tier-features">
+            <li>Symptom logging</li>
+            <li>Apple Health sync</li>
+            <li>Weather data</li>
+            <li>7-day history</li>
+          </ul>
+        </div>
+        <!-- Basic -->
+        <div class="tier-card featured">
+          <span class="tier-badge">Most Popular</span>
+          <div class="tier-name">Basic</div>
+          <div class="tier-price">
+            <span class="tier-amount" data-monthly="$1.99" data-yearly="$19.99">$1.99</span>
+            <span class="tier-period"><span class="tier-period-text">/month</span><span class="tier-yearly-text">/year</span></span>
+          </div>
+          <div class="tier-yearly">or $19.99/year (save 16%)</div>
+          <p class="tier-desc">Live pollen &amp; air quality data</p>
+          <div class="tier-divider"></div>
+          <ul class="tier-features">
+            <li>Everything in Free</li>
+            <li class="highlight">Daily pollen index</li>
+            <li class="highlight">Air quality data</li>
+            <li class="highlight">Pollen &amp; AQ alerts</li>
+            <li class="highlight">90-day history</li>
+          </ul>
+        </div>
+        <!-- Pro -->
+        <div class="tier-card">
+          <div class="tier-name">Pro</div>
+          <div class="tier-price">
+            <span class="tier-amount" data-monthly="$6.99" data-yearly="$59.99">$6.99</span>
+            <span class="tier-period"><span class="tier-period-text">/month</span><span class="tier-yearly-text">/year</span></span>
+          </div>
+          <div class="tier-yearly">or $59.99/year (save 28%)</div>
+          <p class="tier-desc">Full forecasts, species detail &amp; AI insights</p>
+          <div class="tier-divider"></div>
+          <ul class="tier-features">
+            <li>Everything in Basic</li>
+            <li class="highlight">5-day pollen forecast</li>
+            <li class="highlight">Species-level detail</li>
+            <li class="highlight">AI-powered insights</li>
+            <li class="highlight">Widgets &amp; export</li>
+            <li class="highlight">365-day history</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="/" class="footer-logo">
+            <img src="img/icon.png" alt="PollenPath" width="28" height="28">
+            <span>PollenPath</span>
+          </a>
+          <p class="footer-tagline">Track allergies. Understand triggers. Breathe easier.</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>Legal</h4>
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-of-service.html">Terms of Service</a>
+          </div>
+          <div class="footer-col">
+            <h4>Connect</h4>
+            <a href="https://instagram.com/pollenpath.app" target="_blank" rel="noopener">Instagram</a>
+            <a href="mailto:support@pollenpath.app">support@pollenpath.app</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-divider"></div>
+      <p class="footer-copyright">&copy; 2026 PollenPath. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Billing toggle
+    const toggleBtns = document.querySelectorAll('.toggle-btn');
+    const pricingInner = document.querySelector('.pricing-inner');
+    const amounts = document.querySelectorAll('.tier-amount[data-monthly]');
+
+    toggleBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        toggleBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const period = btn.dataset.period;
+        if (period === 'yearly') {
+          pricingInner.classList.add('yearly');
+          amounts.forEach(el => el.textContent = el.dataset.yearly);
+        } else {
+          pricingInner.classList.remove('yearly');
+          amounts.forEach(el => el.textContent = el.dataset.monthly);
+        }
+      });
+    });
+
+    // Scroll-triggered animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.feature-card, .screenshot-card, .tier-card').forEach((el, i) => {
+      el.style.opacity = '0';
+      el.style.animation = `fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${i * 0.08}s forwards`;
+      el.style.animationPlayState = 'paused';
+      observer.observe(el);
+    });
+  </script>
+
+</body>
+</html>
