@@ -261,15 +261,21 @@
     }
     .btn-secondary:hover { border-color: var(--fg-muted); color: var(--fg); }
     .hero-device {
-      max-width: 320px;
+      max-width: 280px;
       margin: 0 auto;
-      border-radius: 32px;
+      border-radius: 44px;
       overflow: hidden;
       box-shadow: 0 24px 80px rgba(0,0,0,0.15);
+      border: 6px solid #1A2B1F;
+      background: #1A2B1F;
+    }
+    @media (prefers-color-scheme: dark) {
+      .hero-device { border-color: #2E3830; background: #2E3830; }
     }
     .hero-device img {
       width: 100%;
       display: block;
+      border-radius: 38px;
     }
 
     /* ── Features ── */
@@ -635,7 +641,7 @@
         <a href="#pricing" class="btn-secondary">See Pricing</a>
       </div>
       <div class="hero-device animate animate-delay-5">
-        <img src="img/screenshot-1.webp" alt="PollenPath Dashboard" width="430" height="932" loading="eager">
+        <img src="img/hero.jpeg" alt="PollenPath Dashboard" width="1290" height="2796" loading="eager">
       </div>
     </div>
   </section>
