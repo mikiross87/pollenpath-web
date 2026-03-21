@@ -1,2 +1,12 @@
-.wrangler/
+# Editor / OS
 .DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# Cloudflare
+.wrangler/
+
+# Claude Code
+CLAUDE.md

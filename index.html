@@ -594,9 +594,11 @@
       gap: 24px;
       justify-content: center;
       overflow-x: auto;
-      padding-bottom: 16px;
+      overflow-y: visible;
+      padding: 24px 0 16px;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
+      perspective: 1200px;
     }
     .screenshots-row::-webkit-scrollbar { display: none; }
 
@@ -607,12 +609,13 @@
       overflow: hidden;
       transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
       box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+      will-change: transform, opacity;
     }
-    .screenshot-card:nth-child(1) { transform: rotate(-2deg) translateY(12px); }
-    .screenshot-card:nth-child(2) { transform: rotate(-0.8deg) translateY(4px); }
-    .screenshot-card:nth-child(3) { transform: rotate(0deg) translateY(0px); }
-    .screenshot-card:nth-child(4) { transform: rotate(0.8deg) translateY(4px); }
-    .screenshot-card:nth-child(5) { transform: rotate(2deg) translateY(12px); }
+    .screenshot-card.fan-ready:nth-child(1) { transform: rotate(-2deg) translateY(12px); }
+    .screenshot-card.fan-ready:nth-child(2) { transform: rotate(-0.8deg) translateY(4px); }
+    .screenshot-card.fan-ready:nth-child(3) { transform: rotate(0deg) translateY(0px); }
+    .screenshot-card.fan-ready:nth-child(4) { transform: rotate(0.8deg) translateY(4px); }
+    .screenshot-card.fan-ready:nth-child(5) { transform: rotate(2deg) translateY(12px); }
     .screenshot-card:hover {
       transform: translateY(-12px) rotate(0deg) scale(1.04) !important;
       box-shadow: 0 32px 80px rgba(0,0,0,0.22);
@@ -1192,26 +1195,35 @@
       observer.observe(el);
     });
 
-    // Screenshots: fan-in from center with staggered timing
-    document.querySelectorAll('.screenshot-card').forEach((el, i) => {
-      const offsets = [-40, -20, 0, 20, 40]; // horizontal spread
-      const delays = [0.2, 0.1, 0, 0.1, 0.2]; // center first
+    // Screenshots: stacked deck deal — cards start stacked in center, deal out to fan positions
+    const screenshotCards = document.querySelectorAll('.screenshot-card');
+    const screenshotRow = document.querySelector('.screenshots-row');
+    screenshotCards.forEach((el, i) => {
       el.style.opacity = '0';
-      el.style.transform = `translateX(${offsets[i]}px) translateY(60px) scale(0.9)`;
-      const obs = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            el.style.transition = `opacity 0.7s cubic-bezier(0.16,1,0.3,1) ${delays[i]}s, transform 0.8s cubic-bezier(0.16,1,0.3,1) ${delays[i]}s`;
-            el.style.opacity = '1';
-            // Restore the fan rotation
-            const rotations = ['rotate(-2deg) translateY(12px)', 'rotate(-0.8deg) translateY(4px)', 'rotate(0deg) translateY(0px)', 'rotate(0.8deg) translateY(4px)', 'rotate(2deg) translateY(12px)'];
-            el.style.transform = rotations[i];
-            obs.unobserve(el);
-          }
-        });
-      }, { threshold: 0.1 });
-      obs.observe(el);
+      el.style.transform = 'translateX(0) translateY(40px) scale(0.92) rotate(0deg)';
+      el.style.zIndex = String(5 - i);
     });
+
+    const screenshotObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Deal cards out from center one by one — center card first, then alternating outward
+          const dealOrder = [2, 1, 3, 0, 4]; // center → inner → outer
+          dealOrder.forEach((cardIdx, step) => {
+            const el = screenshotCards[cardIdx];
+            const delay = step * 120; // 120ms stagger between each deal
+            setTimeout(() => {
+              el.style.transition = 'opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1)';
+              el.style.opacity = '1';
+              el.classList.add('fan-ready');
+              el.style.transform = '';
+            }, delay);
+          });
+          screenshotObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    screenshotObs.observe(screenshotRow);
   </script>
 
 </body>
