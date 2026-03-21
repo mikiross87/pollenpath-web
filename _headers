@@ -6,7 +6,7 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   X-Permitted-Cross-Domain-Policies: none
-  Content-Security-Policy: default-src 'none'; style-src 'self' 'sha256-MAh2KavKf5TjMvpDsdV23zguvo6/WE2CQXQq+2tbEHA='; script-src 'sha256-l8BmnYUMd+VgMf2Nqww10tqmdS80ukbllV+lxxbe0mc=' 'sha256-2gm4Vm+8N9Pc5+A3NF2iof9Rz6tHa04xwdxyc63bFVA='; img-src 'self'; font-src 'self'; connect-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'none'
+  Content-Security-Policy: default-src 'none'; style-src 'self' 'sha256-UWNIhQlnnR1gI/WOXzQaiRwBu+ACVORUlq0iMUWMKkw='; script-src 'sha256-54uqRDpjvJfgyOcCDD8AS40XbVOAr1UcJ5NMeLh6EJU=' 'sha256-AOy0zzxXDiedEL3FaMICMJvwXcCOFZ1ltMUOGryCaRs='; img-src 'self'; font-src 'self'; connect-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'none'
 
 # ── Cache Static Assets ──
 /img/*
@@ -19,7 +19,5 @@
   Cache-Control: public, max-age=31536000, immutable
 
 # ── CSP Hash Regeneration ──
-# When index.html inline <style> or <script> blocks change, recompute hashes:
-#   sed -n '/<style>/,/<\/style>/p' index.html | sed '1d;$d' | openssl dgst -sha256 -binary | openssl base64
-#   sed -n '/^  <script>$/,/<\/script>/p' index.html | sed '1d;$d' | openssl dgst -sha256 -binary | openssl base64
-#   sed -n '/<script type="application\/ld+json">/,/<\/script>/p' index.html | sed '1d;$d' | openssl dgst -sha256 -binary | openssl base64
+# When index.html inline <style> or <script> blocks change, recompute hashes with:
+#   python3 -c "import hashlib,base64,re;h=open('index.html').read();[print(f'{n}: sha256-{base64.b64encode(hashlib.sha256(m.encode()).digest()).decode()}') for n,m in [('style',re.search(r'<style>(.*?)</style>',h,re.DOTALL).group(1)),('script',list(re.finditer(r'<script>(.*?)</script>',h,re.DOTALL))[0].group(1)),('jsonld',re.search(r'<script type=\"application/ld\+json\">(.*?)</script>',h,re.DOTALL).group(1))]]"
