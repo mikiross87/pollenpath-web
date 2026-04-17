@@ -346,196 +346,8 @@
     }
     .btn-secondary:hover { border-color: var(--fg-muted); color: var(--fg); }
 
-    /* ── Showcase ── */
-    @keyframes float1 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-    @keyframes float2 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-    @keyframes float3 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-    @keyframes pulseGlow { 0%,100% { opacity: 0.3; } 50% { opacity: 0.6; } }
-    .showcase {
-      position: relative;
-      width: 100%;
-      max-width: 960px;
-      height: 640px;
-      margin: 0 auto;
-    }
-    .showcase::before {
-      content: '';
-      position: absolute;
-      width: 400px;
-      height: 400px;
-      top: 45%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(212,168,67,0.12) 0%, transparent 70%);
-      animation: pulseGlow 5s ease-in-out infinite;
-      pointer-events: none;
-    }
-    @media (prefers-color-scheme: dark) {
-      .showcase::before { background: radial-gradient(circle, rgba(212,168,67,0.08) 0%, transparent 70%); }
-    }
-    .showcase-card {
-      position: absolute;
-      background: var(--surface);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-subtle);
-      box-shadow: 0 4px 16px rgba(26, 43, 31, 0.08);
-      padding: 20px;
-      font-family: var(--font-body);
-      opacity: 0;
-      animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
-    }
-    .showcase-card:hover {
-      box-shadow: 0 16px 40px rgba(26, 43, 31, 0.15);
-      z-index: 10;
-    }
-    /* Subtle floating on different cards */
-    .sc-pollen   { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.1s forwards, float1 6s ease-in-out 1s infinite; }
-    .sc-today    { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.2s forwards, float2 7s ease-in-out 1.5s infinite; }
-    .sc-symptoms { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.3s forwards, float3 5.5s ease-in-out 0.8s infinite; }
-    .sc-corr     { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.2s forwards, float2 6.5s ease-in-out 1.2s infinite; }
-    .sc-ai       { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.3s forwards, float1 7.5s ease-in-out 2s infinite; }
-    .sc-pred     { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.4s forwards, float3 6s ease-in-out 0.5s infinite; }
-    .sc-weather  { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.4s forwards, float2 8s ease-in-out 1.8s infinite; }
-    .sc-trend    { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.5s forwards, float1 7s ease-in-out 1.3s infinite; }
-    @media (prefers-reduced-motion: reduce) {
-      .sc-pollen, .sc-today, .sc-symptoms, .sc-corr, .sc-ai, .sc-pred, .sc-weather, .sc-trend {
-        animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) forwards !important;
-      }
-    }
-    .showcase-card--gold {
-      background: linear-gradient(135deg, #D4A843 0%, #B8922F 100%);
-      border: none;
-      box-shadow: 0 8px 32px rgba(212, 168, 67, 0.2);
-    }
-    .showcase-card--gold:hover {
-      box-shadow: 0 16px 40px rgba(212, 168, 67, 0.25);
-    }
-    .showcase-card--green-border { border-color: rgba(58, 125, 92, 0.2); }
-    /* Card positions (percentage-based for responsiveness) */
-    .sc-pollen   { left: 1%; top: 1.5%; width: 35.4%; transform: rotate(-1deg); animation-delay: 0.1s; }
-    .sc-today    { left: 38.5%; top: 1.5%; width: 29.2%; transform: rotate(1deg); animation-delay: 0.2s; }
-    .sc-symptoms { left: 68.8%; top: 3.1%; width: 27.1%; transform: rotate(2deg); animation-delay: 0.3s; }
-    .sc-corr     { left: 1%; top: 32.8%; width: 35.4%; transform: rotate(-0.5deg); animation-delay: 0.2s; }
-    .sc-ai       { left: 36.5%; top: 35.9%; width: 27.1%; transform: rotate(-1deg); animation-delay: 0.3s; }
-    .sc-pred     { left: 66.7%; top: 32.8%; width: 29.2%; transform: rotate(1.5deg); animation-delay: 0.4s; }
-    .sc-weather  { left: 6.3%; top: 70.3%; width: 36.5%; transform: rotate(0.5deg); animation-delay: 0.4s; padding: 0; background: none; border: none; box-shadow: none; }
-    .sc-weather:hover { box-shadow: none !important; }
-    .sc-trend    { left: 45.8%; top: 71.9%; width: 27.1%; transform: rotate(-0.5deg); animation-delay: 0.5s; }
-    /* Pollen Hero */
-    .sc-pollen .sc-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
-    .sc-overline { font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
-    .sc-pollen .sc-overline { color: rgba(255,255,255,0.6); }
-    .sc-pollen .sc-score { font-family: var(--font-display); font-size: 64px; font-weight: 900; color: #fff; line-height: 0.9; letter-spacing: -3px; }
-    .sc-pollen .sc-sev-text { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: #fff; }
-    .sc-pollen .sc-sev-sub { font-size: 11px; color: rgba(255,255,255,0.5); font-weight: 500; }
-    .sc-pollen .sc-details { display: flex; gap: 16px; }
-    .sc-pollen .sc-detail-label { font-size: 12px; color: rgba(255,255,255,0.5); }
-    .sc-pollen .sc-detail-value { font-size: 14px; font-weight: 600; color: #fff; }
-    .sc-pollen .sc-detail:last-child { opacity: 0.5; }
-    /* Today For You */
-    .sc-today .sc-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-    .sc-today .sc-header-icon { width: 16px; height: 16px; color: var(--primary); }
-    .sc-today .sc-header-title { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--fg); }
-    .sc-today .sc-headline { font-family: var(--font-display); font-size: 14px; font-weight: 600; color: var(--fg); line-height: 1.4; margin-bottom: 8px; }
-    .sc-today .sc-allergen-row { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; background: rgba(201,68,68,0.07); margin-bottom: 8px; }
-    .sc-today .sc-allergen-icon { color: #C94444; }
-    .sc-today .sc-allergen-label { font-size: 13px; font-weight: 600; color: #C94444; }
-    .sc-today .sc-rec-row { display: flex; align-items: flex-start; gap: 8px; padding: 10px 14px; border-radius: 10px; background: rgba(58,125,92,0.06); }
-    .sc-today .sc-rec-icon { color: var(--primary); flex-shrink: 0; margin-top: 1px; }
-    .sc-today .sc-rec-text { font-size: 12px; font-weight: 500; color: var(--fg); line-height: 1.4; }
-    /* Symptom Summary */
-    .sc-symptoms .sc-sym-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-    .sc-symptoms .sc-sym-title { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--fg); }
-    .sc-symptoms .sc-sym-action { font-size: 13px; font-weight: 600; color: var(--primary); }
-    .sc-symptoms .sc-sym-grid { display: flex; gap: 10px; }
-    .sc-sym-chip { flex: 1; text-align: center; padding: 10px 6px; border-radius: var(--radius-md); background: var(--surface-secondary); }
-    .sc-sym-chip-name { font-size: 12px; font-weight: 500; color: var(--fg); margin-bottom: 4px; }
-    .sc-sym-chip-sev { font-size: 10px; font-weight: 600; }
-    .sc-sym-chip-sev.moderate { color: var(--secondary); }
-    .sc-sym-chip-sev.mild { color: var(--primary); }
-    .sc-sym-chip-sev.none { color: var(--fg-muted); }
-    /* Correlations */
-    .sc-corr .sc-corr-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-    .sc-corr .sc-corr-title { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--fg); }
-    .sc-corr .sc-corr-badge { font-size: 11px; font-weight: 500; color: var(--secondary); background: rgba(212,168,67,0.08); padding: 4px 10px; border-radius: var(--radius-pill); }
-    .sc-corr .sc-corr-rows { display: flex; flex-direction: column; gap: 10px; }
-    .sc-corr-row { display: flex; align-items: center; gap: 12px; }
-    .sc-corr-bar { flex: 1; height: 28px; background: var(--surface-secondary); border-radius: 8px; display: flex; align-items: center; padding: 0 10px; position: relative; overflow: hidden; }
-    .sc-corr-bar-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 8px; }
-    .sc-corr-bar-fill.green { background: rgba(58,125,92,0.15); }
-    .sc-corr-bar-fill.gold { background: rgba(212,168,67,0.15); }
-    .sc-corr-bar-fill.orange { background: rgba(212,118,78,0.15); }
-    .sc-corr-bar-text { position: relative; font-size: 12px; font-weight: 500; color: var(--fg); }
-    .sc-corr-pct { font-family: var(--font-display); font-size: 14px; font-weight: 600; }
-    .sc-corr-pct.green { color: var(--primary); }
-    .sc-corr-pct.gold { color: var(--secondary); }
-    .sc-corr-pct.orange { color: var(--accent); }
-    /* AI Insights */
-    .sc-ai .sc-ai-header { display: flex; align-items: center; gap: 4px; margin-bottom: 8px; }
-    .sc-ai .sc-ai-icon { color: var(--primary); }
-    .sc-ai .sc-ai-label { font-size: 11px; font-weight: 600; letter-spacing: 2px; color: var(--fg-muted); }
-    .sc-ai .sc-ai-body { font-size: 13px; line-height: 1.5; color: var(--fg); }
-    /* Prediction */
-    .sc-pred .sc-overline { color: rgba(255,255,255,0.5); margin-bottom: 4px; }
-    .sc-pred .sc-pred-title { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 8px; }
-    .sc-pred .sc-pred-body { font-size: 13px; line-height: 1.5; color: rgba(255,255,255,0.8); }
-    /* Weather */
-    .sc-weather-grid { display: flex; gap: 12px; }
-    .sc-weather-card { flex: 1; background: var(--surface); border-radius: var(--radius-md); border: 1px solid var(--border-subtle); padding: 14px; box-shadow: 0 4px 16px rgba(26,43,31,0.08); }
+    /* Material Symbols icon font (used by phone mockup + weather/AQ spans) */
     .material-symbols-rounded { font-family: 'Material Symbols Rounded'; font-weight: normal; font-style: normal; font-size: 20px; display: inline-block; line-height: 1; direction: ltr; -webkit-font-smoothing: antialiased; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20; }
-    .sc-weather-ico { margin-bottom: 8px; display: block; }
-    .sc-weather-ico.temp { color: var(--accent); }
-    .sc-weather-ico.humid { color: var(--primary); }
-    .sc-weather-ico.wind { color: var(--secondary); }
-    .sc-weather-ico.press { color: var(--fg-muted); }
-    .sc-weather-val { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--fg); }
-    .sc-weather-lbl { font-size: 11px; color: var(--fg-muted); margin-top: 4px; }
-    /* Weekly Trend */
-    .sc-trend .sc-trend-title { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--fg); margin-bottom: 12px; }
-    .sc-trend-bars { display: flex; align-items: flex-end; gap: 8px; height: 90px; }
-    .sc-trend-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; justify-content: flex-end; }
-    .sc-trend-bar { width: 100%; border-radius: 6px 6px 0 0; }
-    .sc-trend-bar.low { background: var(--success); }
-    .sc-trend-bar.mod { background: var(--secondary); }
-    .sc-trend-bar.high { background: var(--accent); }
-    .sc-trend-day { font-size: 10px; color: var(--fg-muted); }
-    .sc-trend-day.today { color: var(--fg); font-weight: 600; }
-    .sc-trend-bar.today-bar { outline: 2px solid var(--fg); outline-offset: -2px; }
-    /* Showcase responsive — switch to flow layout on tablet and below */
-    @media (max-width: 900px) {
-      .showcase {
-        height: auto;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-      }
-      .showcase-card {
-        position: relative !important;
-        left: auto !important;
-        top: auto !important;
-        width: auto !important;
-        transform: none !important;
-        padding: 14px;
-      }
-      .showcase-card:hover { transform: translateY(-2px) !important; }
-      .sc-pollen .sc-score { font-size: 48px; }
-      .sc-weather {
-        grid-column: 1 / -1;
-        background: none !important;
-        border: none !important;
-        box-shadow: none !important;
-        padding: 0 !important;
-      }
-    }
-    @media (max-width: 600px) {
-      .showcase { grid-template-columns: 1fr; }
-      .sc-pollen .sc-score { font-size: 40px; }
-      .sc-today .sc-headline { font-size: 12px; }
-      .sc-ai .sc-ai-body { font-size: 11px; }
-    }
-
     /* ── Features ── */
     .features {
       background: var(--surface);
@@ -600,7 +412,6 @@
     .showcase {
       padding: 96px 40px;
       background: var(--surface);
-      overflow: hidden;
     }
     .showcase-inner {
       max-width: 1200px;
@@ -640,8 +451,7 @@
       gap: 120px;
       padding: 80px 0;
     }
-    .showcase-block { opacity: 0.4; transition: opacity 0.4s ease; }
-    .showcase-block.active { opacity: 1; }
+    .showcase-block { transition: opacity 0.4s ease; }
     .sb-num {
       font-family: var(--font-display);
       font-size: 14px;
@@ -683,6 +493,7 @@
       border-radius: 48px;
       overflow: hidden;
       box-shadow: 0 24px 60px rgba(26, 43, 31, 0.2);
+      transform: rotate(-2deg);
     }
     .phone-island {
       position: absolute;
@@ -804,13 +615,12 @@
       .showcase-body { grid-template-columns: 1fr; gap: 40px; }
       .showcase-phone-col { position: static; padding-top: 0; }
       .showcase-copy-col { gap: 48px; padding: 0; }
-      .showcase-block { opacity: 1; }
-      .phone { width: 280px; height: 576px; }
+      .phone { width: 280px; height: 576px; transform: rotate(0); }
       .phone-screen { padding-top: 40px; }
     }
     @media (prefers-reduced-motion: reduce) {
       .showcase-phone-col { position: static; }
-      .showcase-block { opacity: 1; }
+      .phone { transform: rotate(0); }
     }
 
     /* ── Pricing ── */
@@ -1033,20 +843,11 @@
       .mobile-menu { padding-left: 20px; padding-right: 20px; }
       .mobile-menu.open { padding: 16px 20px 24px; }
       .hero h1 { letter-spacing: -1px; }
-      .sc-pollen .sc-score { font-size: 36px; }
-      .sc-today .sc-headline { font-size: 12px; }
-      .sc-ai .sc-ai-body { font-size: 11px; }
       .footer-top { flex-direction: column; gap: 32px; }
       .footer-links { flex-wrap: wrap; gap: 24px; }
-      .sc-weather-grid { flex-wrap: wrap; }
-      .sc-weather-card { flex: 1 1 calc(50% - 6px); min-width: calc(50% - 6px); }
     }
     /* Touch devices: disable hover stickiness */
     @media (hover: none) {
-      .showcase-card:hover {
-        box-shadow: 0 4px 16px rgba(26, 43, 31, 0.08);
-        z-index: auto;
-      }
       .feature-card:hover {
         transform: none;
         box-shadow: none;
@@ -1091,115 +892,6 @@
       <div class="hero-ctas animate animate-delay-4">
         <a href="#features" class="btn-primary">Coming Soon</a>
         <a href="#pricing" class="btn-secondary">See plans →</a>
-      </div>
-      <!-- Showcase -->
-      <div class="showcase animate animate-delay-5" aria-label="App feature showcase">
-        <!-- Pollen Hero Card -->
-        <div class="showcase-card showcase-card--gold sc-pollen">
-          <div class="sc-top">
-            <div>
-              <div class="sc-overline">TODAY'S POLLEN INDEX</div>
-              <div class="sc-score">72</div>
-            </div>
-            <div style="text-align:right">
-              <div class="sc-sev-text">Moderate</div>
-              <div class="sc-sev-sub">Pollen Level</div>
-            </div>
-          </div>
-          <div class="sc-details">
-            <div class="sc-detail"><div class="sc-detail-label">Grass</div><div class="sc-detail-value">High</div></div>
-            <div class="sc-detail"><div class="sc-detail-label">Tree</div><div class="sc-detail-value">Low</div></div>
-            <div class="sc-detail"><div class="sc-detail-label">Weed</div><div class="sc-detail-value">Moderate</div></div>
-          </div>
-        </div>
-        <!-- Today for You -->
-        <div class="showcase-card sc-today">
-          <div class="sc-header">
-            <svg class="sc-header-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-            <span class="sc-header-title">Today for You</span>
-          </div>
-          <div class="sc-headline">Tough conditions &mdash; Bermuda Grass is high and your symptoms reflect it</div>
-          <div class="sc-allergen-row">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="sc-allergen-icon"><path d="M12 20H2v-2c0 0 2-2 4-2 1 0 2 .5 3 1.5.4-1.3.8-3 .8-5.5 0-4-1.2-6.5-2.8-8C5.5 2.5 4 2 4 2s1.5-.5 3.5.5C9 3.2 10.5 5 11.3 7.5c.8-2.5 2.3-4.3 3.8-5C17 1.5 18.5 2 18.5 2s-1.5.5-3 2c-1.6 1.5-2.8 4-2.8 8 0 2.5.4 4.2.8 5.5 1-1 2-1.5 3-1.5 2 0 4 2 4 2v2H12z"/></svg>
-            <div><div class="sc-allergen-label">Bermuda Grass pollen is Very High today</div></div>
-          </div>
-          <div class="sc-rec-row">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="sc-rec-icon"><path d="M12 3l1.5 4.5H18l-3.6 2.6L15.9 15 12 12.2 8.1 15l1.5-4.9L6 7.5h4.5z"/></svg>
-            <span class="sc-rec-text">Peak season with elevated pollen &mdash; take preventive medication before heading out</span>
-          </div>
-        </div>
-        <!-- Today's Symptoms -->
-        <div class="showcase-card sc-symptoms">
-          <div class="sc-sym-header">
-            <span class="sc-sym-title">Today's Symptoms</span>
-            <span class="sc-sym-action">Log now</span>
-          </div>
-          <div class="sc-sym-grid">
-            <div class="sc-sym-chip"><div class="sc-sym-chip-name">Cough</div><div class="sc-sym-chip-sev moderate">Moderate</div></div>
-            <div class="sc-sym-chip"><div class="sc-sym-chip-name">Runny Nose</div><div class="sc-sym-chip-sev mild">Mild</div></div>
-            <div class="sc-sym-chip"><div class="sc-sym-chip-name">Congestion</div><div class="sc-sym-chip-sev none">None</div></div>
-          </div>
-        </div>
-        <!-- Top Correlations -->
-        <div class="showcase-card sc-corr">
-          <div class="sc-corr-header">
-            <span class="sc-corr-title">Top Correlations</span>
-            <span class="sc-corr-badge">14-day analysis</span>
-          </div>
-          <div class="sc-corr-rows">
-            <div class="sc-corr-row"><div class="sc-corr-bar"><div class="sc-corr-bar-fill green" style="width:78%"></div><span class="sc-corr-bar-text">Grass &rarr; Cough</span></div><span class="sc-corr-pct green">78%</span></div>
-            <div class="sc-corr-row"><div class="sc-corr-bar"><div class="sc-corr-bar-fill gold" style="width:64%"></div><span class="sc-corr-bar-text">Humidity &rarr; Sinus Congestion</span></div><span class="sc-corr-pct gold">64%</span></div>
-            <div class="sc-corr-row"><div class="sc-corr-bar"><div class="sc-corr-bar-fill orange" style="width:52%"></div><span class="sc-corr-bar-text">Wind &rarr; Runny Nose</span></div><span class="sc-corr-pct orange">52%</span></div>
-            <div class="sc-corr-row"><div class="sc-corr-bar"><div class="sc-corr-bar-fill orange" style="width:45%"></div><span class="sc-corr-bar-text">AQI &rarr; Sinus Congestion</span></div><span class="sc-corr-pct orange">45%</span></div>
-          </div>
-        </div>
-        <!-- AI Insights -->
-        <div class="showcase-card showcase-card--green-border sc-ai">
-          <div class="sc-ai-header">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="sc-ai-icon"><path d="M12 3l1.5 4.5H18l-3.6 2.6L15.9 15 12 12.2 8.1 15l1.5-4.9L6 7.5h4.5z"/></svg>
-            <span class="sc-ai-label">AI INSIGHTS</span>
-          </div>
-          <p class="sc-ai-body">This week, grass pollen drove most of your symptoms. Your cough peaked on Wednesday when levels hit Very High. Humidity also played a role &mdash; your sinus congestion was 64% correlated with moisture levels above 60%.</p>
-        </div>
-        <!-- Tomorrow's Prediction -->
-        <div class="showcase-card showcase-card--gold sc-pred">
-          <div class="sc-overline">TOMORROW'S PREDICTION</div>
-          <div class="sc-pred-title">High grass pollen expected</div>
-          <p class="sc-pred-body">Based on your history, you may experience cough and runny nose. Consider taking antihistamine tonight.</p>
-        </div>
-        <!-- Weather Row -->
-        <div class="showcase-card sc-weather">
-          <div class="sc-weather-grid">
-            <div class="sc-weather-card">
-              <span class="material-symbols-rounded sc-weather-ico temp">thermostat</span>
-              <div class="sc-weather-val">24°C</div><div class="sc-weather-lbl">Temperature</div>
-            </div>
-            <div class="sc-weather-card">
-              <span class="material-symbols-rounded sc-weather-ico humid">humidity_mid</span>
-              <div class="sc-weather-val">62%</div><div class="sc-weather-lbl">Humidity</div>
-            </div>
-            <div class="sc-weather-card">
-              <span class="material-symbols-rounded sc-weather-ico wind">air</span>
-              <div class="sc-weather-val">12 km/h</div><div class="sc-weather-lbl">Wind</div>
-            </div>
-            <div class="sc-weather-card">
-              <span class="material-symbols-rounded sc-weather-ico press">speed</span>
-              <div class="sc-weather-val">1014 hPa</div><div class="sc-weather-lbl">Pressure</div>
-            </div>
-          </div>
-        </div>
-        <!-- Weekly Trend -->
-        <div class="showcase-card sc-trend">
-          <div class="sc-trend-title">Weekly Trend</div>
-          <div class="sc-trend-bars">
-            <div class="sc-trend-col"><div class="sc-trend-bar low" style="height:30%"></div><span class="sc-trend-day">M</span></div>
-            <div class="sc-trend-col"><div class="sc-trend-bar mod" style="height:55%"></div><span class="sc-trend-day">T</span></div>
-            <div class="sc-trend-col"><div class="sc-trend-bar high" style="height:80%"></div><span class="sc-trend-day">W</span></div>
-            <div class="sc-trend-col"><div class="sc-trend-bar mod" style="height:50%"></div><span class="sc-trend-day">T</span></div>
-            <div class="sc-trend-col"><div class="sc-trend-bar low" style="height:25%"></div><span class="sc-trend-day">F</span></div>
-            <div class="sc-trend-col"><div class="sc-trend-bar mod today-bar" style="height:45%"></div><span class="sc-trend-day today">S</span></div>
-          </div>
-        </div>
       </div>
     </div>
   </section>
@@ -1268,7 +960,7 @@
           </div>
         </div>
         <div class="showcase-copy-col">
-          <div class="showcase-block">
+          <div class="showcase-block active">
             <div class="sb-num">01</div>
             <h3 class="sb-title">Dashboard</h3>
             <p class="sb-desc">Know what's in the air &mdash; live pollen, air quality, and weather, all in one place.</p>
