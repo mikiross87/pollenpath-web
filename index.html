@@ -484,131 +484,27 @@
       margin-top: 32px;
     }
 
-    /* Phone mockup (Dashboard) */
+    /* Phone mockup — displays pen-exported iOS screenshots, cross-faded on scroll */
     .phone {
       position: relative;
       width: 340px;
-      height: 700px;
-      background: var(--fg);
+      height: 737px;
       border-radius: 48px;
       overflow: hidden;
       box-shadow: 0 24px 60px rgba(26, 43, 31, 0.2);
       transform: rotate(-2deg);
-    }
-    .phone-island {
-      position: absolute;
-      top: 14px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 110px;
-      height: 32px;
-      background: #000;
-      border-radius: 16px;
-      z-index: 2;
+      background: var(--bg);
     }
     .phone-screen {
       position: absolute;
-      top: 10px;
-      left: 10px;
-      right: 10px;
-      bottom: 10px;
-      background: var(--bg);
-      border-radius: 40px;
-      overflow: hidden;
-      padding-top: 50px;
-      display: flex;
-      flex-direction: column;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.5s ease;
     }
-    .ps-statusbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 24px 10px;
-      font-family: var(--font-body);
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--fg);
-    }
-    .ps-statusbar .ps-indicators { display: flex; gap: 6px; align-items: center; }
-    .ps-statusbar .material-symbols-rounded { font-size: 14px; color: var(--fg); font-variation-settings: 'FILL' 1, 'wght' 500; }
-    .ps-greeting {
-      padding: 16px 24px 18px;
-    }
-    .ps-hi { font-size: 13px; color: var(--fg-secondary); }
-    .ps-name { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--fg); }
-    .ps-pollen {
-      margin: 0 16px;
-      padding: 18px;
-      background: var(--primary);
-      border-radius: 18px;
-      color: #fff;
-    }
-    .ps-pollen-top { display: flex; justify-content: space-between; align-items: flex-start; }
-    .ps-pollen-over { font-size: 9px; font-weight: 600; letter-spacing: 1.5px; color: rgba(255,255,255,0.7); }
-    .ps-pollen-score { font-family: var(--font-display); font-size: 64px; font-weight: 800; line-height: 1; }
-    .ps-pollen-right { text-align: right; padding-top: 18px; }
-    .ps-pollen-sev { font-family: var(--font-display); font-size: 18px; font-weight: 700; }
-    .ps-pollen-sub { font-size: 11px; color: rgba(255,255,255,0.7); }
-    .ps-pollen-div { height: 1px; background: rgba(255,255,255,0.2); margin: 12px 0; }
-    .ps-pollen-allergens { display: flex; gap: 16px; }
-    .ps-pollen-allergens .ps-a-lbl { font-size: 10px; color: rgba(255,255,255,0.7); }
-    .ps-pollen-allergens .ps-a-val { font-family: var(--font-display); font-size: 13px; font-weight: 600; }
-    .ps-weather-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      padding: 16px 16px 0;
-    }
-    .ps-w-card {
-      padding: 14px;
-      background: var(--surface);
-      border-radius: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .ps-w-icon { font-size: 18px; font-variation-settings: 'FILL' 1, 'wght' 400; }
-    .ps-w-icon.temp { color: var(--accent); }
-    .ps-w-icon.humid { color: var(--primary); }
-    .ps-w-icon.wind { color: var(--secondary); }
-    .ps-w-icon.press { color: var(--fg-muted); }
-    .ps-w-val { font-family: var(--font-display); font-size: 17px; font-weight: 700; color: var(--fg); }
-    .ps-w-lbl { font-size: 10px; color: var(--fg-muted); }
-    .ps-aq {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 12px 16px 0;
-      padding: 12px 14px;
-      background: var(--surface);
-      border-radius: 14px;
-      font-family: var(--font-body);
-    }
-    .ps-aq-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--success); }
-    .ps-aq-val { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--fg); }
-    .ps-aq-lbl { flex: 1; font-size: 12px; color: var(--fg-secondary); }
-    .ps-aq-chev { color: var(--fg-muted); font-size: 16px; }
-    .ps-tabbar {
-      margin-top: auto;
-      display: flex;
-      justify-content: space-between;
-      padding: 14px 20px 24px;
-      background: var(--surface);
-      border-top: 1px solid var(--border-subtle);
-    }
-    .ps-tab {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
-      color: var(--fg-muted);
-      font-size: 10px;
-      font-weight: 400;
-    }
-    .ps-tab .material-symbols-rounded { font-size: 22px; color: inherit; font-variation-settings: 'FILL' 0, 'wght' 400; }
-    .ps-tab.active { color: var(--primary); font-weight: 600; }
-    .ps-tab.active .material-symbols-rounded { font-variation-settings: 'FILL' 1, 'wght' 500; }
+    .phone-screen.active { opacity: 1; }
 
     /* Showcase responsive */
     @media (max-width: 900px) {
@@ -725,13 +621,6 @@
       line-height: 1.6;
       color: var(--fg-muted);
       margin-bottom: 8px;
-    }
-
-    /* ── Hero drop cap ── */
-    .hero h1::first-letter {
-      font-family: var(--font-display);
-      font-weight: 800;
-      color: var(--primary);
     }
 
     /* ── Footer ── */
@@ -906,76 +795,30 @@
       </div>
       <div class="showcase-body">
         <div class="showcase-phone-col">
-          <div class="phone" role="img" aria-label="PollenPath Dashboard screen showing pollen index, weather metrics, and air quality">
-            <div class="phone-island" aria-hidden="true"></div>
-            <div class="phone-screen">
-              <div class="ps-statusbar">
-                <span class="ps-time">9:41</span>
-                <span class="ps-indicators">
-                  <span class="material-symbols-rounded">signal_cellular_alt</span>
-                  <span class="material-symbols-rounded">wifi</span>
-                  <span class="material-symbols-rounded">battery_full</span>
-                </span>
-              </div>
-              <div class="ps-greeting">
-                <div class="ps-hi">Good afternoon</div>
-                <div class="ps-name">John Doe</div>
-              </div>
-              <div class="ps-pollen">
-                <div class="ps-pollen-top">
-                  <div>
-                    <div class="ps-pollen-over">TODAY'S POLLEN INDEX</div>
-                    <div class="ps-pollen-score">1</div>
-                  </div>
-                  <div class="ps-pollen-right">
-                    <div class="ps-pollen-sev">Very Low</div>
-                    <div class="ps-pollen-sub">Green low</div>
-                  </div>
-                </div>
-                <div class="ps-pollen-div" aria-hidden="true"></div>
-                <div class="ps-pollen-allergens">
-                  <div><div class="ps-a-lbl">Grass</div><div class="ps-a-val">Very Low</div></div>
-                  <div><div class="ps-a-lbl">Tree</div><div class="ps-a-val">Very Low</div></div>
-                </div>
-              </div>
-              <div class="ps-weather-grid">
-                <div class="ps-w-card"><span class="material-symbols-rounded ps-w-icon temp">thermostat</span><div class="ps-w-val">11°C</div><div class="ps-w-lbl">Temperature</div></div>
-                <div class="ps-w-card"><span class="material-symbols-rounded ps-w-icon humid">water_drop</span><div class="ps-w-val">53%</div><div class="ps-w-lbl">Humidity</div></div>
-                <div class="ps-w-card"><span class="material-symbols-rounded ps-w-icon wind">air</span><div class="ps-w-val">21 km/h</div><div class="ps-w-lbl">Wind</div></div>
-                <div class="ps-w-card"><span class="material-symbols-rounded ps-w-icon press">speed</span><div class="ps-w-val">1014 hPa</div><div class="ps-w-lbl">Pressure</div></div>
-              </div>
-              <div class="ps-aq">
-                <span class="ps-aq-dot" aria-hidden="true"></span>
-                <span class="ps-aq-val">66</span>
-                <span class="ps-aq-lbl">Good air quality</span>
-                <span class="material-symbols-rounded ps-aq-chev">chevron_right</span>
-              </div>
-              <div class="ps-tabbar">
-                <div class="ps-tab active"><span class="material-symbols-rounded">home</span><span>Home</span></div>
-                <div class="ps-tab"><span class="material-symbols-rounded">add_circle</span><span>Log</span></div>
-                <div class="ps-tab"><span class="material-symbols-rounded">calendar_month</span><span>History</span></div>
-                <div class="ps-tab"><span class="material-symbols-rounded">monitoring</span><span>Insights</span></div>
-              </div>
-            </div>
+          <div class="phone" role="img" aria-label="PollenPath app screens">
+            <img class="phone-screen active" data-screen="dashboard" src="/img/screens/dashboard.webp" alt="Dashboard — pollen index, weather, air quality, and symptoms" width="786" height="1704">
+            <img class="phone-screen" data-screen="logger" src="/img/screens/logger.webp" alt="Symptom Logger — quick entry for how you feel today" width="786" height="1704" loading="lazy">
+            <img class="phone-screen" data-screen="insights" src="/img/screens/insights.webp" alt="Insights — Today for You, correlations, and patterns" width="786" height="1704" loading="lazy">
+            <img class="phone-screen" data-screen="alerts" src="/img/screens/alerts.webp" alt="Alerts — daily pollen forecast and alert toggles" width="786" height="1704" loading="lazy">
           </div>
         </div>
         <div class="showcase-copy-col">
-          <div class="showcase-block active">
+          <div class="showcase-block active" data-screen="dashboard">
             <div class="sb-num">01</div>
             <h3 class="sb-title">Dashboard</h3>
             <p class="sb-desc">Know what's in the air &mdash; live pollen, air quality, and weather, all in one place.</p>
           </div>
-          <div class="showcase-block">
+          <div class="showcase-block" data-screen="logger">
             <div class="sb-num">02</div>
             <h3 class="sb-title">Symptom Logger</h3>
             <p class="sb-desc">Tap to record how you feel. Every entry saves to Apple Health automatically.</p>
           </div>
-          <div class="showcase-block">
+          <div class="showcase-block" data-screen="insights">
             <div class="sb-num">03</div>
             <h3 class="sb-title">Insights</h3>
             <p class="sb-desc">See the patterns connecting your symptoms to pollen, air quality, and weather.</p>
           </div>
-          <div class="showcase-block">
+          <div class="showcase-block" data-screen="alerts">
             <div class="sb-num">04</div>
             <h3 class="sb-title">Alerts</h3>
             <p class="sb-desc">Get notified when pollen spikes, a new correlation is found, or it's time to log.</p>
@@ -1139,14 +982,21 @@
       observer.observe(el);
     });
 
-    // Showcase: highlight active copy block as it scrolls through the viewport center
+    // Showcase: highlight the active copy block and crossfade the phone screen as
+    // each block scrolls through the viewport center.
     const showcaseBlocks = document.querySelectorAll('.showcase-block');
+    const phoneScreens = document.querySelectorAll('.phone-screen');
     if (showcaseBlocks.length) {
+      const activateScreen = (key) => {
+        phoneScreens.forEach(s => s.classList.toggle('active', s.dataset.screen === key));
+      };
       const scObs = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             showcaseBlocks.forEach(b => b.classList.remove('active'));
             entry.target.classList.add('active');
+            const key = entry.target.dataset.screen;
+            if (key) activateScreen(key);
           }
         });
       }, { rootMargin: '-40% 0px -40% 0px', threshold: 0 });

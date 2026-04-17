@@ -6,7 +6,7 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   X-Permitted-Cross-Domain-Policies: none
-  Content-Security-Policy: default-src 'none'; style-src 'self' 'sha256-MKS5UxeKWxPKRofOf2Z0VCtjy1mto510lneq/5tBl9s=' 'sha256-6gRxehSHnZGxUC7zyhp8haDvSE5G+/NVlrH3MhTxk1w=' 'sha256-7SHGXcEyxoAbrjPxZg0hnC4xdOUSq5K4NqxDmveqgDg=' 'sha256-6F2Mfuuxmrf1cQbFKZDB41yhLpo6uZX+UpOEvqfBcYU='; script-src 'sha256-r0rPWAUYjBSet4dqdu7Wr3xBTW8Ca+V2ul3ENQEDA+U=' 'sha256-fyc1sDE86LdvhQKFAT0cWQxC4lxspRBBg9+U0O8tTNA='; img-src 'self'; font-src 'self'; connect-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'none'
+  Content-Security-Policy: default-src 'none'; style-src 'self' 'sha256-/wOQ2upeifrJakeNslUPXegx+ukDOC8ejNTn3mqyGY8=' 'sha256-6gRxehSHnZGxUC7zyhp8haDvSE5G+/NVlrH3MhTxk1w=' 'sha256-7SHGXcEyxoAbrjPxZg0hnC4xdOUSq5K4NqxDmveqgDg=' 'sha256-6F2Mfuuxmrf1cQbFKZDB41yhLpo6uZX+UpOEvqfBcYU='; script-src 'sha256-jtuch097Du51zTqlDbQT0kaJvNI7j1F6Wg5IFUsbIp4=' 'sha256-fyc1sDE86LdvhQKFAT0cWQxC4lxspRBBg9+U0O8tTNA='; img-src 'self'; font-src 'self'; connect-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'none'
 
 # ── Cache Static Assets ──
 /img/*
