@@ -484,22 +484,39 @@
       margin-top: 32px;
     }
 
-    /* Phone mockup — displays pen-exported iOS screenshots, cross-faded on scroll */
+    /* Phone mockup — iPhone 16 Pro frame wrapping pen-exported iOS screens,
+       cross-faded on scroll. Dimensions mirror Design/PollenPathWeb.pen. */
     .phone {
       position: relative;
       width: 340px;
-      height: 737px;
+      height: 700px;
       border-radius: 48px;
       overflow: hidden;
       box-shadow: 0 24px 60px rgba(26, 43, 31, 0.2);
       transform: rotate(-2deg);
-      background: var(--bg);
+      background: #1A2B1F;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    .phone-island {
+      position: absolute;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 110px;
+      height: 32px;
+      background: #000;
+      border-radius: 16px;
+      z-index: 2;
+      pointer-events: none;
     }
     .phone-screen {
       position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+      top: 10px;
+      left: 10px;
+      width: calc(100% - 20px);
+      height: calc(100% - 20px);
+      border-radius: 40px;
       object-fit: cover;
       opacity: 0;
       transition: opacity 0.5s ease;
@@ -800,6 +817,7 @@
             <img class="phone-screen" data-screen="logger" src="/img/screens/logger.webp" alt="Symptom Logger — quick entry for how you feel today" width="786" height="1704" loading="lazy">
             <img class="phone-screen" data-screen="insights" src="/img/screens/insights.webp" alt="Insights — Today for You, correlations, and patterns" width="786" height="1704" loading="lazy">
             <img class="phone-screen" data-screen="alerts" src="/img/screens/alerts.webp" alt="Alerts — daily pollen forecast and alert toggles" width="786" height="1704" loading="lazy">
+            <div class="phone-island" aria-hidden="true"></div>
           </div>
         </div>
         <div class="showcase-copy-col">
