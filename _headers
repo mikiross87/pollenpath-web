@@ -6,7 +6,7 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   X-Permitted-Cross-Domain-Policies: none
-  Content-Security-Policy: default-src 'none'; style-src 'self' 'sha256-vtt0FI6A8r3ePvQ09Jp8Wnqw4wnKOhZ9VjgjA1FpL20=' 'sha256-6gRxehSHnZGxUC7zyhp8haDvSE5G+/NVlrH3MhTxk1w=' 'sha256-7SHGXcEyxoAbrjPxZg0hnC4xdOUSq5K4NqxDmveqgDg=' 'sha256-6F2Mfuuxmrf1cQbFKZDB41yhLpo6uZX+UpOEvqfBcYU='; script-src 'sha256-NJoX9mkZhPRTz/wmWTWdJc5ZIVnzYgd06hO/teAg6qE=' 'sha256-fyc1sDE86LdvhQKFAT0cWQxC4lxspRBBg9+U0O8tTNA='; img-src 'self'; font-src 'self'; connect-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'none'
+  Content-Security-Policy: default-src 'none'; style-src 'self' 'sha256-vtt0FI6A8r3ePvQ09Jp8Wnqw4wnKOhZ9VjgjA1FpL20=' 'sha256-kBaUOZt0HxO1pVv+T/s3l9yNhmBG8Wqf0QLDuab2KbQ=' 'sha256-brwfM0OHe2NDEr6nY+LdKexbGrEEubSCvgSjWc28JJw=' 'sha256-tTy51Z9YI3ZdjWSUp/e5QMzhlZ/PhDo99bmLNUQGEoo=' 'sha256-13lnVP81tDiyH0h8q0xi9Ft8MS39kQ2kG7Lxs+9DWrg=' 'sha256-6F2Mfuuxmrf1cQbFKZDB41yhLpo6uZX+UpOEvqfBcYU='; script-src 'sha256-NJoX9mkZhPRTz/wmWTWdJc5ZIVnzYgd06hO/teAg6qE=' 'sha256-fyc1sDE86LdvhQKFAT0cWQxC4lxspRBBg9+U0O8tTNA='; img-src 'self'; font-src 'self'; connect-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'none'
 
 # ── Cache Static Assets ──
 /img/*
@@ -19,5 +19,11 @@
   Cache-Control: public, max-age=31536000, immutable
 
 # ── CSP Hash Regeneration ──
-# When index.html inline <style> or <script> blocks change, recompute hashes with:
-#   python3 -c "import hashlib,base64,re;h=open('index.html').read();[print(f'{n}: sha256-{base64.b64encode(hashlib.sha256(m.encode()).digest()).decode()}') for n,m in [('style',re.search(r'<style>(.*?)</style>',h,re.DOTALL).group(1)),('script',list(re.finditer(r'<script>(.*?)</script>',h,re.DOTALL))[0].group(1)),('jsonld',re.search(r'<script type=\"application/ld\+json\">(.*?)</script>',h,re.DOTALL).group(1))]]"
+# When inline <style> or <script> blocks change in any page, recompute hashes.
+# Each page's style hash goes in style-src above; script + jsonld hashes are
+# from index.html only. style-src has 6 hashes (one per page).
+# Save the script below to scripts/csp-hashes.py or paste inline; run from this dir:
+#   python3 -c "import hashlib,base64,re;\
+# files=['index.html','press.html','changelog.html','privacy-policy.html','terms-of-service.html','404.html'];\
+# patterns=[('style',r'<style>(.*?)</style>'),('script',r'<script>(.*?)</script>'),('jsonld',r'<script type=\"application/ld\+json\">(.*?)</script>')];\
+# [print(f'{f} {t}[{i}]: sha256-{base64.b64encode(hashlib.sha256(m.encode()).digest()).decode()}') for f in files for t,p in patterns for i,m in enumerate(re.findall(p,open(f).read(),re.DOTALL))]"
