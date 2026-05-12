@@ -5,50 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PollenPath — Privacy Policy</title>
     <style>
+        @font-face { font-family: 'Outfit'; src: url('/fonts/outfit-600.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+        @font-face { font-family: 'Outfit'; src: url('/fonts/outfit-700.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+        @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-400.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+        @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-500.woff2') format('woff2'); font-weight: 500; font-display: swap; }
         :root {
+            --font-display: 'Outfit', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
             --bg: #FAFAF8;
-            --text: #1A1A1A;
-            --muted: #6B6B6B;
-            --accent: #4A7C59;
-            --border: #E0E0E0;
+            --fg: #1A2B1F;
+            --fg-secondary: #5A6B5E;
+            --primary: #3A7D5C;
+            --border-subtle: #EBE8E3;
         }
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg: #1A1A1A;
-                --text: #F0F0F0;
-                --muted: #A0A0A0;
-                --accent: #7DB88F;
-                --border: #333;
+                --bg: #0F1410;
+                --fg: #E8EDE9;
+                --fg-secondary: #9CA89E;
+                --primary: #5FAD82;
+                --border-subtle: #232D25;
             }
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+            font-family: var(--font-body);
             background: var(--bg);
-            color: var(--text);
+            color: var(--fg);
             line-height: 1.7;
             padding: 2rem 1.5rem;
             max-width: 720px;
             margin: 0 auto;
         }
-        h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem; }
-        h2 { font-size: 1.25rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 0.75rem; color: var(--accent); }
-        h3 { font-size: 1.05rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+        h1 { font-family: var(--font-display); font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem; letter-spacing: -0.02em; }
+        h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 0.75rem; color: var(--primary); }
+        h3 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; }
         p, li { font-size: 1rem; margin-bottom: 0.75rem; }
-        .subtitle { color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; }
+        .subtitle { color: var(--fg-secondary); font-size: 0.95rem; margin-bottom: 2rem; }
         ul { padding-left: 1.25rem; margin-bottom: 1rem; }
         li { margin-bottom: 0.4rem; }
+        a { color: var(--primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .back-link { display: inline-block; font-size: 0.95rem; margin-bottom: 2rem; font-weight: 500; }
         table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.95rem; }
-        th, td { text-align: left; padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border); }
-        th { font-weight: 600; color: var(--muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.03em; }
-        .highlight { background: var(--accent); color: white; padding: 1rem 1.25rem; border-radius: 12px; margin: 1.5rem 0; }
+        th, td { text-align: left; padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border-subtle); }
+        th { font-family: var(--font-display); font-weight: 600; color: var(--fg-secondary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .highlight { background: var(--primary); color: #FFFFFF; padding: 1rem 1.25rem; border-radius: 12px; margin: 1.5rem 0; }
         .highlight p { margin-bottom: 0; }
-        hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+        hr { border: none; border-top: 1px solid var(--border-subtle); margin: 2rem 0; }
+        .copyright { color: var(--fg-secondary); font-size: 0.85rem; }
     </style>
 </head>
 <body>
 
-<p style="margin-bottom: 2rem;"><a href="/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem;">&larr; Back to PollenPath</a></p>
+<a href="/" class="back-link">&larr; Back to PollenPath</a>
 
 <h1>Privacy Policy</h1>
 <p class="subtitle">Effective date: March 12, 2026 &middot; Last updated: March 12, 2026</p>
@@ -223,7 +233,7 @@
 <p><strong>Email:</strong> support@pollenpath.app</p>
 
 <hr>
-<p style="color: var(--muted); font-size: 0.85rem;">&copy; 2026 PollenPath. All rights reserved.</p>
+<p class="copyright">&copy; 2026 PollenPath. All rights reserved.</p>
 
 </body>
 </html>
