@@ -737,7 +737,7 @@
       line-height: 1.5;
     }
     .footer-disclaimer em { font-style: italic; }
-    .footer-copyright { font-size: 12px; color: var(--fg-muted); }
+    .footer-copyright { font-size: 12px; color: var(--fg-secondary); }
 
     /* ── Responsive ── */
     @media (max-width: 900px) {
@@ -853,6 +853,16 @@
     .tier-card.tier-basic .tier-name,
     .tier-card.tier-basic .tier-desc,
     .tier-card.tier-basic .tier-features li { color: var(--tier-basic-text); }
+    /* On tinted cards: divider, checkmark, and trial badge need contrast-aware overrides. */
+    .tier-card.tier-pro .tier-divider,
+    .tier-card.tier-basic .tier-divider { background: rgba(0, 0, 0, 0.18); }
+    .tier-card.tier-pro .tier-features li::before,
+    .tier-card.tier-basic .tier-features li::before { color: currentColor; }
+    .tier-card.tier-pro .tier-badge-trial,
+    .tier-card.tier-basic .tier-badge-trial {
+      background: rgba(255, 255, 255, 0.92);
+      color: #1A2B1F;
+    }
 
     /* ── Widgets section ── */
     .widgets {
