@@ -65,7 +65,6 @@
     @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
     @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-300-italic.woff2') format('woff2'); font-weight: 300; font-style: italic; font-display: swap; }
     @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-400-italic.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
-    @font-face { font-family: 'Material Symbols Rounded'; src: url('/fonts/material-symbols-rounded.woff2') format('woff2'); font-display: swap; }
     /* ── Reset ── */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -346,8 +345,6 @@
     }
     .btn-secondary:hover { border-color: var(--fg-muted); color: var(--fg); }
 
-    /* Material Symbols icon font (used by phone mockup + weather/AQ spans) */
-    .material-symbols-rounded { font-family: 'Material Symbols Rounded'; font-weight: normal; font-style: normal; font-size: 20px; display: inline-block; line-height: 1; direction: ltr; -webkit-font-smoothing: antialiased; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20; }
     /* ── Features ── */
     .features {
       background: var(--surface);
@@ -813,17 +810,17 @@
       <div class="showcase-body">
         <div class="showcase-phone-col">
           <div class="phone" role="img" aria-label="PollenPath app screens">
-            <img class="phone-screen active" data-screen="dashboard" src="/img/screens/dashboard.webp" alt="Dashboard — pollen index, weather, air quality, and symptoms" width="786" height="1704">
-            <img class="phone-screen" data-screen="logger" src="/img/screens/logger.webp" alt="Symptom Logger — quick entry for how you feel today" width="786" height="1704" loading="lazy">
-            <img class="phone-screen" data-screen="insights" src="/img/screens/insights.webp" alt="Insights — Today for You, correlations, and patterns" width="786" height="1704" loading="lazy">
-            <img class="phone-screen" data-screen="alerts" src="/img/screens/alerts.webp" alt="Alerts — daily pollen forecast and alert toggles" width="786" height="1704" loading="lazy">
+            <img class="phone-screen active" data-screen="home" src="/img/screens/home.webp" alt="Home — pollen index, weather, air quality, and symptoms" width="786" height="2840">
+            <img class="phone-screen" data-screen="logger" src="/img/screens/logger.webp" alt="Symptom Logger — quick entry for how you feel today" width="786" height="2280" loading="lazy">
+            <img class="phone-screen" data-screen="insights" src="/img/screens/insights.webp" alt="Insights — Today for You, correlations, and patterns" width="786" height="2680" loading="lazy">
+            <img class="phone-screen" data-screen="forecast" src="/img/screens/forecast.webp" alt="Forecast — tomorrow's pollen outlook" width="786" height="2280" loading="lazy">
             <div class="phone-island" aria-hidden="true"></div>
           </div>
         </div>
         <div class="showcase-copy-col">
-          <div class="showcase-block active" data-screen="dashboard">
+          <div class="showcase-block active" data-screen="home">
             <div class="sb-num">01</div>
-            <h3 class="sb-title">Dashboard</h3>
+            <h3 class="sb-title">Home</h3>
             <p class="sb-desc">Know what's in the air &mdash; live pollen, air quality, and weather, all in one place.</p>
           </div>
           <div class="showcase-block" data-screen="logger">
@@ -836,10 +833,10 @@
             <h3 class="sb-title">Insights</h3>
             <p class="sb-desc">See the patterns connecting your symptoms to pollen, air quality, and weather.</p>
           </div>
-          <div class="showcase-block" data-screen="alerts">
+          <div class="showcase-block" data-screen="forecast">
             <div class="sb-num">04</div>
-            <h3 class="sb-title">Alerts</h3>
-            <p class="sb-desc">Get notified when pollen spikes, a new correlation is found, or it's time to log.</p>
+            <h3 class="sb-title">Forecast</h3>
+            <p class="sb-desc">Tomorrow's outlook on one screen. Pro adds a 5-day view.</p>
           </div>
         </div>
       </div>
