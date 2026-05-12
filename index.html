@@ -683,7 +683,7 @@
       color: var(--fg);
       letter-spacing: -0.5px;
     }
-    .footer-tagline { font-size: 14px; color: var(--fg-muted); }
+    .footer-tagline { font-size: 14px; color: var(--fg-secondary); }
     .footer-links { display: flex; gap: 48px; }
     .footer-col h4 {
       font-family: var(--font-body);
@@ -715,7 +715,7 @@
       font-weight: 600;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--fg-muted);
+      color: var(--fg-secondary);
       margin-bottom: 12px;
     }
     .footer-attributions-list {
@@ -732,7 +732,7 @@
     .footer-disclaimer {
       font-family: var(--font-body);
       font-size: 12px;
-      color: var(--fg-muted);
+      color: var(--fg-secondary);
       margin: 0 0 12px;
       line-height: 1.5;
     }
@@ -809,6 +809,122 @@
       clip: rect(0, 0, 0, 0);
       white-space: nowrap;
       border: 0;
+    }
+
+    /* ── Pricing tier D-24 parity ──
+       Gold Pro reuses iOS PPColors.severityModerate→severityModerateDark.
+       Silver Basic uses iOS PPColors.tierSilver→tierSilverDark.
+       Free retains the base .tier-card treatment. */
+    :root {
+      --tier-pro-bg-start: #D4A843;
+      --tier-pro-bg-end: #B8922F;
+      --tier-pro-border: #B8922F;
+      --tier-pro-text: #1A2B1F;
+      --tier-basic-bg-start: #C5C9CC;
+      --tier-basic-bg-end: #A5A9AC;
+      --tier-basic-border: #8A9097;
+      --tier-basic-text: #1A2B1F;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --tier-pro-bg-start: #F4BF3E;
+        --tier-pro-bg-end: #C99330;
+        --tier-pro-border: #F4BF3E;
+        --tier-pro-text: #1A2B1F;
+        --tier-basic-bg-start: #8A9097;
+        --tier-basic-bg-end: #6A7078;
+        --tier-basic-border: #8A9097;
+        --tier-basic-text: #E8EDE9;
+      }
+    }
+    .tier-card.tier-pro {
+      background: linear-gradient(135deg, var(--tier-pro-bg-start), var(--tier-pro-bg-end));
+      border-color: var(--tier-pro-border);
+      color: var(--tier-pro-text);
+    }
+    .tier-card.tier-pro .tier-name,
+    .tier-card.tier-pro .tier-desc,
+    .tier-card.tier-pro .tier-features li { color: var(--tier-pro-text); }
+    .tier-card.tier-basic {
+      background: linear-gradient(135deg, var(--tier-basic-bg-start), var(--tier-basic-bg-end));
+      border-color: var(--tier-basic-border);
+      color: var(--tier-basic-text);
+    }
+    .tier-card.tier-basic .tier-name,
+    .tier-card.tier-basic .tier-desc,
+    .tier-card.tier-basic .tier-features li { color: var(--tier-basic-text); }
+
+    /* ── Widgets section ── */
+    .widgets {
+      padding: 80px 40px;
+      background: var(--surface-secondary);
+    }
+    .widgets-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .widgets-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .widgets-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 2fr;
+      gap: 24px;
+      align-items: stretch;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .widget-card {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .widget-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 22px;
+      box-shadow: 0 12px 32px rgba(26, 43, 31, 0.12);
+    }
+    .widget-card figcaption {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--fg-secondary);
+      text-align: center;
+    }
+    @media (max-width: 720px) {
+      .widgets-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .widget-medium {
+        grid-column: 1 / span 2;
+      }
+    }
+
+    /* ── Footer founder note (above attributions) ── */
+    .footer-founder {
+      margin: 0 0 24px 0;
+      padding: 0 0 20px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .footer-founder p {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--fg-secondary);
+      margin: 0 0 6px 0;
+      max-width: 540px;
+    }
+    .footer-founder cite {
+      font-family: var(--font-body);
+      font-style: normal;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      color: var(--fg-secondary);
     }
   </style>
 </head>
@@ -955,6 +1071,30 @@
     </div>
   </section>
 
+  <!-- Widgets -->
+  <section class="widgets" id="widgets">
+    <div class="widgets-inner">
+      <div class="widgets-header">
+        <span class="section-label">Always at a glance</span>
+        <h2 class="section-title">Your phone, before you open it.</h2>
+      </div>
+      <div class="widgets-grid">
+        <figure class="widget-card widget-small">
+          <img src="/img/widgets/pollen-small.webp" alt="Small home-screen widget — pollen level with risk pill" width="340" height="340" loading="lazy">
+          <figcaption>Pollen · Small</figcaption>
+        </figure>
+        <figure class="widget-card widget-small">
+          <img src="/img/widgets/aq-small.webp" alt="Small home-screen widget — air quality level" width="340" height="340" loading="lazy">
+          <figcaption>Air Quality · Small</figcaption>
+        </figure>
+        <figure class="widget-card widget-medium">
+          <img src="/img/widgets/pollen-medium.webp" alt="Medium home-screen widget — pollen with tree, grass, and weed breakdown" width="728" height="340" loading="lazy">
+          <figcaption>Pollen · Medium</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
   <!-- Pricing -->
   <section class="pricing" id="pricing">
     <div class="pricing-inner">
@@ -964,7 +1104,7 @@
       </div>
       <div class="pricing-grid">
         <!-- Free -->
-        <div class="tier-card">
+        <div class="tier-card tier-free">
           <div class="tier-name">Free</div>
           <p class="tier-desc">The core app. No account, no credit card, no trial.</p>
           <div class="tier-divider"></div>
@@ -976,7 +1116,7 @@
           </ul>
         </div>
         <!-- Basic -->
-        <div class="tier-card">
+        <div class="tier-card tier-basic">
           <span class="tier-badge tier-badge-trial">7-Day Free Trial</span>
           <div class="tier-name">Basic</div>
           <p class="tier-desc">Live pollen and air quality for your area.</p>
@@ -989,7 +1129,7 @@
           </ul>
         </div>
         <!-- Pro -->
-        <div class="tier-card">
+        <div class="tier-card tier-pro">
           <span class="tier-badge tier-badge-trial">7-Day Free Trial</span>
           <div class="tier-name">Pro</div>
           <p class="tier-desc">Species-level detail and the 5-day forecast.</p>
@@ -1032,6 +1172,10 @@
         </div>
       </div>
       <div class="footer-divider"></div>
+      <blockquote class="footer-founder">
+        <p>&ldquo;I wanted an allergy tracker I could trust with my own data. So I built one.&rdquo;</p>
+        <cite>&mdash; Miguel, founder</cite>
+      </blockquote>
       <div class="footer-attributions">
         <h4 class="footer-attributions-title">Data &amp; Attributions</h4>
         <ul class="footer-attributions-list">
