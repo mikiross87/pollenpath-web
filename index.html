@@ -79,13 +79,10 @@
     @font-face { font-family: 'Outfit'; src: url('/fonts/outfit-600.woff2') format('woff2'); font-weight: 600; font-display: swap; }
     @font-face { font-family: 'Outfit'; src: url('/fonts/outfit-700.woff2') format('woff2'); font-weight: 700; font-display: swap; }
     @font-face { font-family: 'Outfit'; src: url('/fonts/outfit-800.woff2') format('woff2'); font-weight: 800; font-display: swap; }
-    @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-300.woff2') format('woff2'); font-weight: 300; font-style: normal; font-display: swap; }
     @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
     @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
     @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
     @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
-    @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-300-italic.woff2') format('woff2'); font-weight: 300; font-style: italic; font-display: swap; }
-    @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-400-italic.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
 
     /* ============================================================================
        PollenPath — Colors & Type (tokens.css — TTF @font-face omitted)
@@ -304,13 +301,6 @@
     .nav.scrolled { border-bottom-color: var(--pp-border-subtle); }
     .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
     .brand { display: flex; align-items: center; gap: 10px; font-family: var(--pp-font-display); font-weight: 700; font-size: 20px; letter-spacing: -.4px; }
-    .brand .leaf-badge {
-      width: 34px; height: 34px; border-radius: 10px; flex: none;
-      display: grid; place-items: center;
-      background: linear-gradient(150deg, var(--brand-a), var(--brand-b));
-      box-shadow: var(--pp-shadow-low);
-    }
-    .brand .leaf-badge svg { width: 20px; height: 20px; }
     .nav-links { display: flex; align-items: center; gap: 30px; }
     .nav-links a { font-size: 15px; color: var(--pp-foreground-secondary); font-weight: 500; transition: color .2s; }
     .nav-links a:hover { color: var(--pp-foreground); }
@@ -334,8 +324,6 @@
     .hero-cta { display: flex; align-items: center; gap: 18px; margin: 30px 0 18px; flex-wrap: wrap; }
     .hero-meta { display: flex; align-items: center; gap: 16px; color: var(--pp-foreground-muted); font-size: 14px; font-weight: 500; }
     .hero-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: currentColor; opacity: .5; }
-    .stars { display: inline-flex; gap: 2px; color: var(--pp-secondary); }
-    .stars svg { width: 16px; height: 16px; }
 
     .hero-stage { position: relative; display: grid; place-items: center; min-height: 600px; }
     .hero-glow {
@@ -364,97 +352,7 @@
       border-radius: 36px; overflow: hidden; height: 600px;
       display: flex; flex-direction: column;
     }
-    .phone-statusbar {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 24px 6px; font-family: var(--pp-font-display); font-weight: 700; font-size: 14px;
-      color: var(--pp-foreground); flex: none;
-    }
-    .phone-statusbar .sb-icons { display: flex; align-items: center; gap: 5px; }
-    .phone-statusbar .sb-icons svg { width: 16px; height: 12px; }
     .phone-notch { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 84px; height: 26px; background: #0e120f; border-radius: 14px; z-index: 5; }
-    .phone-body { flex: 1; overflow: hidden; padding: 6px 16px 0; }
-
-    /* dashboard header */
-    .pp-header { display: flex; align-items: flex-start; justify-content: space-between; padding: 8px 4px 14px; }
-    .pp-greet { font-size: 13px; color: var(--pp-foreground-secondary); margin-bottom: 2px; }
-    .pp-name { font-family: var(--pp-font-display); font-weight: 700; font-size: 22px; letter-spacing: -.5px; }
-    .pp-header-icons { display: flex; gap: 12px; color: var(--pp-foreground-secondary); }
-    .pp-header-icons svg { width: 19px; height: 19px; }
-
-    /* gradient hero card */
-    .pp-hero-card {
-      border-radius: 22px; padding: 18px 18px 14px; color: #fff; position: relative;
-      background: linear-gradient(135deg, var(--hero-a), var(--hero-b));
-      box-shadow: 0 12px 26px -8px color-mix(in srgb, var(--hero-b) 70%, transparent);
-      margin-bottom: 14px;
-    }
-    .pp-hero-card .pp-ov { font-size: 9.5px; letter-spacing: 1.6px; font-weight: 600; text-transform: uppercase; opacity: .9; }
-    .pp-hero-top { display: flex; justify-content: space-between; align-items: flex-start; }
-    .pp-hero-num { font-family: var(--pp-font-display); font-weight: 900; font-size: 62px; letter-spacing: -3px; line-height: .92; margin-top: 2px; }
-    .pp-hero-sev { text-align: right; }
-    .pp-hero-sev .lvl { font-family: var(--pp-font-display); font-weight: 700; font-size: 24px; letter-spacing: -.5px; white-space: nowrap; }
-    .pp-hero-sev .sub { font-size: 12px; opacity: .82; }
-    .pp-hero-breakdown { display: flex; gap: 14px; margin-top: 14px; }
-    .pp-hero-breakdown .col .k { font-size: 11px; opacity: .8; }
-    .pp-hero-breakdown .col .v { font-weight: 700; font-size: 13px; }
-    .pp-hero-breakdown .col.muted { opacity: .55; }
-    .pp-hero-foot { display: flex; align-items: center; gap: 5px; margin-top: 12px; font-size: 10.5px; opacity: .8; }
-    .pp-hero-foot svg { width: 11px; height: 11px; }
-
-    /* weather grid */
-    .pp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-    .pp-metric {
-      background: var(--pp-surface); border: 1px solid var(--pp-border-subtle);
-      border-radius: 16px; padding: 13px 14px; box-shadow: var(--pp-shadow-low);
-    }
-    .pp-metric .ic { width: 22px; height: 22px; margin-bottom: 14px; }
-    .pp-metric .val { font-family: var(--pp-font-display); font-weight: 800; font-size: 22px; letter-spacing: -.5px; }
-    .pp-metric .lbl { font-size: 11.5px; color: var(--pp-foreground-secondary); margin-top: 1px; }
-
-    /* aqi row */
-    .pp-aqi {
-      display: flex; align-items: center; gap: 10px;
-      background: var(--pp-surface); border: 1px solid var(--pp-border-subtle);
-      border-radius: 16px; padding: 12px 14px; box-shadow: var(--pp-shadow-low);
-    }
-    .pp-aqi .aqi-dot { width: 26px; height: 26px; flex: none; }
-    .pp-aqi .aqi-num { font-family: var(--pp-font-display); font-weight: 800; font-size: 18px; }
-    .pp-aqi .aqi-txt { font-size: 12.5px; font-weight: 600; }
-    .pp-aqi .aqi-meta { margin-left: auto; font-size: 11px; color: var(--pp-foreground-muted); display: flex; align-items: center; gap: 6px; }
-
-    /* insights screen */
-    .pp-page-title { font-family: var(--pp-font-display); font-weight: 800; font-size: 30px; letter-spacing: -1px; padding: 6px 4px 16px; }
-    .pp-card {
-      background: var(--pp-surface); border: 1px solid var(--pp-border-subtle);
-      border-radius: 20px; padding: 16px; box-shadow: var(--pp-shadow-low); margin-bottom: 12px;
-    }
-    .pp-card-head { display: flex; align-items: center; gap: 8px; color: var(--pp-primary); font-family: var(--pp-font-display); font-weight: 600; font-size: 16px; }
-    .pp-card-head svg { width: 18px; height: 18px; }
-    .pp-card-lead { font-family: var(--pp-font-display); font-weight: 700; font-size: 18px; letter-spacing: -.3px; line-height: 1.25; margin: 12px 0; }
-    .pp-chips { display: flex; gap: 8px; flex-wrap: wrap; }
-    .pp-chip { display: inline-flex; align-items: center; gap: 6px; background: var(--pp-surface-secondary); border-radius: 100px; padding: 7px 13px; font-size: 12.5px; font-weight: 600; }
-    .pp-chip svg { width: 14px; height: 14px; color: var(--pp-primary); }
-    .pp-hint { display: flex; gap: 8px; align-items: flex-start; background: var(--pp-surface-secondary); border-radius: 14px; padding: 11px 13px; margin-top: 12px; font-size: 12.5px; line-height: 1.4; }
-    .pp-hint svg { width: 15px; height: 15px; color: var(--pp-secondary); flex: none; margin-top: 1px; }
-    .pp-ai-ov { display: flex; align-items: center; gap: 7px; color: var(--pp-foreground-muted); font-size: 10.5px; letter-spacing: 1.6px; font-weight: 600; text-transform: uppercase; }
-    .pp-ai-ov svg { width: 15px; height: 15px; color: var(--pp-secondary); }
-    .pp-ai-body { font-family: var(--pp-font-display); font-weight: 500; font-size: 15.5px; line-height: 1.42; margin-top: 10px; color: var(--pp-foreground); }
-
-    /* floating tab bar */
-    .pp-tabbar {
-      position: absolute; bottom: 12px; left: 14px; right: 14px;
-      display: flex; justify-content: space-between; align-items: center;
-      background: color-mix(in srgb, var(--pp-surface) 82%, transparent);
-      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-      border: 1px solid var(--pp-border-subtle); border-radius: 100px;
-      padding: 7px 10px; box-shadow: var(--pp-shadow-medium); z-index: 4;
-    }
-    .pp-tab { display: flex; flex-direction: column; align-items: center; gap: 3px; flex: 1; color: var(--pp-foreground-muted); font-size: 9.5px; font-weight: 600; padding: 5px 0; }
-    .pp-tab svg { width: 19px; height: 19px; }
-    .pp-tab.active { background: var(--pp-primary); color: #fff; border-radius: 100px; }
-
-    /* fade bottom of phone body */
-    .phone-body::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 70px; background: linear-gradient(transparent, var(--pp-background)); pointer-events: none; }
 
     /* ---- Trust strip ----------------------------------------------------------*/
     .trust { padding: 22px 0 8px; }
@@ -666,28 +564,69 @@
 
     .mobile-menu { display: none; }
 
+    /* ---- Extracted utility/layout classes (CSP-safe; replaces inline style=) ---- */
+    .sprite { position: absolute; }
+    .brand-icon { border-radius: 10px; }
+    .ic-primary { color: var(--pp-primary); }
+    .ic-secondary { color: var(--pp-secondary); }
+    .sec--flush-top { padding-top: 0; }
+    .sec-head--flush { margin-bottom: 0; }
+    .center-text { text-align: center; }
+    .blob--low { background: var(--pp-sev-low); }
+    .blob--secondary { background: var(--pp-secondary); }
+
+    /* Waitlist forms — display is owned by the launch-gating reveal rules below, NOT here */
+    .hero-waitlist { gap: 8px; max-width: 420px; }
+    .hero-waitlist.in-hero { align-items: stretch; width: 100%; }
+    .hero-waitlist.in-cta { justify-content: center; margin: 0 auto; }
+    .waitlist-input {
+      flex: 1; min-width: 0; padding: 12px 16px;
+      border: 1px solid var(--pp-border); border-radius: 12px;
+      font-family: var(--pp-font-body); font-size: 15px;
+      background: var(--pp-surface); color: var(--pp-foreground);
+    }
+    .waitlist-input--solid { border: none; background: #fff; color: #141A16; }
+    .waitlist-submit { flex-shrink: 0; }
+    .waitlist-submit--solid { background: #fff; color: #141A16; flex-shrink: 0; }
+
+    /* Footer founder quote + attributions */
+    .footer-quote { margin: 0 0 28px; padding: 0 0 24px; border-bottom: 1px solid var(--pp-border-subtle); }
+    .footer-quote p { font-style: italic; color: var(--pp-foreground-secondary); font-size: 14.5px; line-height: 1.5; max-width: 540px; margin: 0 0 6px; }
+    .footer-quote cite { font-style: normal; font-size: 12.5px; color: var(--pp-foreground-muted); }
+    .footer-attr { margin-bottom: 24px; }
+    .footer-attr h5 { font-family: var(--pp-font-body); font-weight: 600; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--pp-foreground-secondary); margin: 0 0 12px; }
+    .footer-attr ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 13px; color: var(--pp-foreground-secondary); }
+    .footer-attr li b { font-weight: 600; color: var(--pp-foreground); }
+
     /* ---- Launch gating --------------------------------------------------------*/
     [data-show-when] { display: none; }
-    html[data-launch="pre"]  [data-show-when="pre"]  { display: inherit; }
-    html[data-launch="live"] [data-show-when="live"] { display: inherit; }
-    html[data-launch="pre"]  .btn[data-show-when="pre"]  { display: inline-flex; }
-    html[data-launch="live"] .btn[data-show-when="live"] { display: inline-flex; }
+    html[data-launch="pre"]  .btn[data-show-when="pre"],
+    html[data-launch="live"] .btn[data-show-when="live"]            { display: inline-flex; }
+    html[data-launch="pre"]  .appstore[data-show-when="pre"],
+    html[data-launch="live"] .appstore[data-show-when="live"]      { display: inline-flex; }
+    html[data-launch="pre"]  .hero-waitlist[data-show-when="pre"],
+    html[data-launch="live"] .hero-waitlist[data-show-when="live"] { display: flex; }
+    html[data-launch="pre"]  a.mm-cta[data-show-when="pre"],
+    html[data-launch="live"] a.mm-cta[data-show-when="live"]       { display: block; }
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
   </style>
 </head>
 <body>
 
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<svg width="0" height="0" class="sprite" aria-hidden="true">
   <symbol id="leaf" viewBox="0 0 24 24">
     <path d="M4.5 19.5C4.5 11 10.5 4.5 19.5 4.5C19.5 13 13.5 19.5 4.5 19.5Z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/>
     <path d="M5 19C8.2 14 12.2 10 17.5 7" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="apple-logo" viewBox="0 0 24 24">
+    <path d="M17.05 12.54c-.02-2.05 1.68-3.04 1.76-3.09-.96-1.4-2.45-1.6-2.98-1.62-1.27-.13-2.48.75-3.12.75-.64 0-1.64-.73-2.7-.71-1.39.02-2.67.81-3.38 2.05-1.44 2.5-.37 6.2 1.04 8.23.69.99 1.51 2.1 2.58 2.06 1.04-.04 1.43-.67 2.69-.67 1.25 0 1.61.67 2.7.65 1.12-.02 1.82-1.01 2.5-2.01.79-1.15 1.11-2.27 1.13-2.32-.02-.01-2.17-.83-2.19-3.3zM15 6.27c.57-.69.95-1.65.85-2.6-.82.03-1.81.54-2.39 1.23-.52.61-.98 1.58-.86 2.51.91.07 1.84-.46 2.4-1.14z"/>
   </symbol>
 </svg>
 
 <header class="nav" id="nav">
   <div class="wrap nav-inner">
     <a class="brand" href="#top">
-      <img src="img/icon.png" alt="" width="34" height="34" style="border-radius:10px">
+      <img src="img/icon.png" alt="" width="34" height="34" class="brand-icon">
       PollenPath
     </a>
     <nav class="nav-links">
@@ -726,17 +665,17 @@
 <section class="hero">
   <div class="wrap hero-grid">
     <div class="hero-copy reveal">
-      <div class="overline eyebrow-leaf"><svg width="16" height="16" style="color:var(--pp-primary)"><use href="#leaf"/></svg> Allergy Tracker · iOS</div>
+      <div class="overline eyebrow-leaf"><svg width="16" height="16" class="ic-primary"><use href="#leaf"/></svg> Allergy Tracker · iOS</div>
       <h1 class="display">Connect how you <span class="em">feel</span> to what's in the air.</h1>
       <p class="lede">PollenPath pulls real-time pollen, air quality, and weather, lets you log symptoms in seconds, and finds your personal triggers — all on your device. No guessing, no tracking, no ads.</p>
       <div class="hero-cta">
-        <form class="hero-waitlist" data-show-when="pre" action="#" novalidate style="display:flex;gap:8px;align-items:stretch;max-width:420px;width:100%">
+        <form class="hero-waitlist in-hero" data-show-when="pre" action="#" novalidate>
           <label class="sr-only" for="hero-email">Email address</label>
-          <input type="email" id="hero-email" name="email" placeholder="you@example.com" required style="flex:1;min-width:0;padding:12px 16px;border:1px solid var(--pp-border);border-radius:12px;font-family:var(--pp-font-body);font-size:15px;background:var(--pp-surface);color:var(--pp-foreground)">
-          <button type="submit" class="btn btn-primary" style="flex-shrink:0">Get Notified</button>
+          <input type="email" id="hero-email" name="email" placeholder="you@example.com" required class="waitlist-input">
+          <button type="submit" class="btn btn-primary waitlist-submit">Get Notified</button>
         </form>
         <a class="appstore" data-show-when="live" href="https://apps.apple.com/app/id6760616969" aria-label="Download on the App Store">
-          <svg viewBox="0 0 24 24" fill="#fff"><path d="M17.05 12.54c-.02-2.05 1.68-3.04 1.76-3.09-.96-1.4-2.45-1.6-2.98-1.62-1.27-.13-2.48.75-3.12.75-.64 0-1.64-.73-2.7-.71-1.39.02-2.67.81-3.38 2.05-1.44 2.5-.37 6.2 1.04 8.23.69.99 1.51 2.1 2.58 2.06 1.04-.04 1.43-.67 2.69-.67 1.25 0 1.61.67 2.7.65 1.12-.02 1.82-1.01 2.5-2.01.79-1.15 1.11-2.27 1.13-2.32-.02-.01-2.17-.83-2.19-3.3zM15 6.27c.57-.69.95-1.65.85-2.6-.82.03-1.81.54-2.39 1.23-.52.61-.98 1.58-.86 2.51.91.07 1.84-.46 2.4-1.14z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><use href="#apple-logo"/></svg>
           <span class="as-txt"><span class="as-small">Download on the</span><span class="as-big">App Store</span></span>
         </a>
         <a class="btn btn-ghost" href="#features">See how it works</a>
@@ -778,7 +717,7 @@
     <!-- Feature row 1: Dashboard -->
     <div class="feature-row">
       <div class="feature-art reveal">
-        <div class="blob" style="background:var(--pp-sev-low)"></div>
+        <div class="blob blob--low"></div>
         <div class="phone"><div class="phone-screen"><div class="phone-notch"></div><img class="app-screen" src="img/screens/home.webp" alt="PollenPath Home screen" loading="lazy" width="786" height="2840"></div></div>
       </div>
       <div class="feature-copy reveal d1">
@@ -796,11 +735,11 @@
     <!-- Feature row 2: Insights -->
     <div class="feature-row flip">
       <div class="feature-art reveal">
-        <div class="blob" style="background:var(--pp-secondary)"></div>
+        <div class="blob blob--secondary"></div>
         <div class="phone"><div class="phone-screen"><div class="phone-notch"></div><img class="app-screen" src="img/screens/insights.webp" alt="PollenPath Insights screen" loading="lazy" width="786" height="2680"></div></div>
       </div>
       <div class="feature-copy reveal d1">
-        <div class="overline eyebrow-leaf"><svg viewBox="0 0 24 24" width="16" height="16" style="color:var(--pp-secondary)"><path d="M12 2.5c.5 3.7 1.8 5 5.5 5.5-3.7.5-5 1.8-5.5 5.5-.5-3.7-1.8-5-5.5-5.5 3.7-.5 5-1.8 5.5-5.5z" fill="currentColor"/></svg> Insights</div>
+        <div class="overline eyebrow-leaf"><svg viewBox="0 0 24 24" width="16" height="16" class="ic-secondary"><path d="M12 2.5c.5 3.7 1.8 5 5.5 5.5-3.7.5-5 1.8-5.5 5.5-.5-3.7-1.8-5-5.5-5.5 3.7-.5 5-1.8 5.5-5.5z" fill="currentColor"/></svg> Insights</div>
         <h3>Find your triggers, on your device.</h3>
         <p>On-device machine learning correlates how you feel with what's in the air, then surfaces it plainly — a real number, never a vague promise. Your data never leaves your phone.</p>
         <ul class="feature-list">
@@ -814,7 +753,7 @@
 </section>
 
 <!-- ============================ FEATURE CARD GRID ============================ -->
-<section class="sec" style="padding-top:0">
+<section class="sec sec--flush-top">
   <div class="wrap">
     <div class="card-grid">
       <div class="fcard reveal">
@@ -845,7 +784,7 @@
 <section class="privacy" id="privacy">
   <svg class="privacy-leaf"><use href="#leaf"/></svg>
   <div class="wrap">
-    <div class="sec-head reveal" style="margin-bottom:0">
+    <div class="sec-head reveal sec-head--flush">
       <div class="overline">Privacy-first by design</div>
       <h2 class="display">Your health data never leaves your phone.</h2>
       <p class="lede">PollenPath was built on a simple promise: understand your body without handing it to anyone. The intelligence runs on-device — there's nothing to leak.</p>
@@ -879,7 +818,7 @@
       <p class="lede">Premium subscriptions help fund pollen and air quality data for everyone.</p>
     </div>
 
-    <div style="text-align:center" class="reveal">
+    <div class="reveal center-text">
       <div class="billing-toggle" id="billingToggle">
         <button data-cycle="monthly">Monthly</button>
         <button data-cycle="yearly" class="active">Yearly<span class="save-badge">2 months free</span></button>
@@ -936,7 +875,7 @@
 </section>
 
 <!-- ============================ FAQ ============================ -->
-<section class="sec" id="faq" style="padding-top:0">
+<section class="sec sec--flush-top" id="faq">
   <div class="wrap">
     <div class="sec-head center reveal">
       <div class="overline">Good to know</div>
@@ -977,13 +916,13 @@
       <svg class="leaf-wm r"><use href="#leaf"/></svg>
       <h2 class="display">Breathe a little easier.</h2>
       <p>Download PollenPath and connect how you feel to what's in the air — free to start, on your iPhone.</p>
-      <form class="hero-waitlist" data-show-when="pre" action="#" novalidate style="display:flex;gap:8px;justify-content:center;max-width:420px;margin:0 auto">
+      <form class="hero-waitlist in-cta" data-show-when="pre" action="#" novalidate>
         <label class="sr-only" for="cta-email">Email address</label>
-        <input type="email" id="cta-email" name="email" placeholder="you@example.com" required style="flex:1;min-width:0;padding:12px 16px;border:none;border-radius:12px;font-family:var(--pp-font-body);font-size:15px;background:#fff;color:#141A16">
-        <button type="submit" class="btn" style="background:#fff;color:#141A16;flex-shrink:0">Get Notified</button>
+        <input type="email" id="cta-email" name="email" placeholder="you@example.com" required class="waitlist-input waitlist-input--solid">
+        <button type="submit" class="btn waitlist-submit--solid">Get Notified</button>
       </form>
       <a class="appstore" data-show-when="live" href="https://apps.apple.com/app/id6760616969">
-        <svg viewBox="0 0 24 24"><path d="M17.05 12.54c-.02-2.05 1.68-3.04 1.76-3.09-.96-1.4-2.45-1.6-2.98-1.62-1.27-.13-2.48.75-3.12.75-.64 0-1.64-.73-2.7-.71-1.39.02-2.67.81-3.38 2.05-1.44 2.5-.37 6.2 1.04 8.23.69.99 1.51 2.1 2.58 2.06 1.04-.04 1.43-.67 2.69-.67 1.25 0 1.61.67 2.7.65 1.12-.02 1.82-1.01 2.5-2.01.79-1.15 1.11-2.27 1.13-2.32-.02-.01-2.17-.83-2.19-3.3zM15 6.27c.57-.69.95-1.65.85-2.6-.82.03-1.81.54-2.39 1.23-.52.61-.98 1.58-.86 2.51.91.07 1.84-.46 2.4-1.14z" fill="currentColor"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><use href="#apple-logo"/></svg>
         <span class="as-txt"><span class="as-small">Download on the</span><span class="as-big">App Store</span></span>
       </a>
     </div>
@@ -995,7 +934,7 @@
   <div class="wrap">
     <div class="footer-top">
       <div class="footer-brand">
-        <div class="brand"><img src="img/icon.png" alt="" width="34" height="34" style="border-radius:10px"> PollenPath</div>
+        <div class="brand"><img src="img/icon.png" alt="" width="34" height="34" class="brand-icon"> PollenPath</div>
         <p>A warm, privacy-first allergy tracker that connects how you feel to what's in the air.</p>
       </div>
       <div class="footer-col">
@@ -1011,17 +950,17 @@
         <ul><li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="terms-of-service.html">Terms of Service</a></li></ul>
       </div>
     </div>
-    <blockquote style="margin:0 0 28px;padding:0 0 24px;border-bottom:1px solid var(--pp-border-subtle)">
-      <p style="font-style:italic;color:var(--pp-foreground-secondary);font-size:14.5px;line-height:1.5;max-width:540px;margin:0 0 6px">"I wanted an allergy tracker I could trust with my own data. So I built one."</p>
-      <cite style="font-style:normal;font-size:12.5px;color:var(--pp-foreground-muted)">— Miguel, founder</cite>
+    <blockquote class="footer-quote">
+      <p>"I wanted an allergy tracker I could trust with my own data. So I built one."</p>
+      <cite>— Miguel, founder</cite>
     </blockquote>
-    <div style="margin-bottom:24px">
-      <h5 style="font-family:var(--pp-font-body);font-weight:600;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--pp-foreground-secondary);margin:0 0 12px">Data &amp; Attributions</h5>
-      <ul style="list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px 24px;font-size:13px;color:var(--pp-foreground-secondary)">
-        <li><b style="font-weight:600;color:var(--pp-foreground)">Pollen &amp; Air Quality:</b> Google Maps Platform</li>
-        <li><b style="font-weight:600;color:var(--pp-foreground)">Weather:</b> Apple WeatherKit</li>
-        <li><b style="font-weight:600;color:var(--pp-foreground)">Health data:</b> Apple HealthKit — stored on your device</li>
-        <li><b style="font-weight:600;color:var(--pp-foreground)">Maps &amp; Location:</b> Apple MapKit — city-level only</li>
+    <div class="footer-attr">
+      <h5>Data &amp; Attributions</h5>
+      <ul>
+        <li><b>Pollen &amp; Air Quality:</b> Google Maps Platform</li>
+        <li><b>Weather:</b> Apple WeatherKit</li>
+        <li><b>Health data:</b> Apple HealthKit — stored on your device</li>
+        <li><b>Maps &amp; Location:</b> Apple MapKit — city-level only</li>
       </ul>
     </div>
     <div class="footer-bottom">
