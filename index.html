@@ -600,6 +600,9 @@
 
     /* ---- Launch gating --------------------------------------------------------*/
     [data-show-when] { display: none; }
+    /* outrank the blanket `.mobile-menu a { display:block }` (0,1,1) so the
+       opposite-state mobile CTA stays hidden; reveal rules below (0,2,2) still win */
+    .mobile-menu a[data-show-when] { display: none; }
     html[data-launch="pre"]  .btn[data-show-when="pre"],
     html[data-launch="live"] .btn[data-show-when="live"]            { display: inline-flex; }
     html[data-launch="pre"]  .appstore[data-show-when="pre"],
