@@ -64,8 +64,17 @@
     }
   }
   </script>
+
+  <!-- Theme bootstrap — runs before first paint to avoid flash -->
+  <script>
+  (function(){try{var t=localStorage.getItem('pp-theme');
+    if(t!=='dark'&&t!=='light')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+    document.documentElement.setAttribute('data-theme',t);}catch(e){
+    document.documentElement.setAttribute('data-theme','light');}})();
+  </script>
+
   <style>
-    /* ── Self-Hosted Fonts ── */
+    /* ── Self-Hosted Fonts (woff2) ── */
     @font-face { font-family: 'Outfit'; src: url('/fonts/outfit-400.woff2') format('woff2'); font-weight: 400; font-display: swap; }
     @font-face { font-family: 'Outfit'; src: url('/fonts/outfit-600.woff2') format('woff2'); font-weight: 600; font-display: swap; }
     @font-face { font-family: 'Outfit'; src: url('/fonts/outfit-700.woff2') format('woff2'); font-weight: 700; font-display: swap; }
@@ -77,1199 +86,580 @@
     @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
     @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-300-italic.woff2') format('woff2'); font-weight: 300; font-style: italic; font-display: swap; }
     @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-400-italic.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
-    /* ── Reset ── */
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-    /* ── Theme Variables ── */
+    /* ============================================================================
+       PollenPath — Colors & Type (tokens.css — TTF @font-face omitted)
+       Source of truth: pollenpath/Packages/DesignSystem (PPColors, PPTypography,
+       PPSpacing). Values are the brand system's light/dark adaptive pairs.
+       Display/titles: Outfit. Body/UI: DM Sans.
+       ============================================================================ */
+
     :root {
-      --bg: #FAF8F5;
-      --surface: #FFFFFF;
-      --surface-secondary: #F2EFEB;
-      --fg: #1A2B1F;
-      --fg-secondary: #5A6B5E;
-      --fg-muted: #8A9A8D;
-      --primary: #3A7D5C;
-      --primary-fg: #FFFFFF;
-      --accent: #D4764E;
-      --accent-fg: #FFFFFF;
-      --secondary: #D4A843;
-      --secondary-fg: #2D2410;
-      --success: #3A8F4F;
-      --border: #E0DDD8;
-      --border-subtle: #EBE8E3;
-      --radius-sm: 8px;
-      --radius-md: 16px;
-      --radius-lg: 24px;
-      --radius-pill: 100px;
-      --font-display: 'Outfit', sans-serif;
-      --font-body: 'DM Sans', sans-serif;
+      /* === Core brand === */
+      --pp-primary:              #3A7D5C;
+      --pp-primary-foreground:   #FFFFFF;
+      --pp-secondary:            #D4A843;
+      --pp-secondary-foreground: #2D2410;
+      --pp-accent:               #D4764E;
+      --pp-accent-foreground:    #FFFFFF;
+
+      /* === Background & surface === */
+      --pp-background:         #FAF8F5;
+      --pp-surface:            #FFFFFF;
+      --pp-surface-secondary:  #F2EFEB;
+
+      /* === Foreground (text) === */
+      --pp-foreground:           #1A2B1F;
+      --pp-foreground-secondary: #5A6B5E;
+      --pp-foreground-muted:     #8A9A8D;
+
+      /* === Border === */
+      --pp-border:        #E0DDD8;
+      --pp-border-subtle: #EBE8E3;
+
+      /* === Semantic === */
+      --pp-success: #3A8F4F;
+      --pp-warning: #D4A843;
+      --pp-error:   #C94444;
+      --pp-info:    #4A90D9;
+      --pp-critical-foreground: #A84A2E;
+      --pp-critical-surface:    #F4E4D8;
+
+      /* === Pollen severity scale (UPI 1–5) === */
+      --pp-sev-verylow:   #8ED49E;
+      --pp-sev-low:       #6BBF7B;
+      --pp-sev-moderate:  #D4A843;
+      --pp-sev-high:      #D4764E;
+      --pp-sev-veryhigh:  #A84A2E;
+      --pp-scale-cold:    #3B82F6;
+
+      --pp-sev-verylow-dark:  #6BBF7B;
+      --pp-sev-low-dark:      #4EA05E;
+      --pp-sev-moderate-dark: #B8922F;
+      --pp-sev-high-dark:     #B85E38;
+      --pp-sev-veryhigh-dark: #8E3624;
+
+      /* === Tier treatment (paywall) === */
+      --pp-tier-silver:      #C5C9CC;
+      --pp-tier-silver-dark: #A5A9AC;
+
+      /* === Type families === */
+      --pp-font-display: "Outfit", system-ui, sans-serif;
+      --pp-font-body:    "DM Sans", system-ui, sans-serif;
+
+      /* === Spacing scale (PPSpacing) === */
+      --pp-space-xs:  4px;
+      --pp-space-sm:  8px;
+      --pp-space-12:  12px;
+      --pp-space-md:  16px;
+      --pp-space-page: 20px;
+      --pp-space-lg:  24px;
+      --pp-space-xl:  32px;
+      --pp-space-xxl: 48px;
+
+      /* === Corner radius (PPRadius) === */
+      --pp-radius-sm:   8px;
+      --pp-radius-md:   16px;
+      --pp-radius-lg:   24px;
+      --pp-radius-pill: 100px;
+
+      /* === Elevation (light mode soft shadows) === */
+      --pp-shadow-low:    0 2px 8px  rgba(26,43,31,0.05);
+      --pp-shadow-medium: 0 4px 16px rgba(26,43,31,0.08);
+      --pp-shadow-high:   0 8px 24px rgba(26,43,31,0.12);
     }
 
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #141A16;
-        --surface: #1E2620;
-        --surface-secondary: #283028;
-        --fg: #E8EDE9;
-        --fg-secondary: #9CA89E;
-        --fg-muted: #6B7B6E;
-        --primary: #5FAD82;
-        --primary-fg: #FFFFFF;
-        --accent: #E0926E;
-        --accent-fg: #FFFFFF;
-        --secondary: #E0BC5E;
-        --secondary-fg: #1A1508;
-        --success: #4FA85F;
-        --border: #2E3830;
-        --border-subtle: #232D25;
-      }
+    /* ---- Dark mode adaptive overrides --------------------------------------- */
+    :root[data-theme="dark"],
+    .pp-dark {
+      --pp-primary:              #5FAD82;
+      --pp-secondary:            #E0BC5E;
+      --pp-secondary-foreground: #1A1508;
+      --pp-accent:               #E0926E;
+
+      --pp-background:        #141A16;
+      --pp-surface:           #1E2620;
+      --pp-surface-secondary: #283028;
+
+      --pp-foreground:           #E8EDE9;
+      --pp-foreground-secondary: #9CA89E;
+      --pp-foreground-muted:     #6B7B6E;
+
+      --pp-border:        #2E3830;
+      --pp-border-subtle: #232D25;
+
+      --pp-success: #4FA85F;
+      --pp-warning: #E0BC5E;
+      --pp-error:   #D45555;
+      --pp-info:    #6AADEF;
+      --pp-critical-foreground: #E08866;
+      --pp-critical-surface:    #3A2820;
+
+      --pp-sev-verylow:  #6FCB87;
+      --pp-sev-low:      #4FA865;
+      --pp-sev-moderate: #F4BF3E;
+      --pp-sev-high:     #E07B44;
+      --pp-sev-veryhigh: #C94E34;
+      --pp-scale-cold:   #5C9CFF;
+
+      --pp-shadow-low:    none;
+      --pp-shadow-medium: 0 0 8px  rgba(35,45,37,0.30);
+      --pp-shadow-high:   0 0 12px rgba(35,45,37,0.50);
     }
 
-    /* ── Base ── */
-    html { scroll-behavior: smooth; }
+    /* ============================================================================
+       PollenPath — Marketing webclient styles (styles.css — .tw-* panel omitted)
+       Built on PollenPath tokens. Cream paper, forest ink, leaf brand.
+       ============================================================================ */
+
+    *, *::before, *::after { box-sizing: border-box; }
+    :root { --brand-a: var(--pp-primary); --brand-b: var(--pp-sev-high-dark); --hero-a: var(--pp-sev-low); --hero-b: var(--pp-sev-low-dark); }
+    body.no-grain::before { display: none; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
     body {
-      font-family: var(--font-body);
-      background: var(--bg);
-      color: var(--fg);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    /* ── Utilities ── */
-    .section-label {
-      font-family: var(--font-body);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 2px;
-      color: var(--primary);
-      text-transform: uppercase;
-    }
-    .section-title {
-      font-family: var(--font-display);
-      font-size: clamp(28px, 4vw, 36px);
-      font-weight: 700;
-      letter-spacing: -1px;
-      color: var(--fg);
-      text-align: center;
-    }
-
-    /* ── Animations ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .animate {
-      opacity: 0;
-      animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-    .animate-delay-1 { animation-delay: 0.1s; }
-    .animate-delay-2 { animation-delay: 0.2s; }
-    .animate-delay-3 { animation-delay: 0.3s; }
-    .animate-delay-4 { animation-delay: 0.4s; }
-    .animate-delay-5 { animation-delay: 0.5s; }
-
-    /* ── Nav ── */
-    .nav-bar {
-      background: var(--bg);
-    }
-    nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 40px;
-      height: 72px;
-    }
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-    }
-    .nav-logo img { width: 32px; height: 32px; border-radius: 8px; }
-    .nav-logo span {
-      font-family: var(--font-display);
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--fg);
-      letter-spacing: -0.5px;
-    }
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
-    .nav-links a {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--fg-secondary);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--fg); }
-    .nav-cta {
-      display: inline-flex;
-      align-items: center;
-      padding: 10px 24px;
-      border-radius: var(--radius-pill);
-      background: var(--primary);
-      color: var(--primary-fg);
-      font-size: 13px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: opacity 0.2s;
-    }
-    .nav-cta:hover { opacity: 0.9; }
-    .nav-hamburger {
-      display: none;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 8px;
-      color: var(--fg);
-    }
-    .nav-hamburger svg { width: 24px; height: 24px; }
-
-    /* ── Mobile Menu ── */
-    .mobile-menu {
-      display: none;
-      flex-direction: column;
-      gap: 0;
-      background: var(--bg);
-      border-top: 1px solid var(--border-subtle);
-      padding: 0 40px;
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease, padding 0.3s ease;
-    }
-    .mobile-menu.open {
-      max-height: 300px;
-      padding: 16px 40px 24px;
-    }
-    .mobile-menu a {
-      display: block;
-      padding: 12px 0;
+      margin: 0;
+      background: var(--pp-background);
+      color: var(--pp-foreground);
+      font-family: var(--pp-font-body);
       font-size: 16px;
-      font-weight: 500;
-      color: var(--fg-secondary);
-      text-decoration: none;
-      border-bottom: 1px solid var(--border-subtle);
+      line-height: 1.5;
+      overflow-x: hidden;
     }
-    .mobile-menu a:last-child { border-bottom: none; }
-    .mobile-menu a:hover { color: var(--fg); }
+    body.theme-transition, body.theme-transition * { transition: background-color .4s ease, color .4s ease, border-color .4s ease; }
 
-    /* ── Hero ── */
-    .hero {
-      position: relative;
-      padding: 80px 40px 60px;
-      text-align: center;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(42, 94, 66, 0.13) 0%, transparent 60%);
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* Film-grain overlay for organic warmth (~4% noise) */
+    body::before {
+      content: "";
+      position: fixed; inset: 0;
+      z-index: 9999;
       pointer-events: none;
-    }
-    @media (prefers-color-scheme: dark) {
-      .hero::before {
-        background: linear-gradient(180deg, rgba(42, 94, 66, 0.19) 0%, transparent 60%);
-      }
-    }
-    .hero-inner {
-      position: relative;
-      max-width: 1000px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 16px;
-      border-radius: var(--radius-pill);
-      background: var(--surface-secondary);
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--fg-secondary);
-      margin-bottom: 24px;
-    }
-    .hero-badge::before {
-      content: '';
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--success);
-    }
-    .hero h1 {
-      font-family: var(--font-display);
-      font-size: clamp(36px, 5.5vw, 56px);
-      font-weight: 800;
-      letter-spacing: -2px;
-      line-height: 1.1;
-      color: var(--fg);
-      margin-bottom: 20px;
-    }
-    .hero-sub {
-      font-size: 18px;
-      line-height: 1.5;
-      color: var(--fg-secondary);
-      max-width: 640px;
-      margin: 0 auto 32px;
-    }
-    .hero-ctas {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 48px;
-    }
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      padding: 14px 32px;
-      border-radius: var(--radius-pill);
-      background: var(--surface-secondary);
-      color: var(--fg);
-      font-size: 16px;
-      font-weight: 600;
-      text-decoration: none;
-      border: 1px solid var(--border);
-      transition: all 0.2s;
-    }
-    .btn-primary:hover { background: var(--border); }
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      padding: 14px 32px;
-      border-radius: var(--radius-pill);
-      background: transparent;
-      color: var(--fg-secondary);
-      font-size: 16px;
-      font-weight: 500;
-      text-decoration: none;
-      border: 1px solid var(--border);
-      transition: all 0.2s;
-    }
-    .btn-secondary:hover { border-color: var(--fg-muted); color: var(--fg); }
-
-    /* ── Features ── */
-    .features {
-      background: var(--surface);
-      padding: 80px 40px;
-    }
-    .features-inner {
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-    .features-header {
-      text-align: center;
-      margin-bottom: 48px;
-    }
-    .features-header .section-label { margin-bottom: 12px; display: block; }
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-    }
-    .feature-card {
-      background: var(--bg);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .feature-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.06);
-    }
-    .feature-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: var(--radius-md);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 16px;
-    }
-    .feature-icon svg { width: 24px; height: 24px; }
-    .feature-icon.green { background: var(--primary); color: var(--primary-fg); }
-    .feature-icon.orange { background: var(--accent); color: var(--accent-fg); }
-    .feature-icon.gold { background: var(--secondary); color: var(--secondary-fg); }
-    .feature-icon.dark { background: #1A2B1F; color: var(--success); }
-    @media (prefers-color-scheme: dark) {
-      .feature-icon.dark { background: #2E3830; }
-    }
-    .feature-card h3 {
-      font-family: var(--font-display);
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--fg);
-      margin-bottom: 8px;
-    }
-    .feature-card p {
-      font-size: 14px;
-      line-height: 1.5;
-      color: var(--fg-secondary);
+      opacity: .4;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
     }
 
-    /* ── Showcase (A Closer Look) ── */
-    .showcase {
-      padding: 96px 40px;
-      background: var(--surface);
+    /* ---- Type helpers ---------------------------------------------------------*/
+    .overline {
+      font-family: var(--pp-font-body); font-weight: 600;
+      font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--pp-primary);
     }
-    .showcase-inner {
-      max-width: 1200px;
-      margin: 0 auto;
+    .display {
+      font-family: var(--pp-font-display); font-weight: 800;
+      letter-spacing: -1.5px; line-height: 1.02; margin: 0;
     }
-    .showcase-header {
-      text-align: center;
-      margin-bottom: 72px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
+    h1.display { font-size: clamp(40px, 6vw, 76px); font-weight: 900; letter-spacing: -2.5px; }
+    h2.display { font-size: clamp(32px, 4.4vw, 54px); }
+    .lede {
+      font-family: var(--pp-font-body); font-weight: 400;
+      font-size: clamp(17px, 1.6vw, 20px); line-height: 1.55;
+      color: var(--pp-foreground-secondary);
     }
-    .showcase-rule {
-      width: 32px;
-      height: 2px;
-      background: var(--primary);
-      display: block;
+    .eyebrow-leaf { display: inline-flex; align-items: center; gap: 8px; }
+
+    /* ---- Layout ---------------------------------------------------------------*/
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+    section { position: relative; }
+
+    /* ---- Buttons --------------------------------------------------------------*/
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      font-family: var(--pp-font-body); font-weight: 600; font-size: 15px;
+      border-radius: var(--pp-radius-pill); padding: 13px 24px;
+      border: 1px solid transparent; cursor: pointer;
+      transition: transform .2s cubic-bezier(.2,.8,.2,1), opacity .2s, background-color .2s, box-shadow .2s;
     }
-    .showcase-header .section-label { letter-spacing: 2.5px; font-size: 11px; font-weight: 600; color: var(--primary); text-transform: uppercase; }
-    .showcase-body {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: start;
+    .btn:active { transform: scale(.97); opacity: .9; }
+    .btn-primary { background: var(--pp-primary); color: var(--pp-primary-foreground); box-shadow: var(--pp-shadow-low); }
+    .btn-primary:hover { box-shadow: 0 6px 20px rgba(58,125,92,.28); }
+    .btn-ghost { background: transparent; color: var(--pp-foreground); border-color: var(--pp-border); }
+    .btn-ghost:hover { background: var(--pp-surface-secondary); }
+
+    /* App Store badge */
+    .appstore {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: #141A16; color: #fff;
+      border-radius: 14px; padding: 11px 20px 11px 18px;
+      transition: transform .2s cubic-bezier(.2,.8,.2,1), box-shadow .2s;
+      box-shadow: var(--pp-shadow-medium);
     }
-    .showcase-phone-col {
-      position: sticky;
-      top: 100px;
-      display: flex;
-      justify-content: center;
-      padding-top: 24px;
+    .appstore:hover { transform: translateY(-2px); box-shadow: var(--pp-shadow-high); }
+    .appstore:active { transform: scale(.98); }
+    .appstore svg { width: 26px; height: 26px; flex: none; }
+    .appstore .as-txt { display: flex; flex-direction: column; line-height: 1.05; text-align: left; }
+    .appstore .as-small { font-size: 11px; opacity: .85; font-weight: 400; }
+    .appstore .as-big { font-family: var(--pp-font-display); font-weight: 600; font-size: 19px; letter-spacing: -.3px; }
+
+    /* ---- Nav ------------------------------------------------------------------*/
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: color-mix(in srgb, var(--pp-background) 78%, transparent);
+      backdrop-filter: saturate(1.4) blur(16px);
+      -webkit-backdrop-filter: saturate(1.4) blur(16px);
+      border-bottom: 1px solid transparent;
+      transition: border-color .3s, background-color .3s;
     }
-    .showcase-copy-col {
-      display: flex;
-      flex-direction: column;
-      gap: 120px;
-      padding: 80px 0;
+    .nav.scrolled { border-bottom-color: var(--pp-border-subtle); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-family: var(--pp-font-display); font-weight: 700; font-size: 20px; letter-spacing: -.4px; }
+    .brand .leaf-badge {
+      width: 34px; height: 34px; border-radius: 10px; flex: none;
+      display: grid; place-items: center;
+      background: linear-gradient(150deg, var(--brand-a), var(--brand-b));
+      box-shadow: var(--pp-shadow-low);
     }
-    .showcase-block { transition: opacity 0.4s ease; }
-    .sb-num {
-      font-family: var(--font-display);
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 3px;
-      color: var(--fg-muted);
-      margin-bottom: 12px;
+    .brand .leaf-badge svg { width: 20px; height: 20px; }
+    .nav-links { display: flex; align-items: center; gap: 30px; }
+    .nav-links a { font-size: 15px; color: var(--pp-foreground-secondary); font-weight: 500; transition: color .2s; }
+    .nav-links a:hover { color: var(--pp-foreground); }
+    .nav-actions { display: flex; align-items: center; gap: 14px; }
+    .theme-toggle {
+      width: 38px; height: 38px; border-radius: 50%; flex: none;
+      display: grid; place-items: center; cursor: pointer;
+      background: var(--pp-surface-secondary); border: 1px solid var(--pp-border-subtle);
+      color: var(--pp-foreground-secondary); transition: background .2s, color .2s, transform .2s;
     }
-    .showcase-block.active .sb-num { color: var(--primary); }
-    .sb-title {
-      font-family: var(--font-display);
-      font-size: 36px;
-      font-weight: 800;
-      color: var(--fg);
-      letter-spacing: -0.5px;
-      margin-bottom: 12px;
+    .theme-toggle:hover { color: var(--pp-foreground); transform: translateY(-1px); }
+    .theme-toggle svg { width: 18px; height: 18px; }
+
+    /* ---- Hero -----------------------------------------------------------------*/
+    .hero { padding: 64px 0 40px; overflow: hidden; }
+    .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; }
+    .hero-copy { max-width: 560px; }
+    .hero-copy .overline { margin-bottom: 18px; }
+    .hero-copy h1 { margin-bottom: 22px; }
+    .hero-copy .em { color: var(--pp-primary); }
+    .hero-cta { display: flex; align-items: center; gap: 18px; margin: 30px 0 18px; flex-wrap: wrap; }
+    .hero-meta { display: flex; align-items: center; gap: 16px; color: var(--pp-foreground-muted); font-size: 14px; font-weight: 500; }
+    .hero-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: currentColor; opacity: .5; }
+    .stars { display: inline-flex; gap: 2px; color: var(--pp-secondary); }
+    .stars svg { width: 16px; height: 16px; }
+
+    .hero-stage { position: relative; display: grid; place-items: center; min-height: 600px; }
+    .hero-glow {
+      position: absolute; width: 420px; height: 420px; border-radius: 50%;
+      background: radial-gradient(circle, color-mix(in srgb, var(--pp-primary) 30%, transparent), transparent 68%);
+      filter: blur(20px); z-index: 0;
     }
-    .sb-desc {
-      font-family: var(--font-body);
-      font-size: 17px;
-      font-weight: 400;
-      color: var(--fg-secondary);
-      line-height: 1.55;
+    .hero-leaf-bg {
+      position: absolute; right: -40px; top: -30px; width: 340px; color: var(--pp-primary);
+      opacity: .06; z-index: 0; transform: rotate(8deg);
     }
-    .showcase-scroll-hint {
-      text-align: center;
-      font-size: 12px;
-      color: var(--fg-muted);
-      letter-spacing: 1px;
-      margin-top: 32px;
+    .hero-stage .phone { position: relative; z-index: 2; }
+    .hero-stage .phone.secondary {
+      position: absolute; z-index: 1; transform: scale(.82) translate(120px, 40px) rotate(6deg);
+      opacity: .96; filter: saturate(.98);
     }
 
-    /* Phone mockup — iPhone 16 Pro frame wrapping pen-exported iOS screens,
-       cross-faded on scroll. Dimensions mirror Design/PollenPathWeb.pen. */
+    /* ---- Phone mockup ---------------------------------------------------------*/
     .phone {
-      position: relative;
-      width: 340px;
-      height: 700px;
-      border-radius: 48px;
-      overflow: hidden;
-      box-shadow: 0 24px 60px rgba(26, 43, 31, 0.2);
-      transform: rotate(-2deg);
-      background: #1A2B1F;
-      padding: 10px;
-      box-sizing: border-box;
-    }
-    .phone-island {
-      position: absolute;
-      top: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 110px;
-      height: 32px;
-      background: #000;
-      border-radius: 16px;
-      z-index: 2;
-      pointer-events: none;
+      width: 300px; flex: none;
+      background: #0e120f; border-radius: 46px; padding: 11px;
+      box-shadow: 0 30px 70px -20px rgba(26,43,31,.45), 0 8px 24px rgba(26,43,31,.18);
     }
     .phone-screen {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      width: calc(100% - 20px);
-      height: calc(100% - 20px);
-      border-radius: 40px;
-      object-fit: cover;
-      opacity: 0;
-      transition: opacity 0.5s ease;
+      position: relative; background: var(--pp-background);
+      border-radius: 36px; overflow: hidden; height: 600px;
+      display: flex; flex-direction: column;
     }
-    .phone-screen.active { opacity: 1; }
+    .phone-statusbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 24px 6px; font-family: var(--pp-font-display); font-weight: 700; font-size: 14px;
+      color: var(--pp-foreground); flex: none;
+    }
+    .phone-statusbar .sb-icons { display: flex; align-items: center; gap: 5px; }
+    .phone-statusbar .sb-icons svg { width: 16px; height: 12px; }
+    .phone-notch { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 84px; height: 26px; background: #0e120f; border-radius: 14px; z-index: 5; }
+    .phone-body { flex: 1; overflow: hidden; padding: 6px 16px 0; }
 
-    /* Showcase responsive */
-    @media (max-width: 900px) {
-      .showcase-body { grid-template-columns: 1fr; gap: 40px; }
-      .showcase-phone-col { position: static; padding-top: 0; }
-      .showcase-copy-col { gap: 48px; padding: 0; }
-      .phone { width: 280px; height: 576px; transform: rotate(0); }
-      .phone-screen { padding-top: 40px; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .showcase-phone-col { position: static; }
-      .phone { transform: rotate(0); }
-    }
+    /* dashboard header */
+    .pp-header { display: flex; align-items: flex-start; justify-content: space-between; padding: 8px 4px 14px; }
+    .pp-greet { font-size: 13px; color: var(--pp-foreground-secondary); margin-bottom: 2px; }
+    .pp-name { font-family: var(--pp-font-display); font-weight: 700; font-size: 22px; letter-spacing: -.5px; }
+    .pp-header-icons { display: flex; gap: 12px; color: var(--pp-foreground-secondary); }
+    .pp-header-icons svg { width: 19px; height: 19px; }
 
-    /* ── Pricing ── */
-    .pricing {
-      background: var(--surface);
-      padding: 80px 40px;
+    /* gradient hero card */
+    .pp-hero-card {
+      border-radius: 22px; padding: 18px 18px 14px; color: #fff; position: relative;
+      background: linear-gradient(135deg, var(--hero-a), var(--hero-b));
+      box-shadow: 0 12px 26px -8px color-mix(in srgb, var(--hero-b) 70%, transparent);
+      margin-bottom: 14px;
     }
-    .pricing-inner {
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-    .pricing-header {
-      text-align: center;
-      margin-bottom: 32px;
-    }
-    .pricing-header .section-label { margin-bottom: 12px; display: block; }
-    .pricing-header { margin-bottom: 48px; }
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      align-items: start;
-    }
-    .tier-card {
-      background: var(--bg);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      padding: 32px;
-    }
-    .tier-card { position: relative; }
-    .tier-badge-trial {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      display: inline-block;
-      padding: 6px 12px;
-      border-radius: var(--radius-pill);
-      background: var(--primary);
-      color: var(--primary-fg);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.3px;
-    }
-    .tier-name {
-      font-family: var(--font-display);
-      font-size: 26px;
-      font-weight: 700;
-      color: var(--fg);
-      margin-bottom: 10px;
-    }
-    .tier-desc {
-      font-size: 14px;
-      color: var(--fg-secondary);
-      margin-bottom: 24px;
-    }
-    .tier-divider {
-      height: 1px;
-      background: var(--border-subtle);
-      margin-bottom: 24px;
-    }
-    .tier-features {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .tier-features li {
-      font-size: 14px;
-      color: var(--fg-secondary);
-    }
-    .tier-features li.highlight { color: var(--fg); }
-    .tier-features li::before {
-      content: '\2713';
-      margin-right: 8px;
-      color: var(--primary);
-      font-weight: 600;
-    }
+    .pp-hero-card .pp-ov { font-size: 9.5px; letter-spacing: 1.6px; font-weight: 600; text-transform: uppercase; opacity: .9; }
+    .pp-hero-top { display: flex; justify-content: space-between; align-items: flex-start; }
+    .pp-hero-num { font-family: var(--pp-font-display); font-weight: 900; font-size: 62px; letter-spacing: -3px; line-height: .92; margin-top: 2px; }
+    .pp-hero-sev { text-align: right; }
+    .pp-hero-sev .lvl { font-family: var(--pp-font-display); font-weight: 700; font-size: 24px; letter-spacing: -.5px; white-space: nowrap; }
+    .pp-hero-sev .sub { font-size: 12px; opacity: .82; }
+    .pp-hero-breakdown { display: flex; gap: 14px; margin-top: 14px; }
+    .pp-hero-breakdown .col .k { font-size: 11px; opacity: .8; }
+    .pp-hero-breakdown .col .v { font-weight: 700; font-size: 13px; }
+    .pp-hero-breakdown .col.muted { opacity: .55; }
+    .pp-hero-foot { display: flex; align-items: center; gap: 5px; margin-top: 12px; font-size: 10.5px; opacity: .8; }
+    .pp-hero-foot svg { width: 11px; height: 11px; }
 
-    .pricing-annotation {
-      max-width: 640px;
-      margin: 40px auto 0;
-      text-align: center;
-      font-family: var(--font-body);
-      font-size: 14px;
-      font-weight: 300;
-      color: var(--fg-muted);
-      line-height: 1.6;
+    /* weather grid */
+    .pp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+    .pp-metric {
+      background: var(--pp-surface); border: 1px solid var(--pp-border-subtle);
+      border-radius: 16px; padding: 13px 14px; box-shadow: var(--pp-shadow-low);
     }
-    .pricing-annotation em { font-style: italic; }
+    .pp-metric .ic { width: 22px; height: 22px; margin-bottom: 14px; }
+    .pp-metric .val { font-family: var(--pp-font-display); font-weight: 800; font-size: 22px; letter-spacing: -.5px; }
+    .pp-metric .lbl { font-size: 11.5px; color: var(--pp-foreground-secondary); margin-top: 1px; }
 
-    /* ── Features margin annotations ── */
-    .features-margin-note {
-      max-width: 720px;
-      margin: 40px auto 0;
-      text-align: center;
+    /* aqi row */
+    .pp-aqi {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--pp-surface); border: 1px solid var(--pp-border-subtle);
+      border-radius: 16px; padding: 12px 14px; box-shadow: var(--pp-shadow-low);
     }
-    .features-annotation {
-      font-family: var(--font-body);
-      font-style: italic;
-      font-weight: 300;
-      font-size: 14px;
-      line-height: 1.6;
-      color: var(--fg-muted);
-      margin-bottom: 8px;
-    }
+    .pp-aqi .aqi-dot { width: 26px; height: 26px; flex: none; }
+    .pp-aqi .aqi-num { font-family: var(--pp-font-display); font-weight: 800; font-size: 18px; }
+    .pp-aqi .aqi-txt { font-size: 12.5px; font-weight: 600; }
+    .pp-aqi .aqi-meta { margin-left: auto; font-size: 11px; color: var(--pp-foreground-muted); display: flex; align-items: center; gap: 6px; }
 
-    /* ── Footer ── */
-    footer {
-      background: var(--surface-secondary);
-      padding: 48px 40px;
+    /* insights screen */
+    .pp-page-title { font-family: var(--pp-font-display); font-weight: 800; font-size: 30px; letter-spacing: -1px; padding: 6px 4px 16px; }
+    .pp-card {
+      background: var(--pp-surface); border: 1px solid var(--pp-border-subtle);
+      border-radius: 20px; padding: 16px; box-shadow: var(--pp-shadow-low); margin-bottom: 12px;
     }
-    .footer-inner {
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-    .footer-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: start;
-      margin-bottom: 32px;
-    }
-    .footer-brand {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .footer-logo {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-    }
-    .footer-logo img { width: 28px; height: 28px; border-radius: 6px; }
-    .footer-logo span {
-      font-family: var(--font-display);
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--fg);
-      letter-spacing: -0.5px;
-    }
-    .footer-tagline { font-size: 14px; color: var(--fg-secondary); }
-    .footer-links { display: flex; gap: 48px; }
-    .footer-col h4 {
-      font-family: var(--font-body);
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--fg);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-    .footer-col a {
-      display: block;
-      font-size: 14px;
-      color: var(--fg-secondary);
-      text-decoration: none;
-      margin-bottom: 8px;
-      transition: color 0.2s;
-    }
-    .footer-col a:hover { color: var(--fg); }
-    .footer-divider {
-      height: 1px;
-      background: var(--border-subtle);
-      margin-bottom: 24px;
-    }
-    .footer-attributions { margin-bottom: 20px; }
-    .footer-attributions-title {
-      font-family: var(--font-display);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--fg-secondary);
-      margin-bottom: 12px;
-    }
-    .footer-attributions-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px 24px;
-      font-size: 13px;
-      color: var(--fg-secondary);
-    }
-    .footer-attr-label { font-weight: 500; color: var(--fg); margin-right: 4px; }
-    .footer-disclaimer {
-      font-family: var(--font-body);
-      font-size: 12px;
-      color: var(--fg-secondary);
-      margin: 0 0 12px;
-      line-height: 1.5;
-    }
-    .footer-disclaimer em { font-style: italic; }
-    .footer-copyright { font-size: 12px; color: var(--fg-secondary); }
+    .pp-card-head { display: flex; align-items: center; gap: 8px; color: var(--pp-primary); font-family: var(--pp-font-display); font-weight: 600; font-size: 16px; }
+    .pp-card-head svg { width: 18px; height: 18px; }
+    .pp-card-lead { font-family: var(--pp-font-display); font-weight: 700; font-size: 18px; letter-spacing: -.3px; line-height: 1.25; margin: 12px 0; }
+    .pp-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+    .pp-chip { display: inline-flex; align-items: center; gap: 6px; background: var(--pp-surface-secondary); border-radius: 100px; padding: 7px 13px; font-size: 12.5px; font-weight: 600; }
+    .pp-chip svg { width: 14px; height: 14px; color: var(--pp-primary); }
+    .pp-hint { display: flex; gap: 8px; align-items: flex-start; background: var(--pp-surface-secondary); border-radius: 14px; padding: 11px 13px; margin-top: 12px; font-size: 12.5px; line-height: 1.4; }
+    .pp-hint svg { width: 15px; height: 15px; color: var(--pp-secondary); flex: none; margin-top: 1px; }
+    .pp-ai-ov { display: flex; align-items: center; gap: 7px; color: var(--pp-foreground-muted); font-size: 10.5px; letter-spacing: 1.6px; font-weight: 600; text-transform: uppercase; }
+    .pp-ai-ov svg { width: 15px; height: 15px; color: var(--pp-secondary); }
+    .pp-ai-body { font-family: var(--pp-font-display); font-weight: 500; font-size: 15.5px; line-height: 1.42; margin-top: 10px; color: var(--pp-foreground); }
 
-    /* ── Responsive ── */
-    @media (max-width: 900px) {
-      .features-grid { grid-template-columns: repeat(2, 1fr); }
-      .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+    /* floating tab bar */
+    .pp-tabbar {
+      position: absolute; bottom: 12px; left: 14px; right: 14px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: color-mix(in srgb, var(--pp-surface) 82%, transparent);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--pp-border-subtle); border-radius: 100px;
+      padding: 7px 10px; box-shadow: var(--pp-shadow-medium); z-index: 4;
+    }
+    .pp-tab { display: flex; flex-direction: column; align-items: center; gap: 3px; flex: 1; color: var(--pp-foreground-muted); font-size: 9.5px; font-weight: 600; padding: 5px 0; }
+    .pp-tab svg { width: 19px; height: 19px; }
+    .pp-tab.active { background: var(--pp-primary); color: #fff; border-radius: 100px; }
+
+    /* fade bottom of phone body */
+    .phone-body::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 70px; background: linear-gradient(transparent, var(--pp-background)); pointer-events: none; }
+
+    /* ---- Trust strip ----------------------------------------------------------*/
+    .trust { padding: 22px 0 8px; }
+    .trust-inner { display: flex; align-items: center; justify-content: center; gap: 10px 18px; flex-wrap: wrap; }
+    .trust-label { font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--pp-foreground-muted); font-weight: 600; }
+    .trust-item { color: var(--pp-foreground-secondary); font-weight: 600; font-size: 15px; }
+    .trust-sep { color: var(--pp-border); font-weight: 600; user-select: none; }
+
+    /* ---- Section heading ------------------------------------------------------*/
+    .sec { padding: 96px 0; }
+    .sec-head { max-width: 660px; margin-bottom: 56px; }
+    .sec-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+    .sec-head .overline { margin-bottom: 14px; }
+    .sec-head h2 { margin: 0 0 16px; }
+
+    /* ---- Feature rows ---------------------------------------------------------*/
+    .feature-row { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .feature-row + .feature-row { margin-top: 110px; }
+    .feature-row.flip .feature-art { order: -1; }
+    .feature-art { display: grid; place-items: center; position: relative; }
+    .feature-art .blob { position: absolute; width: 360px; height: 360px; border-radius: 46% 54% 60% 40% / 50% 46% 54% 50%; z-index: 0; filter: blur(8px); opacity: .5; }
+    .feature-art .phone { z-index: 2; }
+    .feature-copy h3 { font-family: var(--pp-font-display); font-weight: 700; font-size: clamp(26px, 2.6vw, 34px); letter-spacing: -.8px; margin: 0 0 14px; line-height: 1.1; }
+    .feature-copy p { color: var(--pp-foreground-secondary); font-size: 17px; line-height: 1.6; margin: 0 0 22px; max-width: 460px; }
+    .feature-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
+    .feature-list li { display: flex; gap: 12px; align-items: flex-start; }
+    .feature-list .fi-ic { width: 26px; height: 26px; flex: none; border-radius: 8px; display: grid; place-items: center; background: color-mix(in srgb, var(--pp-primary) 12%, transparent); color: var(--pp-primary); margin-top: 1px; }
+    .feature-list .fi-ic svg { width: 16px; height: 16px; }
+    .feature-list b { font-weight: 600; }
+    .feature-list span { color: var(--pp-foreground-secondary); }
+
+    /* ---- Feature card grid ----------------------------------------------------*/
+    .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .fcard {
+      background: var(--pp-surface); border: 1px solid var(--pp-border-subtle);
+      border-radius: var(--pp-radius-lg); padding: 26px 24px;
+      box-shadow: var(--pp-shadow-low); transition: transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s;
+    }
+    .fcard:hover { transform: translateY(-4px); box-shadow: var(--pp-shadow-high); }
+    .fcard .fc-ic { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; margin-bottom: 18px; background: color-mix(in srgb, var(--pp-primary) 10%, transparent); color: var(--pp-primary); }
+    .fcard .fc-ic svg { width: 24px; height: 24px; }
+    .fcard h4 { font-family: var(--pp-font-display); font-weight: 600; font-size: 19px; letter-spacing: -.3px; margin: 0 0 8px; }
+    .fcard p { font-size: 14.5px; color: var(--pp-foreground-secondary); line-height: 1.5; margin: 0; }
+
+    /* ---- Privacy (dark) section ----------------------------------------------*/
+    .privacy {
+      background: #141A16; color: #E8EDE9; padding: 110px 0; overflow: hidden;
+      position: relative;
+    }
+    .privacy .overline { color: var(--pp-sev-low); }
+    .privacy h2 { color: #fff; }
+    .privacy .lede { color: #9CA89E; }
+    .privacy-leaf { position: absolute; right: -120px; bottom: -120px; width: 560px; color: #5FAD82; opacity: .07; z-index: 0; }
+    .privacy .wrap { position: relative; z-index: 1; }
+    .privacy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 52px; }
+    .pcard {
+      background: #1E2620; border: 1.5px solid #2E3830; border-radius: var(--pp-radius-lg);
+      padding: 28px 26px; box-shadow: 0 0 12px rgba(35,45,37,.5);
+    }
+    .pcard .pc-ic { width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; margin-bottom: 18px; background: rgba(95,173,130,.14); color: #5FAD82; }
+    .pcard .pc-ic svg { width: 24px; height: 24px; }
+    .pcard h4 { font-family: var(--pp-font-display); font-weight: 600; font-size: 19px; letter-spacing: -.3px; margin: 0 0 9px; color: #fff; }
+    .pcard p { font-size: 14.5px; color: #9CA89E; line-height: 1.55; margin: 0; }
+
+    /* ---- Pricing --------------------------------------------------------------*/
+    .billing-toggle { display: inline-flex; background: var(--pp-surface-secondary); border-radius: 100px; padding: 5px; margin: 0 auto 14px; border: 1px solid var(--pp-border-subtle); }
+    .billing-toggle button {
+      border: none; background: transparent; cursor: pointer; font-family: var(--pp-font-body);
+      font-weight: 600; font-size: 14px; color: var(--pp-foreground-secondary);
+      padding: 9px 22px; border-radius: 100px; transition: all .25s; position: relative;
+    }
+    .billing-toggle button.active { background: var(--pp-surface); color: var(--pp-foreground); box-shadow: var(--pp-shadow-low); }
+    .save-badge { font-size: 11px; font-weight: 700; color: var(--pp-primary); background: color-mix(in srgb, var(--pp-primary) 12%, transparent); padding: 2px 8px; border-radius: 100px; margin-left: 6px; }
+    .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: stretch; margin-top: 44px; }
+    .tier {
+      background: var(--pp-surface); border: 1px solid var(--pp-border); border-radius: var(--pp-radius-lg);
+      padding: 30px 28px; box-shadow: var(--pp-shadow-low); display: flex; flex-direction: column;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .tier:hover { transform: translateY(-4px); box-shadow: var(--pp-shadow-medium); }
+    .tier.featured { border: 2px solid var(--pp-primary); box-shadow: 0 14px 32px -10px rgba(58,125,92,.3); position: relative; }
+    .tier-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+    .tier-name { font-family: var(--pp-font-display); font-weight: 700; font-size: 22px; letter-spacing: -.4px; }
+    .best-value { font-size: 10.5px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: #fff; background: var(--pp-primary); padding: 5px 11px; border-radius: 100px; }
+    .tier-sub { font-size: 13.5px; color: var(--pp-foreground-secondary); margin-bottom: 18px; min-height: 20px; }
+    .tier-price { display: flex; align-items: baseline; gap: 6px; margin-bottom: 22px; }
+    .tier-price .amt { font-family: var(--pp-font-display); font-weight: 800; font-size: 46px; letter-spacing: -2px; }
+    .tier.featured .tier-price .amt { color: var(--pp-primary); }
+    .tier-price .per { font-size: 15px; color: var(--pp-foreground-muted); font-weight: 500; }
+    .tier .btn { width: 100%; margin-bottom: 24px; }
+    .tier-feats { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 13px; }
+    .tier-feats li { display: flex; gap: 11px; align-items: flex-start; font-size: 14.5px; color: var(--pp-foreground); }
+    .tier-feats svg { width: 19px; height: 19px; color: var(--pp-success); flex: none; margin-top: 1px; }
+    .tier-feats li.muted { color: var(--pp-foreground-muted); }
+    .tier-feats li.muted svg { color: var(--pp-foreground-muted); }
+    .price-note { text-align: center; margin-top: 28px; font-size: 13px; color: var(--pp-foreground-muted); }
+
+    /* ---- FAQ ------------------------------------------------------------------*/
+    .faq-list { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+    .faq-item { background: var(--pp-surface); border: 1px solid var(--pp-border-subtle); border-radius: var(--pp-radius-md); overflow: hidden; box-shadow: var(--pp-shadow-low); }
+    .faq-q { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; cursor: pointer; font-family: var(--pp-font-display); font-weight: 600; font-size: 18px; letter-spacing: -.2px; list-style: none; }
+    .faq-q::-webkit-details-marker { display: none; }
+    .faq-q .chev { transition: transform .3s; color: var(--pp-foreground-muted); flex: none; }
+    .faq-q .chev svg { width: 20px; height: 20px; display: block; }
+    .faq-item[open] .faq-q .chev { transform: rotate(180deg); }
+    .faq-a { padding: 0 24px 22px; color: var(--pp-foreground-secondary); font-size: 15.5px; line-height: 1.6; max-width: 640px; }
+
+    /* ---- CTA banner -----------------------------------------------------------*/
+    .cta-banner { padding: 0 0 96px; }
+    .cta-box {
+      background: linear-gradient(135deg, var(--brand-a), var(--brand-b));
+      border-radius: 32px; padding: 64px 48px; text-align: center; color: #fff; position: relative; overflow: hidden;
+      box-shadow: 0 24px 50px -16px color-mix(in srgb, var(--pp-primary) 60%, transparent);
+    }
+    .cta-box .leaf-wm { position: absolute; left: -60px; top: -60px; width: 320px; opacity: .12; color: #fff; }
+    .cta-box .leaf-wm.r { left: auto; right: -60px; top: auto; bottom: -80px; transform: rotate(180deg); }
+    .cta-box h2 { color: #fff; margin: 0 0 16px; position: relative; }
+    .cta-box p { color: rgba(255,255,255,.85); font-size: 18px; margin: 0 auto 30px; max-width: 480px; position: relative; }
+    .cta-box .appstore { background: #fff; color: #141A16; position: relative; }
+
+    /* ---- Footer ---------------------------------------------------------------*/
+    .footer { background: var(--pp-surface-secondary); border-top: 1px solid var(--pp-border-subtle); padding: 64px 0 36px; }
+    .footer-top { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+    .footer-brand .brand { margin-bottom: 16px; }
+    .footer-brand p { color: var(--pp-foreground-secondary); font-size: 14.5px; line-height: 1.6; max-width: 280px; margin: 0 0 20px; }
+    .footer-col h5 { font-family: var(--pp-font-body); font-weight: 600; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: var(--pp-foreground-muted); margin: 0 0 16px; }
+    .footer-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 11px; }
+    .footer-col a { font-size: 14.5px; color: var(--pp-foreground-secondary); transition: color .2s; }
+    .footer-col a:hover { color: var(--pp-primary); }
+    .footer-bottom { border-top: 1px solid var(--pp-border); padding-top: 24px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
+    .footer-bottom .disclaimer { font-size: 12.5px; color: var(--pp-foreground-muted); max-width: 720px; line-height: 1.55; }
+    .footer-bottom .copy { font-size: 12.5px; color: var(--pp-foreground-muted); white-space: nowrap; }
+
+    /* ---- Scroll reveal --------------------------------------------------------*/
+    /* Content visible by default; hiding enabled only when <html> has .anim class */
+    .anim .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+    .anim .reveal.in { opacity: 1; transform: none; }
+    .anim .reveal.d1 { transition-delay: .08s; }
+    .anim .reveal.d2 { transition-delay: .16s; }
+    .anim .reveal.d3 { transition-delay: .24s; }
+    @media (prefers-reduced-motion: reduce) { .anim .reveal { opacity: 1 !important; transform: none !important; transition: none; } html { scroll-behavior: auto; } }
+
+    /* ---- Responsive -----------------------------------------------------------*/
+    @media (max-width: 940px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 24px; }
+      .hero-stage { min-height: 540px; }
+      .hero-copy { max-width: none; }
+      .feature-row { grid-template-columns: 1fr; gap: 40px; }
+      .feature-row.flip .feature-art { order: 0; }
+      .card-grid { grid-template-columns: repeat(2, 1fr); }
+      .privacy-grid, .price-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
       .nav-links { display: none; }
-      .nav-hamburger { display: block; }
-      .nav-cta { display: none; }
-      .mobile-menu { display: flex; }
-      .footer-links { gap: 32px; }
     }
-    @media (max-width: 600px) {
-      .features-grid { grid-template-columns: 1fr; }
-      nav { padding: 0 20px; }
-      .hero { padding: 60px 20px 40px; }
-      .features, .showcase, .pricing { padding: 60px 20px; }
-      footer { padding: 40px 20px; }
-      .mobile-menu { padding-left: 20px; padding-right: 20px; }
-      .mobile-menu.open { padding: 16px 20px 24px; }
-      .hero h1 { letter-spacing: -1px; }
-      .footer-top { flex-direction: column; gap: 32px; }
-      .footer-links { flex-wrap: wrap; gap: 24px; }
-    }
-    /* Touch devices: disable hover stickiness */
-    @media (hover: none) {
-      .feature-card:hover {
-        transform: none;
-        box-shadow: none;
-      }
+    @media (max-width: 560px) {
+      .wrap { padding: 0 20px; }
+      .card-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; }
+      .hero-stage .phone.secondary { display: none; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
     }
 
-    /* ── Launch-state gating (data-launch="pre"|"live") ── */
+    /* ---- Launch gating --------------------------------------------------------*/
     [data-show-when] { display: none; }
-    html[data-launch="pre"] [data-show-when="pre"] { display: inherit; }
+    html[data-launch="pre"]  [data-show-when="pre"]  { display: inherit; }
     html[data-launch="live"] [data-show-when="live"] { display: inherit; }
-
-    /* Hero waitlist form (pre-launch) */
-    .hero-waitlist { gap: 8px; align-items: stretch; max-width: 420px; width: 100%; }
-    html[data-launch="pre"] .hero-waitlist[data-show-when="pre"] { display: flex; }
-    .hero-waitlist input[type="email"] {
-      flex: 1;
-      min-width: 0;
-      padding: 12px 16px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      font-family: var(--font-body);
-      font-size: 1rem;
-      background: var(--surface);
-      color: var(--fg);
-    }
-    .hero-waitlist input[type="email"]:focus {
-      outline: 2px solid var(--primary);
-      outline-offset: 2px;
-    }
-    .hero-waitlist .btn-primary { flex-shrink: 0; }
-
-    /* App Store badge (live) */
-    html[data-launch="live"] .hero-appstore[data-show-when="live"] { display: inline-block; }
-    .hero-appstore img { display: block; height: 56px; width: auto; }
-
-    /* Accessibility utility — only declare if not already defined elsewhere */
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-
-    /* ── Pricing tier D-24 parity ──
-       Gold Pro reuses iOS PPColors.severityModerate→severityModerateDark.
-       Silver Basic uses iOS PPColors.tierSilver→tierSilverDark.
-       Free retains the base .tier-card treatment. */
-    :root {
-      --tier-pro-bg-start: #D4A843;
-      --tier-pro-bg-end: #B8922F;
-      --tier-pro-border: #B8922F;
-      --tier-pro-text: #1A2B1F;
-      --tier-basic-bg-start: #C5C9CC;
-      --tier-basic-bg-end: #A5A9AC;
-      --tier-basic-border: #8A9097;
-      --tier-basic-text: #1A2B1F;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --tier-pro-bg-start: #F4BF3E;
-        --tier-pro-bg-end: #C99330;
-        --tier-pro-border: #F4BF3E;
-        --tier-pro-text: #1A2B1F;
-        --tier-basic-bg-start: #8A9097;
-        --tier-basic-bg-end: #6A7078;
-        --tier-basic-border: #8A9097;
-        --tier-basic-text: #E8EDE9;
-      }
-    }
-    .tier-card.tier-pro {
-      background: linear-gradient(135deg, var(--tier-pro-bg-start), var(--tier-pro-bg-end));
-      border-color: var(--tier-pro-border);
-      color: var(--tier-pro-text);
-    }
-    .tier-card.tier-pro .tier-name,
-    .tier-card.tier-pro .tier-desc,
-    .tier-card.tier-pro .tier-features li { color: var(--tier-pro-text); }
-    .tier-card.tier-basic {
-      background: linear-gradient(135deg, var(--tier-basic-bg-start), var(--tier-basic-bg-end));
-      border-color: var(--tier-basic-border);
-      color: var(--tier-basic-text);
-    }
-    .tier-card.tier-basic .tier-name,
-    .tier-card.tier-basic .tier-desc,
-    .tier-card.tier-basic .tier-features li { color: var(--tier-basic-text); }
-    /* On tinted cards: divider, checkmark, and trial badge need contrast-aware overrides. */
-    .tier-card.tier-pro .tier-divider,
-    .tier-card.tier-basic .tier-divider { background: rgba(0, 0, 0, 0.18); }
-    .tier-card.tier-pro .tier-features li::before,
-    .tier-card.tier-basic .tier-features li::before { color: currentColor; }
-    .tier-card.tier-pro .tier-badge-trial,
-    .tier-card.tier-basic .tier-badge-trial {
-      background: rgba(255, 255, 255, 0.92);
-      color: #1A2B1F;
-    }
-
-    /* ── Widgets section ── */
-    .widgets {
-      padding: 80px 40px;
-      background: var(--surface-secondary);
-    }
-    .widgets-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .widgets-header {
-      text-align: center;
-      margin-bottom: 48px;
-    }
-    .widgets-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 2fr;
-      gap: 24px;
-      align-items: stretch;
-      max-width: 960px;
-      margin: 0 auto;
-    }
-    .widget-card {
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .widget-card img {
-      width: 100%;
-      height: auto;
-      border-radius: 22px;
-      box-shadow: 0 12px 32px rgba(26, 43, 31, 0.12);
-    }
-    .widget-card figcaption {
-      font-family: var(--font-body);
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      color: var(--fg-secondary);
-      text-align: center;
-    }
-    @media (max-width: 720px) {
-      .widgets-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-      .widget-medium {
-        grid-column: 1 / span 2;
-      }
-    }
-
-    /* ── Footer founder note (above attributions) ── */
-    .footer-founder {
-      margin: 0 0 24px 0;
-      padding: 0 0 20px 0;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-    .footer-founder p {
-      font-family: var(--font-body);
-      font-style: italic;
-      font-size: 14px;
-      line-height: 1.5;
-      color: var(--fg-secondary);
-      margin: 0 0 6px 0;
-      max-width: 540px;
-    }
-    .footer-founder cite {
-      font-family: var(--font-body);
-      font-style: normal;
-      font-size: 12px;
-      letter-spacing: 0.04em;
-      color: var(--fg-secondary);
-    }
+    html[data-launch="pre"]  .btn[data-show-when="pre"]  { display: inline-flex; }
+    html[data-launch="live"] .btn[data-show-when="live"] { display: inline-flex; }
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
   </style>
 </head>
 <body>
 
-  <!-- Nav -->
-  <div class="nav-bar">
-    <nav class="animate">
-      <a href="/" class="nav-logo">
-        <img src="img/icon.png" alt="PollenPath" width="32" height="32">
-        <span>PollenPath</span>
-      </a>
-      <ul class="nav-links">
-        <li><a href="#features">Features</a></li>
-        <li><a href="#pricing">Plans</a></li>
-        <li><a href="privacy-policy.html">Privacy</a></li>
-        <li><a href="terms-of-service.html">Terms</a></li>
-      </ul>
-      <button class="nav-hamburger" aria-label="Open menu">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
-      <a class="nav-cta" data-show-when="pre" href="#hero-email">Get Notified</a>
-      <a class="nav-cta" data-show-when="live" href="https://apps.apple.com/app/id6760616969">App Store ↗</a>
-    </nav>
-    <div class="mobile-menu" id="mobileMenu">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="leaf" viewBox="0 0 24 24">
+    <path d="M4.5 19.5C4.5 11 10.5 4.5 19.5 4.5C19.5 13 13.5 19.5 4.5 19.5Z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/>
+    <path d="M5 19C8.2 14 12.2 10 17.5 7" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+  </symbol>
+</svg>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top">
+      <img src="img/icon.png" alt="" width="34" height="34" style="border-radius:10px">
+      PollenPath
+    </a>
+    <nav class="nav-links">
       <a href="#features">Features</a>
+      <a href="#privacy">Privacy</a>
       <a href="#pricing">Pricing</a>
-      <a href="privacy-policy.html">Privacy</a>
-      <a href="terms-of-service.html">Terms</a>
-      <a data-show-when="pre" href="#hero-email">Get Notified</a>
-      <a data-show-when="live" href="https://apps.apple.com/app/id6760616969">App Store ↗</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M4.5 4.5l1.5 1.5M18 18l1.5 1.5M2.5 12h2M19.5 12h2M4.5 19.5l1.5-1.5M18 6l1.5-1.5"/></svg>
+      </button>
+      <a class="btn btn-primary" data-show-when="pre" href="#download">Get Notified</a>
+      <a class="btn btn-primary" data-show-when="live" href="https://apps.apple.com/app/id6760616969">Get the app</a>
     </div>
   </div>
+</header>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-badge animate animate-delay-1" data-show-when="pre">Coming soon to the App Store</div>
-      <div class="hero-badge animate animate-delay-1" data-show-when="live">Available on the App Store</div>
-      <h1 class="animate animate-delay-2">An allergy tracker that&rsquo;s actually honest.</h1>
-      <p class="hero-sub animate animate-delay-3">No accounts. No ads. No data sold. Just your symptoms, Apple Health, and the patterns connecting them. Always free.</p>
-      <div class="hero-ctas animate animate-delay-4">
-        <!-- Pre-launch: waitlist -->
-        <form class="hero-waitlist" data-show-when="pre" action="#" novalidate>
-          <label class="sr-only" for="hero-email">Email address</label>
-          <input type="email" id="hero-email" name="email" placeholder="you@example.com" required>
-          <button type="submit" class="btn-primary">Get Notified</button>
-        </form>
-        <!-- Live: App Store badge (asset added when AS approval lands) -->
-        <a class="hero-appstore" data-show-when="live" href="https://apps.apple.com/app/id6760616969" aria-label="Download on the App Store">
-          <img src="/img/appstore-badge.svg" alt="Download on the App Store" width="180" height="60" loading="lazy">
-        </a>
-        <a href="#pricing" class="btn-secondary">See plans →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Showcase — A closer look -->
-  <section class="showcase" id="showcase">
-    <div class="showcase-inner">
-      <div class="showcase-header">
-        <span class="showcase-rule" aria-hidden="true"></span>
-        <span class="section-label">A Closer Look</span>
-        <h2 class="section-title">The app, at a glance.</h2>
-      </div>
-      <div class="showcase-body">
-        <div class="showcase-phone-col">
-          <div class="phone" role="img" aria-label="PollenPath app screens">
-            <img class="phone-screen active" data-screen="home" src="/img/screens/home.webp" alt="Home — pollen index, weather, air quality, and symptoms" width="786" height="2840">
-            <img class="phone-screen" data-screen="logger" src="/img/screens/logger.webp" alt="Symptom Logger — quick entry for how you feel today" width="786" height="2280" loading="lazy">
-            <img class="phone-screen" data-screen="insights" src="/img/screens/insights.webp" alt="Insights — Today for You, correlations, and patterns" width="786" height="2680" loading="lazy">
-            <img class="phone-screen" data-screen="forecast" src="/img/screens/forecast.webp" alt="Forecast — tomorrow's pollen outlook" width="786" height="2280" loading="lazy">
-            <div class="phone-island" aria-hidden="true"></div>
-          </div>
-        </div>
-        <div class="showcase-copy-col">
-          <div class="showcase-block active" data-screen="home">
-            <div class="sb-num">01</div>
-            <h3 class="sb-title">Home</h3>
-            <p class="sb-desc">Know what's in the air &mdash; live pollen, air quality, and weather, all in one place.</p>
-          </div>
-          <div class="showcase-block" data-screen="logger">
-            <div class="sb-num">02</div>
-            <h3 class="sb-title">Symptom Logger</h3>
-            <p class="sb-desc">Tap to record how you feel. Every entry saves to Apple Health automatically.</p>
-          </div>
-          <div class="showcase-block" data-screen="insights">
-            <div class="sb-num">03</div>
-            <h3 class="sb-title">Insights</h3>
-            <p class="sb-desc">See the patterns connecting your symptoms to pollen, air quality, and weather.</p>
-          </div>
-          <div class="showcase-block" data-screen="forecast">
-            <div class="sb-num">04</div>
-            <h3 class="sb-title">Forecast</h3>
-            <p class="sb-desc">Tomorrow's outlook on one screen. Pro adds a 5-day view.</p>
-          </div>
-        </div>
-      </div>
-      <p class="showcase-scroll-hint"><em>&darr;  Scroll to explore each screen</em></p>
-    </div>
-  </section>
-
-  <!-- Features -->
-  <section class="features" id="features">
-    <div class="features-inner">
-      <div class="features-header">
-        <span class="section-label">Part I — Always Free</span>
-        <h2 class="section-title">Your allergy log, as it should be.</h2>
-      </div>
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon green">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg>
-          </div>
-          <h3>Log Symptoms in Seconds</h3>
-          <p>Tap to record cough, congestion, runny nose, and dozens more. Every entry saves to Apple Health &mdash; yours to keep, search, and share with your doctor.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon orange">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M7 14l4-4 3 3 5-5"/></svg>
-          </div>
-          <h3>Patterns, Not Guesses</h3>
-          <p>See your weekly trends, most frequent symptoms, and which weather conditions tend to make you feel worse. All from data you already logged.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon gold">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-          </div>
-          <h3>Tomorrow, Predicted</h3>
-          <p>After two weeks of logging, PollenPath predicts tomorrow's symptom severity from the weather forecast &mdash; entirely on your device.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon dark">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
-          </div>
-          <h3>Yours Alone</h3>
-          <p>Symptoms live in Apple Health on your device. Location is city-level only. No accounts, no analytics, no ads, no data sold &mdash; ever.</p>
-        </div>
-      </div>
-      <div class="features-margin-note">
-        <p class="features-annotation">Everything above is free. No account, no trial, no credit card. Part II covers what Pro layers on top.</p>
-        <p class="features-annotation">Pollen and air quality coverage varies by region. PollenPath tells you what's available for your area during onboarding.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Widgets -->
-  <section class="widgets" id="widgets">
-    <div class="widgets-inner">
-      <div class="widgets-header">
-        <span class="section-label">Always at a glance</span>
-        <h2 class="section-title">Your phone, before you open it.</h2>
-      </div>
-      <div class="widgets-grid">
-        <figure class="widget-card widget-small">
-          <img src="/img/widgets/pollen-small.webp" alt="Small home-screen widget — pollen level with risk pill" width="340" height="340" loading="lazy">
-          <figcaption>Pollen · Small</figcaption>
-        </figure>
-        <figure class="widget-card widget-small">
-          <img src="/img/widgets/aq-small.webp" alt="Small home-screen widget — air quality level" width="340" height="340" loading="lazy">
-          <figcaption>Air Quality · Small</figcaption>
-        </figure>
-        <figure class="widget-card widget-medium">
-          <img src="/img/widgets/pollen-medium.webp" alt="Medium home-screen widget — pollen with tree, grass, and weed breakdown" width="728" height="340" loading="lazy">
-          <figcaption>Pollen · Medium</figcaption>
-        </figure>
-      </div>
-    </div>
-  </section>
-
-  <!-- Pricing -->
-  <section class="pricing" id="pricing">
-    <div class="pricing-inner">
-      <div class="pricing-header">
-        <span class="section-label">Part II — Plans</span>
-        <h2 class="section-title">Always free. Try Pro free for 7 days.</h2>
-      </div>
-      <div class="pricing-grid">
-        <!-- Free -->
-        <div class="tier-card tier-free">
-          <div class="tier-name">Free</div>
-          <p class="tier-desc">The core app. No account, no credit card, no trial.</p>
-          <div class="tier-divider"></div>
-          <ul class="tier-features">
-            <li>Symptom logging + Apple Health sync</li>
-            <li>Weekly trends + weather correlations</li>
-            <li>On-device predictions after 14 days</li>
-            <li>No ads, no tracking, no data sold</li>
-          </ul>
-        </div>
-        <!-- Basic -->
-        <div class="tier-card tier-basic">
-          <span class="tier-badge tier-badge-trial">7-Day Free Trial</span>
-          <div class="tier-name">Basic</div>
-          <p class="tier-desc">Live pollen and air quality for your area.</p>
-          <div class="tier-divider"></div>
-          <ul class="tier-features">
-            <li>Everything in Free</li>
-            <li class="highlight">Live pollen index</li>
-            <li class="highlight">Live air quality</li>
-            <li class="highlight">Pollen + AQ alerts</li>
-          </ul>
-        </div>
-        <!-- Pro -->
-        <div class="tier-card tier-pro">
-          <span class="tier-badge tier-badge-trial">7-Day Free Trial</span>
-          <div class="tier-name">Pro</div>
-          <p class="tier-desc">Species-level detail and the 5-day forecast.</p>
-          <div class="tier-divider"></div>
-          <ul class="tier-features">
-            <li>Everything in Basic</li>
-            <li class="highlight">5-day pollen forecast</li>
-            <li class="highlight">Species-level breakdown</li>
-            <li class="highlight">Richer on-device predictions</li>
-            <li class="highlight">More frequent refresh</li>
-          </ul>
-        </div>
-      </div>
-      <p class="pricing-annotation"><em>Prices and trial terms shown on the App Store. Pro subscriptions support the live pollen and air quality data we deliver.</em></p>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-top">
-        <div class="footer-brand">
-          <a href="/" class="footer-logo">
-            <img src="img/icon.png" alt="PollenPath" width="28" height="28">
-            <span>PollenPath</span>
-          </a>
-          <p class="footer-tagline">The honest allergy tracker.</p>
-        </div>
-        <div class="footer-links">
-          <div class="footer-col">
-            <h4>Legal</h4>
-            <a href="privacy-policy.html">Privacy Policy</a>
-            <a href="terms-of-service.html">Terms of Service</a>
-          </div>
-          <div class="footer-col">
-            <h4>Connect</h4>
-            <a href="press.html">Press</a>
-            <a href="changelog.html">Changelog</a>
-            <a href="https://instagram.com/pollenpath.app" target="_blank" rel="noopener">Instagram</a>
-            <a href="mailto:support@pollenpath.app">support@pollenpath.app</a>
-          </div>
-        </div>
-      </div>
-      <div class="footer-divider"></div>
-      <blockquote class="footer-founder">
-        <p>&ldquo;I wanted an allergy tracker I could trust with my own data. So I built one.&rdquo;</p>
-        <cite>&mdash; Miguel, founder</cite>
-      </blockquote>
-      <div class="footer-attributions">
-        <h4 class="footer-attributions-title">Data &amp; Attributions</h4>
-        <ul class="footer-attributions-list">
-          <li><span class="footer-attr-label">Pollen &amp; Air Quality:</span> Google Maps Platform</li>
-          <li><span class="footer-attr-label">Weather:</span> Apple WeatherKit</li>
-          <li><span class="footer-attr-label">Health data:</span> Apple HealthKit &mdash; stored on your device</li>
-          <li><span class="footer-attr-label">Maps &amp; Location:</span> Apple MapKit &mdash; city-level only</li>
-        </ul>
-      </div>
-      <p class="footer-disclaimer"><em>PollenPath is a wellness and tracking tool. It does not provide medical advice, diagnosis, or treatment.</em></p>
-      <p class="footer-copyright">&copy; 2026 PollenPath. All rights reserved.</p>
-    </div>
-  </footer>
-
-  <script>
-    // Scroll-triggered fade-up for feature + tier cards
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.animationPlayState = 'running';
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.feature-card, .tier-card').forEach((el, i) => {
-      el.style.opacity = '0';
-      el.style.animation = `fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${i * 0.08}s forwards`;
-      el.style.animationPlayState = 'paused';
-      observer.observe(el);
-    });
-
-    // Showcase: highlight the active copy block and crossfade the phone screen as
-    // each block scrolls through the viewport center.
-    const showcaseBlocks = document.querySelectorAll('.showcase-block');
-    const phoneScreens = document.querySelectorAll('.phone-screen');
-    if (showcaseBlocks.length) {
-      const activateScreen = (key) => {
-        phoneScreens.forEach(s => s.classList.toggle('active', s.dataset.screen === key));
-      };
-      const scObs = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            showcaseBlocks.forEach(b => b.classList.remove('active'));
-            entry.target.classList.add('active');
-            const key = entry.target.dataset.screen;
-            if (key) activateScreen(key);
-          }
-        });
-      }, { rootMargin: '-40% 0px -40% 0px', threshold: 0 });
-      showcaseBlocks.forEach(b => scObs.observe(b));
-    }
-
-    // Mobile menu toggle
-    const hamburger = document.querySelector('.nav-hamburger');
-    const mobileMenu = document.getElementById('mobileMenu');
-    if (hamburger && mobileMenu) {
-        hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
-        mobileMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => mobileMenu.classList.remove('open'));
-        });
-    }
-
-    // Launch-state waitlist wiring — pre-launch only.
-    // Backend (Cloudflare Worker → KV by default) is wired separately; see CLAUDE.md "Launch-day flip".
-    if (document.documentElement.dataset.launch === 'pre') {
-      const waitlistForm = document.querySelector('.hero-waitlist');
-      if (waitlistForm) {
-        waitlistForm.addEventListener('submit', (e) => {
-          e.preventDefault();
-          const email = waitlistForm.querySelector('input[type="email"]').value.trim();
-          if (!email) return;
-          // TODO(W-18): POST to email-collection endpoint when backend lands.
-          const btn = waitlistForm.querySelector('button');
-          const input = waitlistForm.querySelector('input');
-          btn.textContent = 'Thanks!';
-          btn.disabled = true;
-          input.disabled = true;
-        });
-      }
-    }
-  </script>
+<main id="top">
+  <!-- sections added in Tasks 2–5 -->
+</main>
 
 </body>
 </html>
