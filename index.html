@@ -588,6 +588,9 @@
     .footer-bottom .disclaimer { font-size: 12.5px; color: var(--pp-foreground-muted); max-width: 720px; line-height: 1.55; }
     .footer-bottom .copy { font-size: 12.5px; color: var(--pp-foreground-muted); white-space: nowrap; }
 
+    /* ---- Phone screenshot fill -----------------------------------------------*/
+    .phone-screen > img.app-screen { width:100%; height:100%; object-fit:cover; object-position:top center; display:block; }
+
     /* ---- Scroll reveal --------------------------------------------------------*/
     /* Content visible by default; hiding enabled only when <html> has .anim class */
     .anim .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
@@ -658,7 +661,50 @@
 </header>
 
 <main id="top">
-  <!-- sections added in Tasks 2–5 -->
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy reveal">
+      <div class="overline eyebrow-leaf"><svg width="16" height="16" style="color:var(--pp-primary)"><use href="#leaf"/></svg> Allergy Tracker · iOS</div>
+      <h1 class="display">Connect how you <span class="em">feel</span> to what's in the air.</h1>
+      <p class="lede">PollenPath pulls real-time pollen, air quality, and weather, lets you log symptoms in seconds, and finds your personal triggers — all on your device. No guessing, no tracking, no ads.</p>
+      <div class="hero-cta">
+        <form class="hero-waitlist" data-show-when="pre" action="#" novalidate style="display:flex;gap:8px;align-items:stretch;max-width:420px;width:100%">
+          <label class="sr-only" for="hero-email">Email address</label>
+          <input type="email" id="hero-email" name="email" placeholder="you@example.com" required style="flex:1;min-width:0;padding:12px 16px;border:1px solid var(--pp-border);border-radius:12px;font-family:var(--pp-font-body);font-size:15px;background:var(--pp-surface);color:var(--pp-foreground)">
+          <button type="submit" class="btn btn-primary" style="flex-shrink:0">Get Notified</button>
+        </form>
+        <a class="appstore" data-show-when="live" href="https://apps.apple.com/app/id6760616969" aria-label="Download on the App Store">
+          <svg viewBox="0 0 24 24" fill="#fff"><path d="M17.05 12.54c-.02-2.05 1.68-3.04 1.76-3.09-.96-1.4-2.45-1.6-2.98-1.62-1.27-.13-2.48.75-3.12.75-.64 0-1.64-.73-2.7-.71-1.39.02-2.67.81-3.38 2.05-1.44 2.5-.37 6.2 1.04 8.23.69.99 1.51 2.1 2.58 2.06 1.04-.04 1.43-.67 2.69-.67 1.25 0 1.61.67 2.7.65 1.12-.02 1.82-1.01 2.5-2.01.79-1.15 1.11-2.27 1.13-2.32-.02-.01-2.17-.83-2.19-3.3zM15 6.27c.57-.69.95-1.65.85-2.6-.82.03-1.81.54-2.39 1.23-.52.61-.98 1.58-.86 2.51.91.07 1.84-.46 2.4-1.14z"/></svg>
+          <span class="as-txt"><span class="as-small">Download on the</span><span class="as-big">App Store</span></span>
+        </a>
+        <a class="btn btn-ghost" href="#features">See how it works</a>
+      </div>
+      <div class="hero-meta">
+        <span>Privacy-first</span><span class="dot"></span>
+        <span>Free to start</span><span class="dot"></span>
+        <span>Apple Health</span>
+      </div>
+    </div>
+    <div class="hero-stage reveal d1">
+      <div class="hero-glow"></div>
+      <svg class="hero-leaf-bg"><use href="#leaf"/></svg>
+      <div class="phone secondary"><div class="phone-screen"><div class="phone-notch"></div><img class="app-screen" src="img/screens/insights.webp" alt="PollenPath Insights screen" loading="lazy" width="786" height="2680"></div></div>
+      <div class="phone"><div class="phone-screen"><div class="phone-notch"></div><img class="app-screen" src="img/screens/home.webp" alt="PollenPath Home screen — pollen index, weather, air quality" width="786" height="2840"></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="trust">
+  <div class="wrap trust-inner reveal">
+    <span class="trust-label">Environmental data from</span>
+    <span class="trust-item">Google Pollen API</span><span class="trust-sep">·</span>
+    <span class="trust-item">Google Air Quality API</span><span class="trust-sep">·</span>
+    <span class="trust-item">Apple WeatherKit</span><span class="trust-sep">·</span>
+    <span class="trust-item">On-device Core ML</span>
+  </div>
+</section>
+
 </main>
 
 </body>
