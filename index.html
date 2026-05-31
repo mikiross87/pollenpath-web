@@ -908,5 +908,135 @@
 
 </main>
 
+<!-- ============================ CTA BANNER ============================ -->
+<section class="cta-banner" id="download">
+  <div class="wrap reveal">
+    <div class="cta-box">
+      <svg class="leaf-wm"><use href="#leaf"/></svg>
+      <svg class="leaf-wm r"><use href="#leaf"/></svg>
+      <h2 class="display">Breathe a little easier.</h2>
+      <p>Download PollenPath and connect how you feel to what's in the air — free to start, on your iPhone.</p>
+      <form class="hero-waitlist" data-show-when="pre" action="#" novalidate style="display:flex;gap:8px;justify-content:center;max-width:420px;margin:0 auto">
+        <label class="sr-only" for="cta-email">Email address</label>
+        <input type="email" id="cta-email" name="email" placeholder="you@example.com" required style="flex:1;min-width:0;padding:12px 16px;border:none;border-radius:12px;font-family:var(--pp-font-body);font-size:15px;background:#fff;color:#141A16">
+        <button type="submit" class="btn" style="background:#fff;color:#141A16;flex-shrink:0">Get Notified</button>
+      </form>
+      <a class="appstore" data-show-when="live" href="https://apps.apple.com/app/id6760616969">
+        <svg viewBox="0 0 24 24"><path d="M17.05 12.54c-.02-2.05 1.68-3.04 1.76-3.09-.96-1.4-2.45-1.6-2.98-1.62-1.27-.13-2.48.75-3.12.75-.64 0-1.64-.73-2.7-.71-1.39.02-2.67.81-3.38 2.05-1.44 2.5-.37 6.2 1.04 8.23.69.99 1.51 2.1 2.58 2.06 1.04-.04 1.43-.67 2.69-.67 1.25 0 1.61.67 2.7.65 1.12-.02 1.82-1.01 2.5-2.01.79-1.15 1.11-2.27 1.13-2.32-.02-.01-2.17-.83-2.19-3.3zM15 6.27c.57-.69.95-1.65.85-2.6-.82.03-1.81.54-2.39 1.23-.52.61-.98 1.58-.86 2.51.91.07 1.84-.46 2.4-1.14z" fill="currentColor"/></svg>
+        <span class="as-txt"><span class="as-small">Download on the</span><span class="as-big">App Store</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="brand"><img src="img/icon.png" alt="" width="34" height="34" style="border-radius:10px"> PollenPath</div>
+        <p>A warm, privacy-first allergy tracker that connects how you feel to what's in the air.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Product</h5>
+        <ul><li><a href="#features">Features</a></li><li><a href="#privacy">Privacy</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#faq">FAQ</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul><li><a href="press.html">Press</a></li><li><a href="changelog.html">Changelog</a></li><li><a href="https://instagram.com/pollenpath.app" target="_blank" rel="noopener">Instagram</a></li><li><a href="mailto:support@pollenpath.app">Contact</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <ul><li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="terms-of-service.html">Terms of Service</a></li></ul>
+      </div>
+    </div>
+    <blockquote style="margin:0 0 28px;padding:0 0 24px;border-bottom:1px solid var(--pp-border-subtle)">
+      <p style="font-style:italic;color:var(--pp-foreground-secondary);font-size:14.5px;line-height:1.5;max-width:540px;margin:0 0 6px">"I wanted an allergy tracker I could trust with my own data. So I built one."</p>
+      <cite style="font-style:normal;font-size:12.5px;color:var(--pp-foreground-muted)">— Miguel, founder</cite>
+    </blockquote>
+    <div style="margin-bottom:24px">
+      <h5 style="font-family:var(--pp-font-body);font-weight:600;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--pp-foreground-secondary);margin:0 0 12px">Data &amp; Attributions</h5>
+      <ul style="list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px 24px;font-size:13px;color:var(--pp-foreground-secondary)">
+        <li><b style="font-weight:600;color:var(--pp-foreground)">Pollen &amp; Air Quality:</b> Google Maps Platform</li>
+        <li><b style="font-weight:600;color:var(--pp-foreground)">Weather:</b> Apple WeatherKit</li>
+        <li><b style="font-weight:600;color:var(--pp-foreground)">Health data:</b> Apple HealthKit — stored on your device</li>
+        <li><b style="font-weight:600;color:var(--pp-foreground)">Maps &amp; Location:</b> Apple MapKit — city-level only</li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <p class="disclaimer">PollenPath is a wellness and tracking tool. It does not provide medical advice, diagnosis, or treatment. Species coverage varies by region.</p>
+      <span class="copy">© 2026 PollenPath</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  // Scroll reveal — content visible by default; hiding enabled only once JS runs.
+  document.documentElement.classList.add('anim');
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
+    revealEls.forEach(function (el) { io.observe(el); });
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        revealEls.forEach(function (el) { if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('in'); });
+      }, 200);
+    });
+  } else { revealEls.forEach(function (el) { el.classList.add('in'); }); }
+
+  // Nav shadow on scroll
+  var nav = document.getElementById('nav');
+  var onScroll = function () { nav.classList.toggle('scrolled', window.scrollY > 12); };
+  onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Billing toggle
+  var billing = document.getElementById('billingToggle');
+  if (billing) {
+    billing.addEventListener('click', function (e) {
+      var btn = e.target.closest('button'); if (!btn) return;
+      var cycle = btn.getAttribute('data-cycle');
+      billing.querySelectorAll('button').forEach(function (b) { b.classList.toggle('active', b === btn); });
+      document.querySelectorAll('[data-monthly]').forEach(function (amt) {
+        amt.textContent = amt.getAttribute(cycle === 'monthly' ? 'data-monthly' : 'data-yearly');
+      });
+      document.querySelectorAll('[data-per-cycle]').forEach(function (per) {
+        per.textContent = cycle === 'monthly' ? '/ month' : '/ year';
+      });
+    });
+  }
+
+  // Theme toggle
+  var sun = '<circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M4.5 4.5l1.5 1.5M18 18l1.5 1.5M2.5 12h2M19.5 12h2M4.5 19.5l1.5-1.5M18 6l1.5-1.5"/>';
+  var moon = '<path d="M20 14.5A8 8 0 0 1 9.5 4 7 7 0 1 0 20 14.5z"/>';
+  var themeIcon = document.getElementById('themeIcon');
+  function applyIcon(t) { themeIcon.innerHTML = t === 'dark' ? moon : sun; }
+  applyIcon(document.documentElement.getAttribute('data-theme'));
+  document.getElementById('themeToggle').addEventListener('click', function () {
+    var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.body.classList.add('theme-transition');
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('pp-theme', next); } catch (e) {}
+    applyIcon(next);
+    setTimeout(function () { document.body.classList.remove('theme-transition'); }, 500);
+  });
+
+  // Pre-launch waitlist (no backend yet)
+  if (document.documentElement.dataset.launch === 'pre') {
+    document.querySelectorAll('.hero-waitlist').forEach(function (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!form.querySelector('input[type="email"]').value.trim()) return;
+        var btn = form.querySelector('button'), input = form.querySelector('input');
+        btn.textContent = 'Thanks!'; btn.disabled = true; input.disabled = true;
+      });
+    });
+  }
+})();
+</script>
+
 </body>
 </html>
