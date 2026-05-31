@@ -2,14 +2,12 @@
 <!--
   Launch-day flip: this site ships both pre-launch and live-launch CTA variants
   in a single static build. The `data-launch` attribute below gates which set is
-  visible (CSS via `[data-show-when]` selectors) and whether the JS waitlist
-  handler binds. To go live:
+  visible (CSS via `[data-show-when]` selectors). Pre-launch shows a static
+  "Coming soon" badge (no waitlist, no links); live shows the App Store CTAs.
+  To go live:
     1. Flip `data-launch="pre"` → `data-launch="live"` on the <html> element below.
-    2. Add `img/appstore-badge.svg` (Apple-supplied) if not yet present.
-    3. Regenerate CSP `style-src` + `script-src` hashes (one-liner in `_headers` trailer).
-    4. Commit, push — Cloudflare Pages auto-deploys.
-  The waitlist email backend (default: Cloudflare Worker → KV) lives outside
-  this repo; export collected entries before flipping if you need them.
+    2. Regenerate CSP `style-src` + `script-src` hashes (one-liner in `_headers` trailer).
+    3. Commit, push — Cloudflare Pages auto-deploys.
 -->
 <html lang="en" data-launch="pre">
 <head>
@@ -575,19 +573,28 @@
     .blob--low { background: var(--pp-sev-low); }
     .blob--secondary { background: var(--pp-secondary); }
 
-    /* Waitlist forms — display is owned by the launch-gating reveal rules below, NOT here */
-    .hero-waitlist { gap: 8px; max-width: 420px; }
-    .hero-waitlist.in-hero { align-items: stretch; width: 100%; }
-    .hero-waitlist.in-cta { justify-content: center; margin: 0 auto; }
-    .waitlist-input {
-      flex: 1; min-width: 0; padding: 12px 16px;
-      border: 1px solid var(--pp-border); border-radius: 12px;
-      font-family: var(--pp-font-body); font-size: 15px;
-      background: var(--pp-surface); color: var(--pp-foreground);
+    /* "Coming soon" badge (pre-launch, non-interactive). Display owned by the gating rules below. */
+    .coming-soon {
+      align-items: center; gap: 9px; padding: 11px 20px;
+      border-radius: var(--pp-radius-pill);
+      background: var(--pp-surface-secondary); border: 1px solid var(--pp-border-subtle);
+      color: var(--pp-foreground-secondary);
+      font-family: var(--pp-font-body); font-weight: 600; font-size: 15px;
+      cursor: default; user-select: none;
     }
-    .waitlist-input--solid { border: none; background: #fff; color: #141A16; }
-    .waitlist-submit { flex-shrink: 0; }
-    .waitlist-submit--solid { background: #fff; color: #141A16; flex-shrink: 0; }
+    .coming-soon .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--pp-primary); flex: none; }
+    .coming-soon.on-dark { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.30); color: #fff; }
+    .coming-soon.on-dark .dot { background: #fff; }
+    .coming-soon-mini {
+      align-items: center; gap: 7px; padding: 8px 15px;
+      border-radius: var(--pp-radius-pill);
+      background: var(--pp-surface-secondary); border: 1px solid var(--pp-border-subtle);
+      color: var(--pp-foreground-secondary);
+      font-family: var(--pp-font-body); font-weight: 600; font-size: 13px;
+      cursor: default; user-select: none;
+    }
+    .coming-soon-mini .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--pp-primary); flex: none; }
+    .mm-soon { color: var(--pp-foreground-muted); font-weight: 600; cursor: default; }
 
     /* Footer founder quote + attributions */
     .footer-quote { margin: 0 0 28px; padding: 0 0 24px; border-bottom: 1px solid var(--pp-border-subtle); }
@@ -607,9 +614,11 @@
     html[data-launch="live"] .btn[data-show-when="live"]            { display: inline-flex; }
     html[data-launch="pre"]  .appstore[data-show-when="pre"],
     html[data-launch="live"] .appstore[data-show-when="live"]      { display: inline-flex; }
-    html[data-launch="pre"]  .hero-waitlist[data-show-when="pre"],
-    html[data-launch="live"] .hero-waitlist[data-show-when="live"] { display: flex; }
-    html[data-launch="pre"]  a.mm-cta[data-show-when="pre"],
+    html[data-launch="pre"]  .coming-soon[data-show-when="pre"],
+    html[data-launch="live"] .coming-soon[data-show-when="live"]   { display: inline-flex; }
+    html[data-launch="pre"]  .coming-soon-mini[data-show-when="pre"],
+    html[data-launch="live"] .coming-soon-mini[data-show-when="live"] { display: inline-flex; }
+    html[data-launch="pre"]  .mm-soon[data-show-when="pre"],
     html[data-launch="live"] a.mm-cta[data-show-when="live"]       { display: block; }
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
   </style>
@@ -649,7 +658,7 @@
           <line x1="2" y1="13.5" x2="16" y2="13.5"/>
         </svg>
       </button>
-      <a class="btn btn-primary" data-show-when="pre" href="#download">Get Notified</a>
+      <span class="coming-soon-mini" data-show-when="pre"><span class="dot"></span>Coming soon</span>
       <a class="btn btn-primary" data-show-when="live" href="https://apps.apple.com/app/id6760616969">Get the app</a>
     </div>
   </div>
@@ -659,7 +668,7 @@
   <a href="#privacy">Privacy</a>
   <a href="#pricing">Pricing</a>
   <a href="#faq">FAQ</a>
-  <a href="#download" class="mm-cta" data-show-when="pre">Get Notified</a>
+  <span class="mm-soon" data-show-when="pre">Coming soon</span>
   <a href="https://apps.apple.com/app/id6760616969" class="mm-cta" data-show-when="live">Download on the App Store</a>
 </nav>
 
@@ -672,11 +681,7 @@
       <h1 class="display">Connect how you <span class="em">feel</span> to what's in the air.</h1>
       <p class="lede">PollenPath pulls real-time pollen, air quality, and weather, lets you log symptoms in seconds, and finds your personal triggers — all on your device. No guessing, no tracking, no ads.</p>
       <div class="hero-cta">
-        <form class="hero-waitlist in-hero" data-show-when="pre" action="#" novalidate>
-          <label class="sr-only" for="hero-email">Email address</label>
-          <input type="email" id="hero-email" name="email" placeholder="you@example.com" required class="waitlist-input">
-          <button type="submit" class="btn btn-primary waitlist-submit">Get Notified</button>
-        </form>
+        <span class="coming-soon" data-show-when="pre"><span class="dot"></span>Coming soon to the App Store</span>
         <a class="appstore" data-show-when="live" href="https://apps.apple.com/app/id6760616969" aria-label="Download on the App Store">
           <svg viewBox="0 0 24 24" fill="currentColor"><use href="#apple-logo"/></svg>
           <span class="as-txt"><span class="as-small">Download on the</span><span class="as-big">App Store</span></span>
@@ -919,11 +924,7 @@
       <svg class="leaf-wm r"><use href="#leaf"/></svg>
       <h2 class="display">Breathe a little easier.</h2>
       <p>Download PollenPath and connect how you feel to what's in the air — free to start, on your iPhone.</p>
-      <form class="hero-waitlist in-cta" data-show-when="pre" action="#" novalidate>
-        <label class="sr-only" for="cta-email">Email address</label>
-        <input type="email" id="cta-email" name="email" placeholder="you@example.com" required class="waitlist-input waitlist-input--solid">
-        <button type="submit" class="btn waitlist-submit--solid">Get Notified</button>
-      </form>
+      <span class="coming-soon on-dark" data-show-when="pre"><span class="dot"></span>Coming soon to the App Store</span>
       <a class="appstore" data-show-when="live" href="https://apps.apple.com/app/id6760616969">
         <svg viewBox="0 0 24 24" fill="currentColor"><use href="#apple-logo"/></svg>
         <span class="as-txt"><span class="as-small">Download on the</span><span class="as-big">App Store</span></span>
@@ -1026,18 +1027,6 @@
     applyIcon(next);
     setTimeout(function () { document.body.classList.remove('theme-transition'); }, 500);
   });
-
-  // Pre-launch waitlist (no backend yet)
-  if (document.documentElement.dataset.launch === 'pre') {
-    document.querySelectorAll('.hero-waitlist').forEach(function (form) {
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        if (!form.querySelector('input[type="email"]').value.trim()) return;
-        var btn = form.querySelector('button'), input = form.querySelector('input');
-        btn.textContent = 'Thanks!'; btn.disabled = true; input.disabled = true;
-      });
-    });
-  }
 
   // Mobile hamburger menu
   var hamburger = document.getElementById('navHamburger');
