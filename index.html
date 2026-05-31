@@ -611,6 +611,37 @@
       .privacy-grid, .price-grid { grid-template-columns: 1fr; }
       .footer-top { grid-template-columns: 1fr 1fr; }
       .nav-links { display: none; }
+      .nav-hamburger { display: grid; }
+      .mobile-menu {
+        position: sticky; top: 68px; z-index: 99;
+        background: color-mix(in srgb, var(--pp-background) 96%, transparent);
+        backdrop-filter: saturate(1.4) blur(16px);
+        -webkit-backdrop-filter: saturate(1.4) blur(16px);
+        border-bottom: 1px solid var(--pp-border-subtle);
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height .28s cubic-bezier(.4,0,.2,1);
+      }
+      .mobile-menu.open {
+        display: flex;
+        flex-direction: column;
+        max-height: 340px;
+      }
+      .mobile-menu a {
+        display: block;
+        padding: 14px 20px;
+        font-family: var(--pp-font-body); font-size: 16px; font-weight: 500;
+        color: var(--pp-foreground-secondary);
+        text-decoration: none;
+        border-bottom: 1px solid var(--pp-border-subtle);
+        transition: color .18s, background .18s;
+      }
+      .mobile-menu a:last-child { border-bottom: none; }
+      .mobile-menu a:hover { color: var(--pp-foreground); background: var(--pp-surface-secondary); }
+      .mobile-menu a.mm-cta {
+        color: var(--pp-primary); font-weight: 600;
+      }
+      .mobile-menu a.mm-cta:hover { color: var(--pp-primary); }
     }
     @media (max-width: 560px) {
       .wrap { padding: 0 20px; }
@@ -619,6 +650,21 @@
       .hero-stage .phone.secondary { display: none; }
       .footer-bottom { flex-direction: column; align-items: flex-start; }
     }
+
+    /* ---- Hamburger + Mobile Menu ----------------------------------------------*/
+    .nav-hamburger {
+      display: none;
+      width: 38px; height: 38px; border-radius: 50%; flex: none;
+      place-items: center; cursor: pointer;
+      background: var(--pp-surface-secondary); border: 1px solid var(--pp-border-subtle);
+      color: var(--pp-foreground-secondary);
+      transition: background .2s, color .2s, transform .2s;
+      padding: 0;
+    }
+    .nav-hamburger:hover { color: var(--pp-foreground); transform: translateY(-1px); }
+    .nav-hamburger svg { width: 18px; height: 18px; }
+
+    .mobile-menu { display: none; }
 
     /* ---- Launch gating --------------------------------------------------------*/
     [data-show-when] { display: none; }
@@ -654,11 +700,26 @@
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">
         <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M4.5 4.5l1.5 1.5M18 18l1.5 1.5M2.5 12h2M19.5 12h2M4.5 19.5l1.5-1.5M18 6l1.5-1.5"/></svg>
       </button>
+      <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+        <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <line x1="2" y1="4.5" x2="16" y2="4.5"/>
+          <line x1="2" y1="9" x2="16" y2="9"/>
+          <line x1="2" y1="13.5" x2="16" y2="13.5"/>
+        </svg>
+      </button>
       <a class="btn btn-primary" data-show-when="pre" href="#download">Get Notified</a>
       <a class="btn btn-primary" data-show-when="live" href="https://apps.apple.com/app/id6760616969">Get the app</a>
     </div>
   </div>
 </header>
+<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+  <a href="#features">Features</a>
+  <a href="#privacy">Privacy</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#faq">FAQ</a>
+  <a href="#download" class="mm-cta" data-show-when="pre">Get Notified</a>
+  <a href="https://apps.apple.com/app/id6760616969" class="mm-cta" data-show-when="live">Download on the App Store</a>
+</nav>
 
 <main id="top">
 
@@ -1032,6 +1093,22 @@
         if (!form.querySelector('input[type="email"]').value.trim()) return;
         var btn = form.querySelector('button'), input = form.querySelector('input');
         btn.textContent = 'Thanks!'; btn.disabled = true; input.disabled = true;
+      });
+    });
+  }
+
+  // Mobile hamburger menu
+  var hamburger = document.getElementById('navHamburger');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', function () {
+      var open = mobileMenu.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    mobileMenu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        mobileMenu.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
       });
     });
   }
