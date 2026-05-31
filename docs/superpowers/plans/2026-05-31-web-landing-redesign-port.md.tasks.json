@@ -1,0 +1,47 @@
+{
+  "planPath": "docs/superpowers/plans/2026-05-31-web-landing-redesign-port.md",
+  "tasks": [
+    {
+      "id": 1,
+      "subject": "Task 1: Scaffold — head, inlined styles, nav, theme bootstrap",
+      "status": "pending",
+      "description": "**Goal:** New index.html: preserved <head>, inlined <style> (woff2 fonts + tokens.css minus TTF + styles.css minus .tw-*), #leaf symbol, sticky nav (real icon.png + theme toggle + gated CTA), head theme-bootstrap script, empty <main id=top>.\n\n**Files:** Modify index.html. Reference docs/superpowers/design-source/{PollenPath.html,styles.css,tokens.css}; current head via `git show develop:index.html`.\n\n**Verify:** Serve :8787; curl `app-id=6760616969`=1, `data-launch=pre`=1, icon.png>=1, tw-panel=0, ld+json=1; browser nav + toggle.\n\n```json:metadata\n{\"files\":[\"index.html\"],\"acceptanceCriteria\":[\"head preserved verbatim incl JSON-LD + apple-itunes-app\",\"data-launch=pre retained\",\"single inlined style: woff2 + tokens + styles minus tw-*\",\"head theme-bootstrap pre-paint\",\"nav real icon.png + theme toggle + gated CTA\",\"main#top empty + #leaf symbol\",\"no JS errors; toggle persists\"]}\n```"
+    },
+    {
+      "id": 2,
+      "subject": "Task 2: Hero + trust strip",
+      "status": "pending",
+      "blockedBy": [1],
+      "description": "**Goal:** Hero (headline, lede, pre-launch waitlist CTA, trust pills with stars removed, dual real-screenshot phones home+insights) + trust strip.\n\n**Files:** Modify index.html inside <main>. Reference design PollenPath.html 44-95.\n\n**Verify:** curl \"what's in the air\"=1, hero-waitlist=1, class=\"stars\"=0, screens=home+insights, screens 200.\n\n```json:metadata\n{\"files\":[\"index.html\"],\"acceptanceCriteria\":[\"hero copy matches, .em on feel\",\"CTA gated pre=waitlist live=appstore\",\"pills kept, stars removed\",\"dual framed real phones object-fit cover\",\"trust strip 4 text credits\"]}\n```"
+    },
+    {
+      "id": 3,
+      "subject": "Task 3: Features (rows + card grid) + dark Privacy section",
+      "status": "pending",
+      "blockedBy": [2],
+      "description": "**Goal:** Two feature rows (real screenshots home/insights), 4-card grid, dark privacy section.\n\n**Files:** Modify index.html inside <main>. Reference design PollenPath.html 97-199.\n\n**Verify:** curl data-phone=0, feature-row=2, privacy=1, 'never leaves your phone'=1.\n\n```json:metadata\n{\"files\":[\"index.html\"],\"acceptanceCriteria\":[\"two feature rows framed real screenshots\",\"4-card grid matches design\",\"dark privacy 3 pcards\",\"no data-phone attrs\"]}\n```"
+    },
+    {
+      "id": 4,
+      "subject": "Task 4: Pricing (real prices + toggle) + FAQ",
+      "status": "pending",
+      "blockedBy": [3],
+      "description": "**Goal:** Pricing with real prices (Basic $2.99/$29.99, Pro $7.99/$79.99), monthly/yearly toggle default yearly, '2 months free' badge, USD/region note; FAQ accordion (5, first open).\n\n**Files:** Modify index.html inside <main>. Reference design PollenPath.html 202-296.\n\n**Verify:** curl data-monthly=$2.99&$7.99, data-yearly=$29.99&$79.99, '2 months free'=1, 'Save ~58%'=0, 'varies by region'=1, faq-item=5.\n\n```json:metadata\n{\"files\":[\"index.html\"],\"acceptanceCriteria\":[\"three tiers match design\",\"Basic 2.99/29.99 Pro 7.99/79.99 default yearly\",\"badge '2 months free'\",\"price-note USD/region + trial\",\"5 faq-item first open\"]}\n```"
+    },
+    {
+      "id": 5,
+      "subject": "Task 5: CTA banner + footer + page JavaScript",
+      "status": "pending",
+      "blockedBy": [4],
+      "description": "**Goal:** Gated CTA banner (id=download), footer (real links, founder quote, Data & Attributions, disclaimer), trimmed body <script> (reveal+nav+billing+theme+waitlist; no phone-builder/tweaks).\n\n**Files:** Modify index.html (CTA+footer after </main>, <script> before </body>). Reference design PollenPath.html 298-373 + app.js; current footer via git show.\n\n**Verify:** curl tweaks=0, app.js=0, id=download=1, privacy-policy.html=1, support@pollenpath.app=1, 'Data &amp; Attributions'=1; browser reveals/nav/toggle/waitlist.\n\n```json:metadata\n{\"files\":[\"index.html\"],\"acceptanceCriteria\":[\"CTA banner gated pre/live\",\"footer real links Product/Company/Legal\",\"founder + attributions + disclaimer + copyright\",\"trimmed script reveal+nav+billing+theme+waitlist only\",\"no app.js/tweaks refs\"]}\n```"
+    },
+    {
+      "id": 6,
+      "subject": "Task 6: CSP hash regeneration + full verification pass",
+      "status": "pending",
+      "blockedBy": [5],
+      "description": "**Goal:** Regenerate index.html CSP hashes (style + 2 scripts + JSON-LD) in _headers, add data: to img-src, full local verification (CSP clean, no 404s, responsive light/dark + persistence + system fallback).\n\n**Files:** Modify _headers; verify index.html.\n\n**Verify:** Run documented hash one-liner; update style-src/script-src; serve :8787; assets 200; browser devtools no CSP errors, no 404s; resize + theme.\n\n```json:metadata\n{\"files\":[\"_headers\",\"index.html\"],\"acceptanceCriteria\":[\"script-src 3 index hashes\",\"style-src index hash + 5 other-page hashes retained\",\"img-src 'self' data:\",\"zero CSP violations\",\"all assets 200\",\"responsive light/dark persist + system fallback\"]}\n```"
+    }
+  ],
+  "lastUpdated": "2026-05-31"
+}
