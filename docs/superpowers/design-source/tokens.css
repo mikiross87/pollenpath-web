@@ -1,0 +1,186 @@
+/* ============================================================================
+   PollenPath — Colors & Type
+   Source of truth: pollenpath/Packages/DesignSystem (PPColors, PPTypography,
+   PPSpacing). Values are the brand system's light/dark adaptive pairs.
+   Display/titles: Outfit. Body/UI: DM Sans.
+   ============================================================================ */
+
+/* ---- Fonts (variable TTFs lifted from the app bundle) -------------------- */
+@font-face {
+  font-family: "Outfit";
+  src: url("fonts/Outfit-Variable.ttf") format("truetype");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DM Sans";
+  src: url("fonts/DMSans-Variable.ttf") format("truetype");
+  font-weight: 100 1000;
+  font-display: swap;
+}
+
+:root {
+  /* === Core brand === */
+  --pp-primary:              #3A7D5C; /* forest green — primary actions, active tab */
+  --pp-primary-foreground:   #FFFFFF;
+  --pp-secondary:            #D4A843; /* gold — premium / accent surfaces */
+  --pp-secondary-foreground: #2D2410;
+  --pp-accent:               #D4764E; /* terracotta — warm highlight */
+  --pp-accent-foreground:    #FFFFFF;
+
+  /* === Background & surface === */
+  --pp-background:         #FAF8F5; /* warm cream page */
+  --pp-surface:            #FFFFFF; /* cards */
+  --pp-surface-secondary:  #F2EFEB; /* recessed wells, chips */
+
+  /* === Foreground (text) === */
+  --pp-foreground:           #1A2B1F; /* near-black forest — headings/body */
+  --pp-foreground-secondary: #5A6B5E; /* secondary copy */
+  --pp-foreground-muted:     #8A9A8D; /* captions, disabled, out-of-season */
+
+  /* === Border === */
+  --pp-border:        #E0DDD8;
+  --pp-border-subtle: #EBE8E3;
+
+  /* === Semantic === */
+  --pp-success: #3A8F4F;
+  --pp-warning: #D4A843;
+  --pp-error:   #C94444;
+  --pp-info:    #4A90D9;
+  /* terracotta "required / critical-but-not-error" voice */
+  --pp-critical-foreground: #A84A2E;
+  --pp-critical-surface:    #F4E4D8;
+
+  /* === Pollen severity scale (UPI 1–5) === */
+  --pp-sev-verylow:   #8ED49E;
+  --pp-sev-low:       #6BBF7B;
+  --pp-sev-moderate:  #D4A843;
+  --pp-sev-high:      #D4764E;
+  --pp-sev-veryhigh:  #A84A2E;
+  --pp-scale-cold:    #3B82F6; /* cold end of temp/value gradients */
+
+  /* darker second gradient stop per severity */
+  --pp-sev-verylow-dark:  #6BBF7B;
+  --pp-sev-low-dark:      #4EA05E;
+  --pp-sev-moderate-dark: #B8922F; /* "gold deep" — AI card accent */
+  --pp-sev-high-dark:     #B85E38;
+  --pp-sev-veryhigh-dark: #8E3624;
+
+  /* === Tier treatment (paywall) === */
+  --pp-tier-silver:      #C5C9CC;
+  --pp-tier-silver-dark: #A5A9AC;
+  /* gold tier reuses --pp-sev-moderate / --pp-sev-moderate-dark */
+
+  /* === Type families === */
+  --pp-font-display: "Outfit", system-ui, sans-serif;   /* titles, metrics */
+  --pp-font-body:    "DM Sans", system-ui, sans-serif;  /* body, UI labels */
+
+  /* === Spacing scale (PPSpacing) === */
+  --pp-space-xs:  4px;
+  --pp-space-sm:  8px;
+  --pp-space-12:  12px;
+  --pp-space-md:  16px;
+  --pp-space-page: 20px;  /* standard screen horizontal padding */
+  --pp-space-lg:  24px;   /* card padding */
+  --pp-space-xl:  32px;
+  --pp-space-xxl: 48px;
+
+  /* === Corner radius (PPRadius) === */
+  --pp-radius-sm:   8px;
+  --pp-radius-md:   16px;
+  --pp-radius-lg:   24px;  /* default card radius */
+  --pp-radius-pill: 100px;
+
+  /* === Elevation (light mode soft shadows) === */
+  --pp-shadow-low:    0 2px 8px  rgba(26,43,31,0.05);
+  --pp-shadow-medium: 0 4px 16px rgba(26,43,31,0.08);
+  --pp-shadow-high:   0 8px 24px rgba(26,43,31,0.12);
+}
+
+/* ---- Dark mode adaptive overrides --------------------------------------- */
+:root[data-theme="dark"],
+.pp-dark {
+  --pp-primary:              #5FAD82;
+  --pp-secondary:            #E0BC5E;
+  --pp-secondary-foreground: #1A1508;
+  --pp-accent:               #E0926E;
+
+  --pp-background:        #141A16; /* near-black forest */
+  --pp-surface:           #1E2620;
+  --pp-surface-secondary: #283028;
+
+  --pp-foreground:           #E8EDE9;
+  --pp-foreground-secondary: #9CA89E;
+  --pp-foreground-muted:     #6B7B6E;
+
+  --pp-border:        #2E3830;
+  --pp-border-subtle: #232D25;
+
+  --pp-success: #4FA85F;
+  --pp-warning: #E0BC5E;
+  --pp-error:   #D45555;
+  --pp-info:    #6AADEF;
+  --pp-critical-foreground: #E08866;
+  --pp-critical-surface:    #3A2820;
+
+  --pp-sev-verylow:  #6FCB87;
+  --pp-sev-low:      #4FA865;
+  --pp-sev-moderate: #F4BF3E;
+  --pp-sev-high:     #E07B44;
+  --pp-sev-veryhigh: #C94E34;
+  --pp-scale-cold:   #5C9CFF;
+
+  /* dark-mode cards: luminous border instead of drop shadow */
+  --pp-shadow-low:    none;
+  --pp-shadow-medium: 0 0 8px  rgba(35,45,37,0.30);
+  --pp-shadow-high:   0 0 12px rgba(35,45,37,0.50);
+}
+
+/* ============================================================================
+   Semantic type styles — mirror PPTypography token-for-token.
+   Apply as classes, or copy the declarations into your own selectors.
+   ============================================================================ */
+
+.pp-display {      /* Outfit 800 · 40 · -1 tracking */
+  font-family: var(--pp-font-display); font-weight: 800;
+  font-size: 40px; letter-spacing: -1px; line-height: 1.05;
+}
+.pp-hero-metric {  /* Outfit 900 · 96 · -4 tracking — pollen index hero number */
+  font-family: var(--pp-font-display); font-weight: 900;
+  font-size: 96px; letter-spacing: -4px; line-height: 0.9;
+}
+.pp-title {        /* Outfit 700 · 28 · -0.5 */
+  font-family: var(--pp-font-display); font-weight: 700;
+  font-size: 28px; letter-spacing: -0.5px; line-height: 1.1;
+}
+.pp-headline {     /* Outfit 600 · 20 · -0.4 */
+  font-family: var(--pp-font-display); font-weight: 600;
+  font-size: 20px; letter-spacing: -0.4px; line-height: 1.2;
+}
+.pp-card-title {   /* Outfit 600 · 18 — card titles, section headers */
+  font-family: var(--pp-font-display); font-weight: 600;
+  font-size: 18px; line-height: 1.25;
+}
+.pp-subhead {      /* DM Sans 600 · 16 */
+  font-family: var(--pp-font-body); font-weight: 600; font-size: 16px;
+}
+.pp-button-label { /* DM Sans 600 · 15–16 — CTA labels */
+  font-family: var(--pp-font-body); font-weight: 600; font-size: 15px;
+}
+.pp-body {         /* DM Sans 400 · 15 · 1.5 line-height */
+  font-family: var(--pp-font-body); font-weight: 400;
+  font-size: 15px; line-height: 1.5;
+}
+.pp-body-small {   /* DM Sans 400 · 14 — card descriptions */
+  font-family: var(--pp-font-body); font-weight: 400; font-size: 14px; line-height: 1.45;
+}
+.pp-caption {      /* DM Sans 500 · 13 */
+  font-family: var(--pp-font-body); font-weight: 500; font-size: 13px;
+}
+.pp-footnote {     /* DM Sans 400 · 12 */
+  font-family: var(--pp-font-body); font-weight: 400; font-size: 12px;
+}
+.pp-overline {     /* DM Sans 600 · 11 · +2 tracking · UPPERCASE */
+  font-family: var(--pp-font-body); font-weight: 600;
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+}

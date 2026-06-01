@@ -1,18 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<!--
+  Launch-day flip: this site ships both pre-launch and live-launch CTA variants
+  in a single static build. The `data-launch` attribute below gates which set is
+  visible (CSS via `[data-show-when]` selectors). Pre-launch shows a static
+  "Coming soon" badge (no waitlist, no links); live shows the App Store CTAs.
+  To go live:
+    1. Flip `data-launch="pre"` → `data-launch="live"` on the <html> element below.
+    2. Regenerate CSP `style-src` + `script-src` hashes (one-liner in `_headers` trailer).
+    3. Commit, push — Cloudflare Pages auto-deploys.
+-->
+<html lang="en" data-launch="pre">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PollenPath — Allergy Tracker for iOS | Pollen Forecast & Air Quality</title>
-  <meta name="description" content="Track allergy symptoms alongside real-time pollen forecasts and air quality data. Discover your personal triggers with on-device AI insights. Free on the App Store.">
-  <meta name="keywords" content="allergy tracker, pollen forecast, air quality, hay fever, allergy app, pollen count, symptom tracker, allergy season, iOS app, Apple Health">
+  <meta name="description" content="Log allergy symptoms, sync to Apple Health, and see the patterns connecting how you feel to the world around you. Live pollen and air quality with a 7-day free trial. iOS.">
+  <meta name="keywords" content="allergy tracker, pollen forecast, air quality, hay fever, allergy app, pollen count, symptom tracker, allergy season, iOS app, Apple Health, allergy journal">
   <meta name="author" content="PollenPath">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://pollenpath.app">
 
   <!-- Open Graph -->
   <meta property="og:title" content="PollenPath — Finally Understand Your Allergies">
-  <meta property="og:description" content="Track symptoms, check real-time pollen & air quality, and discover your personal triggers with on-device AI. Coming soon to the App Store.">
+  <meta property="og:description" content="Log allergy symptoms, sync to Apple Health, and see the patterns connecting how you feel. Live pollen and air quality with a 7-day free trial.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://pollenpath.app">
   <meta property="og:image" content="https://pollenpath.app/img/og-image.png">
@@ -24,7 +34,7 @@
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="PollenPath — Allergy Tracker for iOS">
-  <meta name="twitter:description" content="Track symptoms, check real-time pollen & air quality, and discover your personal triggers with on-device AI.">
+  <meta name="twitter:description" content="Log allergy symptoms, sync to Apple Health, and see the patterns connecting how you feel. 7-day free trial of Pro.">
   <meta name="twitter:image" content="https://pollenpath.app/img/og-image.png">
 
   <!-- App Links -->
@@ -42,1256 +52,1015 @@
     "@type": "MobileApplication",
     "name": "PollenPath",
     "operatingSystem": "iOS",
-    "applicationCategory": "HealthApplication",
-    "description": "Track allergy symptoms alongside real-time pollen forecasts and air quality data. Discover your personal triggers with on-device AI insights.",
+    "applicationCategory": "LifestyleApplication",
+    "description": "Log allergy symptoms, sync to Apple Health, and see the patterns connecting how you feel to the world around you. Live pollen and air quality with a 7-day free trial.",
     "url": "https://pollenpath.app",
     "image": "https://pollenpath.app/img/icon.png",
     "author": {
       "@type": "Organization",
       "name": "PollenPath"
-    },
-    "offers": [
-      { "@type": "Offer", "price": "0", "priceCurrency": "USD", "name": "Free" },
-      { "@type": "Offer", "price": "1.99", "priceCurrency": "USD", "name": "Basic Monthly" },
-      { "@type": "Offer", "price": "6.99", "priceCurrency": "USD", "name": "Pro Monthly" }
-    ]
+    }
   }
   </script>
+
+  <!-- Theme bootstrap — runs before first paint to avoid flash -->
+  <script>
+  (function(){try{var t=localStorage.getItem('pp-theme');
+    if(t!=='dark'&&t!=='light')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+    document.documentElement.setAttribute('data-theme',t);}catch(e){
+    document.documentElement.setAttribute('data-theme','light');}})();
+  </script>
+
   <style>
-    /* ── Self-Hosted Fonts ── */
+    /* ── Self-Hosted Fonts (woff2) ── */
     @font-face { font-family: 'Outfit'; src: url('/fonts/outfit-400.woff2') format('woff2'); font-weight: 400; font-display: swap; }
     @font-face { font-family: 'Outfit'; src: url('/fonts/outfit-600.woff2') format('woff2'); font-weight: 600; font-display: swap; }
     @font-face { font-family: 'Outfit'; src: url('/fonts/outfit-700.woff2') format('woff2'); font-weight: 700; font-display: swap; }
     @font-face { font-family: 'Outfit'; src: url('/fonts/outfit-800.woff2') format('woff2'); font-weight: 800; font-display: swap; }
-    @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-300.woff2') format('woff2'); font-weight: 300; font-style: normal; font-display: swap; }
     @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
     @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
     @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
     @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
-    @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-300-italic.woff2') format('woff2'); font-weight: 300; font-style: italic; font-display: swap; }
-    @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-400-italic.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
-    @font-face { font-family: 'Material Symbols Rounded'; src: url('/fonts/material-symbols-rounded.woff2') format('woff2'); font-display: swap; }
-    /* ── Reset ── */
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-    /* ── Theme Variables ── */
+    /* ============================================================================
+       PollenPath — Colors & Type (tokens.css — TTF @font-face omitted)
+       Source of truth: pollenpath/Packages/DesignSystem (PPColors, PPTypography,
+       PPSpacing). Values are the brand system's light/dark adaptive pairs.
+       Display/titles: Outfit. Body/UI: DM Sans.
+       ============================================================================ */
+
     :root {
-      --bg: #FAF8F5;
-      --surface: #FFFFFF;
-      --surface-secondary: #F2EFEB;
-      --fg: #1A2B1F;
-      --fg-secondary: #5A6B5E;
-      --fg-muted: #8A9A8D;
-      --primary: #3A7D5C;
-      --primary-fg: #FFFFFF;
-      --accent: #D4764E;
-      --accent-fg: #FFFFFF;
-      --secondary: #D4A843;
-      --secondary-fg: #2D2410;
-      --success: #3A8F4F;
-      --border: #E0DDD8;
-      --border-subtle: #EBE8E3;
-      --radius-sm: 8px;
-      --radius-md: 16px;
-      --radius-lg: 24px;
-      --radius-pill: 100px;
-      --font-display: 'Outfit', sans-serif;
-      --font-body: 'DM Sans', sans-serif;
+      /* === Core brand === */
+      --pp-primary:              #3A7D5C;
+      --pp-primary-foreground:   #FFFFFF;
+      --pp-secondary:            #D4A843;
+      --pp-secondary-foreground: #2D2410;
+      --pp-accent:               #D4764E;
+      --pp-accent-foreground:    #FFFFFF;
+
+      /* === Background & surface === */
+      --pp-background:         #FAF8F5;
+      --pp-surface:            #FFFFFF;
+      --pp-surface-secondary:  #F2EFEB;
+
+      /* === Foreground (text) === */
+      --pp-foreground:           #1A2B1F;
+      --pp-foreground-secondary: #5A6B5E;
+      --pp-foreground-muted:     #8A9A8D;
+
+      /* === Border === */
+      --pp-border:        #E0DDD8;
+      --pp-border-subtle: #EBE8E3;
+
+      /* === Semantic === */
+      --pp-success: #3A8F4F;
+      --pp-warning: #D4A843;
+      --pp-error:   #C94444;
+      --pp-info:    #4A90D9;
+      --pp-critical-foreground: #A84A2E;
+      --pp-critical-surface:    #F4E4D8;
+
+      /* === Pollen severity scale (UPI 1–5) === */
+      --pp-sev-verylow:   #8ED49E;
+      --pp-sev-low:       #6BBF7B;
+      --pp-sev-moderate:  #D4A843;
+      --pp-sev-high:      #D4764E;
+      --pp-sev-veryhigh:  #A84A2E;
+      --pp-scale-cold:    #3B82F6;
+
+      --pp-sev-verylow-dark:  #6BBF7B;
+      --pp-sev-low-dark:      #4EA05E;
+      --pp-sev-moderate-dark: #B8922F;
+      --pp-sev-high-dark:     #B85E38;
+      --pp-sev-veryhigh-dark: #8E3624;
+
+      /* === Tier treatment (paywall) === */
+      --pp-tier-silver:      #C5C9CC;
+      --pp-tier-silver-dark: #A5A9AC;
+
+      /* === Type families === */
+      --pp-font-display: "Outfit", system-ui, sans-serif;
+      --pp-font-body:    "DM Sans", system-ui, sans-serif;
+
+      /* === Spacing scale (PPSpacing) === */
+      --pp-space-xs:  4px;
+      --pp-space-sm:  8px;
+      --pp-space-12:  12px;
+      --pp-space-md:  16px;
+      --pp-space-page: 20px;
+      --pp-space-lg:  24px;
+      --pp-space-xl:  32px;
+      --pp-space-xxl: 48px;
+
+      /* === Corner radius (PPRadius) === */
+      --pp-radius-sm:   8px;
+      --pp-radius-md:   16px;
+      --pp-radius-lg:   24px;
+      --pp-radius-pill: 100px;
+
+      /* === Elevation (light mode soft shadows) === */
+      --pp-shadow-low:    0 2px 8px  rgba(26,43,31,0.05);
+      --pp-shadow-medium: 0 4px 16px rgba(26,43,31,0.08);
+      --pp-shadow-high:   0 8px 24px rgba(26,43,31,0.12);
     }
 
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #141A16;
-        --surface: #1E2620;
-        --surface-secondary: #283028;
-        --fg: #E8EDE9;
-        --fg-secondary: #9CA89E;
-        --fg-muted: #6B7B6E;
-        --primary: #5FAD82;
-        --primary-fg: #FFFFFF;
-        --accent: #E0926E;
-        --accent-fg: #FFFFFF;
-        --secondary: #E0BC5E;
-        --secondary-fg: #1A1508;
-        --success: #4FA85F;
-        --border: #2E3830;
-        --border-subtle: #232D25;
-      }
+    /* ---- Dark mode adaptive overrides --------------------------------------- */
+    :root[data-theme="dark"],
+    .pp-dark {
+      --pp-primary:              #5FAD82;
+      --pp-secondary:            #E0BC5E;
+      --pp-secondary-foreground: #1A1508;
+      --pp-accent:               #E0926E;
+
+      --pp-background:        #141A16;
+      --pp-surface:           #1E2620;
+      --pp-surface-secondary: #283028;
+
+      --pp-foreground:           #E8EDE9;
+      --pp-foreground-secondary: #9CA89E;
+      --pp-foreground-muted:     #6B7B6E;
+
+      --pp-border:        #2E3830;
+      --pp-border-subtle: #232D25;
+
+      --pp-success: #4FA85F;
+      --pp-warning: #E0BC5E;
+      --pp-error:   #D45555;
+      --pp-info:    #6AADEF;
+      --pp-critical-foreground: #E08866;
+      --pp-critical-surface:    #3A2820;
+
+      --pp-sev-verylow:  #6FCB87;
+      --pp-sev-low:      #4FA865;
+      --pp-sev-moderate: #F4BF3E;
+      --pp-sev-high:     #E07B44;
+      --pp-sev-veryhigh: #C94E34;
+      --pp-scale-cold:   #5C9CFF;
+
+      --pp-shadow-low:    none;
+      --pp-shadow-medium: 0 0 8px  rgba(35,45,37,0.30);
+      --pp-shadow-high:   0 0 12px rgba(35,45,37,0.50);
     }
 
-    /* ── Base ── */
-    html { scroll-behavior: smooth; }
+    /* ============================================================================
+       PollenPath — Marketing webclient styles (styles.css — .tw-* panel omitted)
+       Built on PollenPath tokens. Cream paper, forest ink, leaf brand.
+       ============================================================================ */
+
+    *, *::before, *::after { box-sizing: border-box; }
+    :root { --brand-a: var(--pp-primary); --brand-b: var(--pp-sev-high-dark); --hero-a: var(--pp-sev-low); --hero-b: var(--pp-sev-low-dark); }
+    body.no-grain::before { display: none; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
     body {
-      font-family: var(--font-body);
-      background: var(--bg);
-      color: var(--fg);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      margin: 0;
+      background: var(--pp-background);
+      color: var(--pp-foreground);
+      font-family: var(--pp-font-body);
+      font-size: 16px;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+    body.theme-transition, body.theme-transition * { transition: background-color .4s ease, color .4s ease, border-color .4s ease; }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* Film-grain overlay for organic warmth (~4% noise) */
+    body::before {
+      content: "";
+      position: fixed; inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: .4;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
     }
 
-    /* ── Utilities ── */
-    .section-label {
-      font-family: var(--font-body);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 2px;
-      color: var(--primary);
-      text-transform: uppercase;
+    /* ---- Type helpers ---------------------------------------------------------*/
+    .overline {
+      font-family: var(--pp-font-body); font-weight: 600;
+      font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--pp-primary);
     }
-    .section-title {
-      font-family: var(--font-display);
-      font-size: clamp(28px, 4vw, 36px);
-      font-weight: 700;
-      letter-spacing: -1px;
-      color: var(--fg);
-      text-align: center;
+    .display {
+      font-family: var(--pp-font-display); font-weight: 800;
+      letter-spacing: -1.5px; line-height: 1.02; margin: 0;
+    }
+    h1.display { font-size: clamp(40px, 6vw, 76px); font-weight: 900; letter-spacing: -2.5px; }
+    h2.display { font-size: clamp(32px, 4.4vw, 54px); }
+    .lede {
+      font-family: var(--pp-font-body); font-weight: 400;
+      font-size: clamp(17px, 1.6vw, 20px); line-height: 1.55;
+      color: var(--pp-foreground-secondary);
+    }
+    .eyebrow-leaf { display: inline-flex; align-items: center; gap: 8px; }
+
+    /* ---- Layout ---------------------------------------------------------------*/
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+    section { position: relative; }
+
+    /* ---- Buttons --------------------------------------------------------------*/
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      font-family: var(--pp-font-body); font-weight: 600; font-size: 15px;
+      border-radius: var(--pp-radius-pill); padding: 13px 24px;
+      border: 1px solid transparent; cursor: pointer;
+      transition: transform .2s cubic-bezier(.2,.8,.2,1), opacity .2s, background-color .2s, box-shadow .2s;
+    }
+    .btn:active { transform: scale(.97); opacity: .9; }
+    .btn-primary { background: var(--pp-primary); color: var(--pp-primary-foreground); box-shadow: var(--pp-shadow-low); }
+    .btn-primary:hover { box-shadow: 0 6px 20px rgba(58,125,92,.28); }
+    .btn-ghost { background: transparent; color: var(--pp-foreground); border-color: var(--pp-border); }
+    .btn-ghost:hover { background: var(--pp-surface-secondary); }
+
+    /* App Store badge */
+    .appstore {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: #141A16; color: #fff;
+      border-radius: 14px; padding: 11px 20px 11px 18px;
+      transition: transform .2s cubic-bezier(.2,.8,.2,1), box-shadow .2s;
+      box-shadow: var(--pp-shadow-medium);
+    }
+    .appstore:hover { transform: translateY(-2px); box-shadow: var(--pp-shadow-high); }
+    .appstore:active { transform: scale(.98); }
+    .appstore svg { width: 26px; height: 26px; flex: none; }
+    .appstore .as-txt { display: flex; flex-direction: column; line-height: 1.05; text-align: left; }
+    .appstore .as-small { font-size: 11px; opacity: .85; font-weight: 400; }
+    .appstore .as-big { font-family: var(--pp-font-display); font-weight: 600; font-size: 19px; letter-spacing: -.3px; }
+
+    /* ---- Nav ------------------------------------------------------------------*/
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: color-mix(in srgb, var(--pp-background) 78%, transparent);
+      backdrop-filter: saturate(1.4) blur(16px);
+      -webkit-backdrop-filter: saturate(1.4) blur(16px);
+      border-bottom: 1px solid transparent;
+      transition: border-color .3s, background-color .3s;
+    }
+    .nav.scrolled { border-bottom-color: var(--pp-border-subtle); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-family: var(--pp-font-display); font-weight: 700; font-size: 20px; letter-spacing: -.4px; }
+    .nav-links { display: flex; align-items: center; gap: 30px; }
+    .nav-links a { font-size: 15px; color: var(--pp-foreground-secondary); font-weight: 500; transition: color .2s; }
+    .nav-links a:hover { color: var(--pp-foreground); }
+    .nav-actions { display: flex; align-items: center; gap: 14px; }
+    .theme-toggle {
+      width: 38px; height: 38px; border-radius: 50%; flex: none;
+      display: grid; place-items: center; cursor: pointer;
+      background: var(--pp-surface-secondary); border: 1px solid var(--pp-border-subtle);
+      color: var(--pp-foreground-secondary); transition: background .2s, color .2s, transform .2s;
+    }
+    .theme-toggle:hover { color: var(--pp-foreground); transform: translateY(-1px); }
+    .theme-toggle svg { width: 18px; height: 18px; }
+
+    /* ---- Hero -----------------------------------------------------------------*/
+    .hero { padding: 64px 0 40px; overflow: hidden; }
+    .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; }
+    .hero-copy { max-width: 560px; }
+    .hero-copy .overline { margin-bottom: 18px; }
+    .hero-copy h1 { margin-bottom: 22px; }
+    .hero-copy .em { color: var(--pp-primary); }
+    .hero-cta { display: flex; align-items: center; gap: 18px; margin: 30px 0 18px; flex-wrap: wrap; }
+    .hero-meta { display: flex; align-items: center; gap: 16px; color: var(--pp-foreground-muted); font-size: 14px; font-weight: 500; }
+    .hero-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: currentColor; opacity: .5; }
+
+    .hero-stage { position: relative; display: grid; place-items: center; min-height: 600px; }
+    .hero-glow {
+      position: absolute; width: 420px; height: 420px; border-radius: 50%;
+      background: radial-gradient(circle, color-mix(in srgb, var(--pp-primary) 30%, transparent), transparent 68%);
+      filter: blur(20px); z-index: 0;
+    }
+    .hero-leaf-bg {
+      position: absolute; right: -40px; top: -30px; width: 340px; color: var(--pp-primary);
+      opacity: .06; z-index: 0; transform: rotate(8deg);
+    }
+    .hero-stage .phone { position: relative; z-index: 2; }
+    .hero-stage .phone.secondary {
+      position: absolute; z-index: 1; transform: scale(.82) translate(120px, 40px) rotate(6deg);
+      opacity: .96; filter: saturate(.98);
     }
 
-    /* ── Animations ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .animate {
-      opacity: 0;
-      animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-    .animate-delay-1 { animation-delay: 0.1s; }
-    .animate-delay-2 { animation-delay: 0.2s; }
-    .animate-delay-3 { animation-delay: 0.3s; }
-    .animate-delay-4 { animation-delay: 0.4s; }
-    .animate-delay-5 { animation-delay: 0.5s; }
+    /* ---- Device mockup (iPhone frame + shadow baked into the PNG) -------------*/
+    /* Source: Design/pollenpath-redesign.pen §14 · Web refresh. Each PNG is a
+       full device render with transparent corners and a soft shadow already
+       composited, so no CSS frame/notch/box-shadow is needed. */
+    .phone { display: block; height: auto; width: 360px; flex: none; }
 
-    /* ── Nav ── */
-    .nav-bar {
-      background: var(--bg);
+    /* ---- Screenshot gallery ---------------------------------------------------*/
+    .gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; align-items: start; }
+    .gallery-item { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 18px; }
+    .gallery-item .phone { width: 100%; max-width: 280px; }
+    .gallery-item figcaption { font-family: var(--pp-font-display); font-weight: 600; font-size: 16px; letter-spacing: -.2px; color: var(--pp-foreground-secondary); text-align: center; }
+
+    /* ---- Trust strip ----------------------------------------------------------*/
+    .trust { padding: 22px 0 8px; }
+    .trust-inner { display: flex; align-items: center; justify-content: center; gap: 10px 18px; flex-wrap: wrap; }
+    .trust-label { font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--pp-foreground-muted); font-weight: 600; }
+    .trust-item { color: var(--pp-foreground-secondary); font-weight: 600; font-size: 15px; }
+    .trust-sep { color: var(--pp-border); font-weight: 600; user-select: none; }
+
+    /* ---- Section heading ------------------------------------------------------*/
+    .sec { padding: 96px 0; }
+    .sec-head { max-width: 660px; margin-bottom: 56px; }
+    .sec-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+    .sec-head .overline { margin-bottom: 14px; }
+    .sec-head h2 { margin: 0 0 16px; }
+
+    /* ---- Feature rows ---------------------------------------------------------*/
+    .feature-row { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .feature-row + .feature-row { margin-top: 110px; }
+    .feature-row.flip .feature-art { order: -1; }
+    .feature-art { display: grid; place-items: center; position: relative; }
+    .feature-art .blob { position: absolute; width: 360px; height: 360px; border-radius: 46% 54% 60% 40% / 50% 46% 54% 50%; z-index: 0; filter: blur(8px); opacity: .5; }
+    .feature-art .phone { z-index: 2; }
+    .feature-copy h3 { font-family: var(--pp-font-display); font-weight: 700; font-size: clamp(26px, 2.6vw, 34px); letter-spacing: -.8px; margin: 0 0 14px; line-height: 1.1; }
+    .feature-copy p { color: var(--pp-foreground-secondary); font-size: 17px; line-height: 1.6; margin: 0 0 22px; max-width: 460px; }
+    .feature-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
+    .feature-list li { display: flex; gap: 12px; align-items: flex-start; }
+    .feature-list .fi-ic { width: 26px; height: 26px; flex: none; border-radius: 8px; display: grid; place-items: center; background: color-mix(in srgb, var(--pp-primary) 12%, transparent); color: var(--pp-primary); margin-top: 1px; }
+    .feature-list .fi-ic svg { width: 16px; height: 16px; }
+    .feature-list b { font-weight: 600; }
+    .feature-list span { color: var(--pp-foreground-secondary); }
+
+    /* ---- Feature card grid ----------------------------------------------------*/
+    .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .fcard {
+      background: var(--pp-surface); border: 1px solid var(--pp-border-subtle);
+      border-radius: var(--pp-radius-lg); padding: 26px 24px;
+      box-shadow: var(--pp-shadow-low); transition: transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s;
     }
-    nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 40px;
-      height: 72px;
+    .fcard:hover { transform: translateY(-4px); box-shadow: var(--pp-shadow-high); }
+    .fcard .fc-ic { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; margin-bottom: 18px; background: color-mix(in srgb, var(--pp-primary) 10%, transparent); color: var(--pp-primary); }
+    .fcard .fc-ic svg { width: 24px; height: 24px; }
+    .fcard h4 { font-family: var(--pp-font-display); font-weight: 600; font-size: 19px; letter-spacing: -.3px; margin: 0 0 8px; }
+    .fcard p { font-size: 14.5px; color: var(--pp-foreground-secondary); line-height: 1.5; margin: 0; }
+
+    /* ---- Privacy (dark) section ----------------------------------------------*/
+    .privacy {
+      background: #141A16; color: #E8EDE9; padding: 110px 0; overflow: hidden;
+      position: relative;
     }
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
+    .privacy .overline { color: var(--pp-sev-low); }
+    .privacy h2 { color: #fff; }
+    .privacy .lede { color: #9CA89E; }
+    .privacy-leaf { position: absolute; right: -120px; bottom: -120px; width: 560px; color: #5FAD82; opacity: .07; z-index: 0; }
+    .privacy .wrap { position: relative; z-index: 1; }
+    .privacy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 52px; }
+    .pcard {
+      background: #1E2620; border: 1.5px solid #2E3830; border-radius: var(--pp-radius-lg);
+      padding: 28px 26px; box-shadow: 0 0 12px rgba(35,45,37,.5);
     }
-    .nav-logo img { width: 32px; height: 32px; border-radius: 8px; }
-    .nav-logo span {
-      font-family: var(--font-display);
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--fg);
-      letter-spacing: -0.5px;
+    .pcard .pc-ic { width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; margin-bottom: 18px; background: rgba(95,173,130,.14); color: #5FAD82; }
+    .pcard .pc-ic svg { width: 24px; height: 24px; }
+    .pcard h4 { font-family: var(--pp-font-display); font-weight: 600; font-size: 19px; letter-spacing: -.3px; margin: 0 0 9px; color: #fff; }
+    .pcard p { font-size: 14.5px; color: #9CA89E; line-height: 1.55; margin: 0; }
+
+    /* ---- Pricing --------------------------------------------------------------*/
+    .billing-toggle { display: inline-flex; background: var(--pp-surface-secondary); border-radius: 100px; padding: 5px; margin: 0 auto 14px; border: 1px solid var(--pp-border-subtle); }
+    .billing-toggle button {
+      border: none; background: transparent; cursor: pointer; font-family: var(--pp-font-body);
+      font-weight: 600; font-size: 14px; color: var(--pp-foreground-secondary);
+      padding: 9px 22px; border-radius: 100px; transition: all .25s; position: relative;
     }
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
+    .billing-toggle button.active { background: var(--pp-surface); color: var(--pp-foreground); box-shadow: var(--pp-shadow-low); }
+    .save-badge { font-size: 11px; font-weight: 700; color: var(--pp-primary); background: color-mix(in srgb, var(--pp-primary) 12%, transparent); padding: 2px 8px; border-radius: 100px; margin-left: 6px; }
+    .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: stretch; margin-top: 44px; }
+    .tier {
+      background: var(--pp-surface); border: 1px solid var(--pp-border); border-radius: var(--pp-radius-lg);
+      padding: 30px 28px; box-shadow: var(--pp-shadow-low); display: flex; flex-direction: column;
+      transition: transform .25s, box-shadow .25s;
     }
-    .nav-links a {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--fg-secondary);
-      text-decoration: none;
-      transition: color 0.2s;
+    .tier:hover { transform: translateY(-4px); box-shadow: var(--pp-shadow-medium); }
+    .tier.featured { border: 2px solid var(--pp-primary); box-shadow: 0 14px 32px -10px rgba(58,125,92,.3); position: relative; }
+    .tier-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+    .tier-name { font-family: var(--pp-font-display); font-weight: 700; font-size: 22px; letter-spacing: -.4px; }
+    .best-value { font-size: 10.5px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: #fff; background: var(--pp-primary); padding: 5px 11px; border-radius: 100px; }
+    .tier-sub { font-size: 13.5px; color: var(--pp-foreground-secondary); margin-bottom: 18px; min-height: 20px; }
+    .tier-price { display: flex; align-items: baseline; gap: 6px; margin-bottom: 22px; }
+    .tier-price .amt { font-family: var(--pp-font-display); font-weight: 800; font-size: 46px; letter-spacing: -2px; }
+    .tier.featured .tier-price .amt { color: var(--pp-primary); }
+    .tier-price .per { font-size: 15px; color: var(--pp-foreground-muted); font-weight: 500; }
+    .tier .btn { width: 100%; margin-bottom: 24px; }
+    .tier-feats { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 13px; }
+    .tier-feats li { display: flex; gap: 11px; align-items: flex-start; font-size: 14.5px; color: var(--pp-foreground); }
+    .tier-feats svg { width: 19px; height: 19px; color: var(--pp-success); flex: none; margin-top: 1px; }
+    .tier-feats li.muted { color: var(--pp-foreground-muted); }
+    .tier-feats li.muted svg { color: var(--pp-foreground-muted); }
+    .price-note { text-align: center; margin-top: 28px; font-size: 13px; color: var(--pp-foreground-muted); }
+
+    /* ---- FAQ ------------------------------------------------------------------*/
+    .faq-list { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+    .faq-item { background: var(--pp-surface); border: 1px solid var(--pp-border-subtle); border-radius: var(--pp-radius-md); overflow: hidden; box-shadow: var(--pp-shadow-low); }
+    .faq-q { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; cursor: pointer; font-family: var(--pp-font-display); font-weight: 600; font-size: 18px; letter-spacing: -.2px; list-style: none; }
+    .faq-q::-webkit-details-marker { display: none; }
+    .faq-q .chev { transition: transform .3s; color: var(--pp-foreground-muted); flex: none; }
+    .faq-q .chev svg { width: 20px; height: 20px; display: block; }
+    .faq-item[open] .faq-q .chev { transform: rotate(180deg); }
+    .faq-a { padding: 0 24px 22px; color: var(--pp-foreground-secondary); font-size: 15.5px; line-height: 1.6; max-width: 640px; }
+
+    /* ---- CTA banner -----------------------------------------------------------*/
+    .cta-banner { padding: 0 0 96px; }
+    .cta-box {
+      background: linear-gradient(135deg, var(--brand-a), var(--brand-b));
+      border-radius: 32px; padding: 64px 48px; text-align: center; color: #fff; position: relative; overflow: hidden;
+      box-shadow: 0 24px 50px -16px color-mix(in srgb, var(--pp-primary) 60%, transparent);
     }
-    .nav-links a:hover { color: var(--fg); }
-    .nav-cta {
-      display: inline-flex;
-      align-items: center;
-      padding: 10px 24px;
-      border-radius: var(--radius-pill);
-      background: var(--primary);
-      color: var(--primary-fg);
-      font-size: 13px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: opacity 0.2s;
+    .cta-box .leaf-wm { position: absolute; left: -60px; top: -60px; width: 320px; opacity: .12; color: #fff; }
+    .cta-box .leaf-wm.r { left: auto; right: -60px; top: auto; bottom: -80px; transform: rotate(180deg); }
+    .cta-box h2 { color: #fff; margin: 0 0 16px; position: relative; }
+    .cta-box p { color: rgba(255,255,255,.85); font-size: 18px; margin: 0 auto 30px; max-width: 480px; position: relative; }
+    .cta-box .appstore { background: #fff; color: #141A16; position: relative; }
+
+    /* ---- Footer ---------------------------------------------------------------*/
+    .footer { background: var(--pp-surface-secondary); border-top: 1px solid var(--pp-border-subtle); padding: 64px 0 36px; }
+    .footer-top { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+    .footer-brand .brand { margin-bottom: 16px; }
+    .footer-brand p { color: var(--pp-foreground-secondary); font-size: 14.5px; line-height: 1.6; max-width: 280px; margin: 0 0 20px; }
+    .footer-col h5 { font-family: var(--pp-font-body); font-weight: 600; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: var(--pp-foreground-muted); margin: 0 0 16px; }
+    .footer-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 11px; }
+    .footer-col a { font-size: 14.5px; color: var(--pp-foreground-secondary); transition: color .2s; }
+    .footer-col a:hover { color: var(--pp-primary); }
+    .footer-bottom { border-top: 1px solid var(--pp-border); padding-top: 24px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
+    .footer-bottom .disclaimer { font-size: 12.5px; color: var(--pp-foreground-muted); max-width: 720px; line-height: 1.55; }
+    .footer-bottom .copy { font-size: 12.5px; color: var(--pp-foreground-muted); white-space: nowrap; }
+
+    /* ---- Scroll reveal --------------------------------------------------------*/
+    /* Content visible by default; hiding enabled only when <html> has .anim class */
+    .anim .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+    .anim .reveal.in { opacity: 1; transform: none; }
+    .anim .reveal.d1 { transition-delay: .08s; }
+    .anim .reveal.d2 { transition-delay: .16s; }
+    .anim .reveal.d3 { transition-delay: .24s; }
+    @media (prefers-reduced-motion: reduce) { .anim .reveal { opacity: 1 !important; transform: none !important; transition: none; } html { scroll-behavior: auto; } }
+
+    /* ---- Responsive -----------------------------------------------------------*/
+    @media (max-width: 940px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 24px; }
+      .hero-stage { min-height: 540px; }
+      .hero-copy { max-width: none; }
+      .feature-row { grid-template-columns: 1fr; gap: 40px; }
+      .feature-row.flip .feature-art { order: 0; }
+      .gallery { grid-template-columns: repeat(2, 1fr); gap: 40px 20px; }
+      .card-grid { grid-template-columns: repeat(2, 1fr); }
+      .privacy-grid, .price-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+      #nav .nav-hamburger { display: grid; }
+      .mobile-menu {
+        position: sticky; top: 68px; z-index: 99;
+        background: color-mix(in srgb, var(--pp-background) 96%, transparent);
+        backdrop-filter: saturate(1.4) blur(16px);
+        -webkit-backdrop-filter: saturate(1.4) blur(16px);
+        border-bottom: 1px solid var(--pp-border-subtle);
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height .28s cubic-bezier(.4,0,.2,1);
+      }
+      .mobile-menu.open {
+        display: flex;
+        flex-direction: column;
+        max-height: 340px;
+      }
+      .mobile-menu a {
+        display: block;
+        padding: 14px 20px;
+        font-family: var(--pp-font-body); font-size: 16px; font-weight: 500;
+        color: var(--pp-foreground-secondary);
+        text-decoration: none;
+        border-bottom: 1px solid var(--pp-border-subtle);
+        transition: color .18s, background .18s;
+      }
+      .mobile-menu a:last-child { border-bottom: none; }
+      .mobile-menu a:hover { color: var(--pp-foreground); background: var(--pp-surface-secondary); }
+      .mobile-menu a.mm-cta {
+        color: var(--pp-primary); font-weight: 600;
+      }
+      .mobile-menu a.mm-cta:hover { color: var(--pp-primary); }
     }
-    .nav-cta:hover { opacity: 0.9; }
+    @media (max-width: 560px) {
+      .wrap { padding: 0 20px; }
+      .gallery { grid-template-columns: 1fr; gap: 36px; }
+      .gallery-item .phone { max-width: 260px; }
+      .card-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; }
+      .hero-stage .phone.secondary { display: none; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* ---- Hamburger + Mobile Menu ----------------------------------------------*/
     .nav-hamburger {
       display: none;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 8px;
-      color: var(--fg);
+      width: 38px; height: 38px; border-radius: 50%; flex: none;
+      place-items: center; cursor: pointer;
+      background: var(--pp-surface-secondary); border: 1px solid var(--pp-border-subtle);
+      color: var(--pp-foreground-secondary);
+      transition: background .2s, color .2s, transform .2s;
+      padding: 0;
     }
-    .nav-hamburger svg { width: 24px; height: 24px; }
+    .nav-hamburger:hover { color: var(--pp-foreground); transform: translateY(-1px); }
+    .nav-hamburger svg { width: 18px; height: 18px; }
 
-    /* ── Mobile Menu ── */
-    .mobile-menu {
-      display: none;
-      flex-direction: column;
-      gap: 0;
-      background: var(--bg);
-      border-top: 1px solid var(--border-subtle);
-      padding: 0 40px;
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease, padding 0.3s ease;
-    }
-    .mobile-menu.open {
-      max-height: 300px;
-      padding: 16px 40px 24px;
-    }
-    .mobile-menu a {
-      display: block;
-      padding: 12px 0;
-      font-size: 16px;
-      font-weight: 500;
-      color: var(--fg-secondary);
-      text-decoration: none;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-    .mobile-menu a:last-child { border-bottom: none; }
-    .mobile-menu a:hover { color: var(--fg); }
+    .mobile-menu { display: none; }
 
-    /* ── Hero ── */
-    .hero {
-      position: relative;
-      padding: 80px 40px 60px;
-      text-align: center;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(42, 94, 66, 0.13) 0%, transparent 60%);
-      pointer-events: none;
-    }
-    @media (prefers-color-scheme: dark) {
-      .hero::before {
-        background: linear-gradient(180deg, rgba(42, 94, 66, 0.19) 0%, transparent 60%);
-      }
-    }
-    .hero-inner {
-      position: relative;
-      max-width: 1000px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 16px;
-      border-radius: var(--radius-pill);
-      background: var(--surface-secondary);
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--fg-secondary);
-      margin-bottom: 24px;
-    }
-    .hero-badge::before {
-      content: '';
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--success);
-    }
-    .hero h1 {
-      font-family: var(--font-display);
-      font-size: clamp(36px, 5.5vw, 56px);
-      font-weight: 800;
-      letter-spacing: -2px;
-      line-height: 1.1;
-      color: var(--fg);
-      margin-bottom: 20px;
-    }
-    .hero-sub {
-      font-size: 18px;
-      line-height: 1.5;
-      color: var(--fg-secondary);
-      max-width: 640px;
-      margin: 0 auto 32px;
-    }
-    .hero-ctas {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 48px;
-    }
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      padding: 14px 32px;
-      border-radius: var(--radius-pill);
-      background: var(--surface-secondary);
-      color: var(--fg);
-      font-size: 16px;
-      font-weight: 600;
-      text-decoration: none;
-      border: 1px solid var(--border);
-      transition: all 0.2s;
-    }
-    .btn-primary:hover { background: var(--border); }
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      padding: 14px 32px;
-      border-radius: var(--radius-pill);
-      background: transparent;
-      color: var(--fg-secondary);
-      font-size: 16px;
-      font-weight: 500;
-      text-decoration: none;
-      border: 1px solid var(--border);
-      transition: all 0.2s;
-    }
-    .btn-secondary:hover { border-color: var(--fg-muted); color: var(--fg); }
+    /* ---- Extracted utility/layout classes (CSP-safe; replaces inline style=) ---- */
+    .sprite { position: absolute; }
+    .brand-icon { border-radius: 10px; }
+    .ic-primary { color: var(--pp-primary); }
+    .ic-secondary { color: var(--pp-secondary); }
+    .sec--flush-top { padding-top: 0; }
+    .sec-head--flush { margin-bottom: 0; }
+    .center-text { text-align: center; }
+    .blob--low { background: var(--pp-sev-low); }
+    .blob--secondary { background: var(--pp-secondary); }
 
-    /* ── Showcase ── */
-    @keyframes float1 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-    @keyframes float2 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-    @keyframes float3 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-    @keyframes pulseGlow { 0%,100% { opacity: 0.3; } 50% { opacity: 0.6; } }
-    .showcase {
-      position: relative;
-      width: 100%;
-      max-width: 960px;
-      height: 640px;
-      margin: 0 auto;
+    /* "Coming soon" badge (pre-launch, non-interactive). Display owned by the gating rules below. */
+    .coming-soon {
+      align-items: center; gap: 9px; padding: 11px 20px;
+      border-radius: var(--pp-radius-pill);
+      background: var(--pp-surface-secondary); border: 1px solid var(--pp-border-subtle);
+      color: var(--pp-foreground-secondary);
+      font-family: var(--pp-font-body); font-weight: 600; font-size: 15px;
+      cursor: default; user-select: none;
     }
-    .showcase::before {
-      content: '';
-      position: absolute;
-      width: 400px;
-      height: 400px;
-      top: 45%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(212,168,67,0.12) 0%, transparent 70%);
-      animation: pulseGlow 5s ease-in-out infinite;
-      pointer-events: none;
+    .coming-soon .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--pp-primary); flex: none; }
+    .coming-soon.on-dark { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.30); color: #fff; }
+    .coming-soon.on-dark .dot { background: #fff; }
+    .coming-soon-mini {
+      align-items: center; gap: 7px; padding: 8px 15px;
+      border-radius: var(--pp-radius-pill);
+      background: var(--pp-surface-secondary); border: 1px solid var(--pp-border-subtle);
+      color: var(--pp-foreground-secondary);
+      font-family: var(--pp-font-body); font-weight: 600; font-size: 13px;
+      cursor: default; user-select: none;
     }
-    @media (prefers-color-scheme: dark) {
-      .showcase::before { background: radial-gradient(circle, rgba(212,168,67,0.08) 0%, transparent 70%); }
-    }
-    .showcase-card {
-      position: absolute;
-      background: var(--surface);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-subtle);
-      box-shadow: 0 4px 16px rgba(26, 43, 31, 0.08);
-      padding: 20px;
-      font-family: var(--font-body);
-      opacity: 0;
-      animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
-    }
-    .showcase-card:hover {
-      box-shadow: 0 16px 40px rgba(26, 43, 31, 0.15);
-      z-index: 10;
-    }
-    /* Subtle floating on different cards */
-    .sc-pollen   { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.1s forwards, float1 6s ease-in-out 1s infinite; }
-    .sc-today    { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.2s forwards, float2 7s ease-in-out 1.5s infinite; }
-    .sc-symptoms { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.3s forwards, float3 5.5s ease-in-out 0.8s infinite; }
-    .sc-corr     { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.2s forwards, float2 6.5s ease-in-out 1.2s infinite; }
-    .sc-ai       { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.3s forwards, float1 7.5s ease-in-out 2s infinite; }
-    .sc-pred     { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.4s forwards, float3 6s ease-in-out 0.5s infinite; }
-    .sc-weather  { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.4s forwards, float2 8s ease-in-out 1.8s infinite; }
-    .sc-trend    { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.5s forwards, float1 7s ease-in-out 1.3s infinite; }
-    @media (prefers-reduced-motion: reduce) {
-      .sc-pollen, .sc-today, .sc-symptoms, .sc-corr, .sc-ai, .sc-pred, .sc-weather, .sc-trend {
-        animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) forwards !important;
-      }
-    }
-    .showcase-card--gold {
-      background: linear-gradient(135deg, #D4A843 0%, #B8922F 100%);
-      border: none;
-      box-shadow: 0 8px 32px rgba(212, 168, 67, 0.2);
-    }
-    .showcase-card--gold:hover {
-      box-shadow: 0 16px 40px rgba(212, 168, 67, 0.25);
-    }
-    .showcase-card--green-border { border-color: rgba(58, 125, 92, 0.2); }
-    /* Card positions (percentage-based for responsiveness) */
-    .sc-pollen   { left: 1%; top: 1.5%; width: 35.4%; transform: rotate(-1deg); animation-delay: 0.1s; }
-    .sc-today    { left: 38.5%; top: 1.5%; width: 29.2%; transform: rotate(1deg); animation-delay: 0.2s; }
-    .sc-symptoms { left: 68.8%; top: 3.1%; width: 27.1%; transform: rotate(2deg); animation-delay: 0.3s; }
-    .sc-corr     { left: 1%; top: 32.8%; width: 35.4%; transform: rotate(-0.5deg); animation-delay: 0.2s; }
-    .sc-ai       { left: 36.5%; top: 35.9%; width: 27.1%; transform: rotate(-1deg); animation-delay: 0.3s; }
-    .sc-pred     { left: 66.7%; top: 32.8%; width: 29.2%; transform: rotate(1.5deg); animation-delay: 0.4s; }
-    .sc-weather  { left: 6.3%; top: 70.3%; width: 36.5%; transform: rotate(0.5deg); animation-delay: 0.4s; padding: 0; background: none; border: none; box-shadow: none; }
-    .sc-weather:hover { box-shadow: none !important; }
-    .sc-trend    { left: 45.8%; top: 71.9%; width: 27.1%; transform: rotate(-0.5deg); animation-delay: 0.5s; }
-    /* Pollen Hero */
-    .sc-pollen .sc-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
-    .sc-overline { font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
-    .sc-pollen .sc-overline { color: rgba(255,255,255,0.6); }
-    .sc-pollen .sc-score { font-family: var(--font-display); font-size: 64px; font-weight: 900; color: #fff; line-height: 0.9; letter-spacing: -3px; }
-    .sc-pollen .sc-sev-text { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: #fff; }
-    .sc-pollen .sc-sev-sub { font-size: 11px; color: rgba(255,255,255,0.5); font-weight: 500; }
-    .sc-pollen .sc-details { display: flex; gap: 16px; }
-    .sc-pollen .sc-detail-label { font-size: 12px; color: rgba(255,255,255,0.5); }
-    .sc-pollen .sc-detail-value { font-size: 14px; font-weight: 600; color: #fff; }
-    .sc-pollen .sc-detail:last-child { opacity: 0.5; }
-    /* Today For You */
-    .sc-today .sc-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-    .sc-today .sc-header-icon { width: 16px; height: 16px; color: var(--primary); }
-    .sc-today .sc-header-title { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--fg); }
-    .sc-today .sc-headline { font-family: var(--font-display); font-size: 14px; font-weight: 600; color: var(--fg); line-height: 1.4; margin-bottom: 8px; }
-    .sc-today .sc-allergen-row { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; background: rgba(201,68,68,0.07); margin-bottom: 8px; }
-    .sc-today .sc-allergen-icon { color: #C94444; }
-    .sc-today .sc-allergen-label { font-size: 13px; font-weight: 600; color: #C94444; }
-    .sc-today .sc-rec-row { display: flex; align-items: flex-start; gap: 8px; padding: 10px 14px; border-radius: 10px; background: rgba(58,125,92,0.06); }
-    .sc-today .sc-rec-icon { color: var(--primary); flex-shrink: 0; margin-top: 1px; }
-    .sc-today .sc-rec-text { font-size: 12px; font-weight: 500; color: var(--fg); line-height: 1.4; }
-    /* Symptom Summary */
-    .sc-symptoms .sc-sym-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-    .sc-symptoms .sc-sym-title { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--fg); }
-    .sc-symptoms .sc-sym-action { font-size: 13px; font-weight: 600; color: var(--primary); }
-    .sc-symptoms .sc-sym-grid { display: flex; gap: 10px; }
-    .sc-sym-chip { flex: 1; text-align: center; padding: 10px 6px; border-radius: var(--radius-md); background: var(--surface-secondary); }
-    .sc-sym-chip-name { font-size: 12px; font-weight: 500; color: var(--fg); margin-bottom: 4px; }
-    .sc-sym-chip-sev { font-size: 10px; font-weight: 600; }
-    .sc-sym-chip-sev.moderate { color: var(--secondary); }
-    .sc-sym-chip-sev.mild { color: var(--primary); }
-    .sc-sym-chip-sev.none { color: var(--fg-muted); }
-    /* Correlations */
-    .sc-corr .sc-corr-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-    .sc-corr .sc-corr-title { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--fg); }
-    .sc-corr .sc-corr-badge { font-size: 11px; font-weight: 500; color: var(--secondary); background: rgba(212,168,67,0.08); padding: 4px 10px; border-radius: var(--radius-pill); }
-    .sc-corr .sc-corr-rows { display: flex; flex-direction: column; gap: 10px; }
-    .sc-corr-row { display: flex; align-items: center; gap: 12px; }
-    .sc-corr-bar { flex: 1; height: 28px; background: var(--surface-secondary); border-radius: 8px; display: flex; align-items: center; padding: 0 10px; position: relative; overflow: hidden; }
-    .sc-corr-bar-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 8px; }
-    .sc-corr-bar-fill.green { background: rgba(58,125,92,0.15); }
-    .sc-corr-bar-fill.gold { background: rgba(212,168,67,0.15); }
-    .sc-corr-bar-fill.orange { background: rgba(212,118,78,0.15); }
-    .sc-corr-bar-text { position: relative; font-size: 12px; font-weight: 500; color: var(--fg); }
-    .sc-corr-pct { font-family: var(--font-display); font-size: 14px; font-weight: 600; }
-    .sc-corr-pct.green { color: var(--primary); }
-    .sc-corr-pct.gold { color: var(--secondary); }
-    .sc-corr-pct.orange { color: var(--accent); }
-    /* AI Insights */
-    .sc-ai .sc-ai-header { display: flex; align-items: center; gap: 4px; margin-bottom: 8px; }
-    .sc-ai .sc-ai-icon { color: var(--primary); }
-    .sc-ai .sc-ai-label { font-size: 11px; font-weight: 600; letter-spacing: 2px; color: var(--fg-muted); }
-    .sc-ai .sc-ai-body { font-size: 13px; line-height: 1.5; color: var(--fg); }
-    /* Prediction */
-    .sc-pred .sc-overline { color: rgba(255,255,255,0.5); margin-bottom: 4px; }
-    .sc-pred .sc-pred-title { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 8px; }
-    .sc-pred .sc-pred-body { font-size: 13px; line-height: 1.5; color: rgba(255,255,255,0.8); }
-    /* Weather */
-    .sc-weather-grid { display: flex; gap: 12px; }
-    .sc-weather-card { flex: 1; background: var(--surface); border-radius: var(--radius-md); border: 1px solid var(--border-subtle); padding: 14px; box-shadow: 0 4px 16px rgba(26,43,31,0.08); }
-    .material-symbols-rounded { font-family: 'Material Symbols Rounded'; font-weight: normal; font-style: normal; font-size: 20px; display: inline-block; line-height: 1; direction: ltr; -webkit-font-smoothing: antialiased; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20; }
-    .sc-weather-ico { margin-bottom: 8px; display: block; }
-    .sc-weather-ico.temp { color: var(--accent); }
-    .sc-weather-ico.humid { color: var(--primary); }
-    .sc-weather-ico.wind { color: var(--secondary); }
-    .sc-weather-ico.press { color: var(--fg-muted); }
-    .sc-weather-val { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--fg); }
-    .sc-weather-lbl { font-size: 11px; color: var(--fg-muted); margin-top: 4px; }
-    /* Weekly Trend */
-    .sc-trend .sc-trend-title { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--fg); margin-bottom: 12px; }
-    .sc-trend-bars { display: flex; align-items: flex-end; gap: 8px; height: 90px; }
-    .sc-trend-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; justify-content: flex-end; }
-    .sc-trend-bar { width: 100%; border-radius: 6px 6px 0 0; }
-    .sc-trend-bar.low { background: var(--success); }
-    .sc-trend-bar.mod { background: var(--secondary); }
-    .sc-trend-bar.high { background: var(--accent); }
-    .sc-trend-day { font-size: 10px; color: var(--fg-muted); }
-    .sc-trend-day.today { color: var(--fg); font-weight: 600; }
-    .sc-trend-bar.today-bar { outline: 2px solid var(--fg); outline-offset: -2px; }
-    /* Showcase responsive — switch to flow layout on tablet and below */
-    @media (max-width: 900px) {
-      .showcase {
-        height: auto;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-      }
-      .showcase-card {
-        position: relative !important;
-        left: auto !important;
-        top: auto !important;
-        width: auto !important;
-        transform: none !important;
-        padding: 14px;
-      }
-      .showcase-card:hover { transform: translateY(-2px) !important; }
-      .sc-pollen .sc-score { font-size: 48px; }
-      .sc-weather {
-        grid-column: 1 / -1;
-        background: none !important;
-        border: none !important;
-        box-shadow: none !important;
-        padding: 0 !important;
-      }
-    }
-    @media (max-width: 600px) {
-      .showcase { grid-template-columns: 1fr; }
-      .sc-pollen .sc-score { font-size: 40px; }
-      .sc-today .sc-headline { font-size: 12px; }
-      .sc-ai .sc-ai-body { font-size: 11px; }
-    }
+    .coming-soon-mini .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--pp-primary); flex: none; }
+    .mm-soon { color: var(--pp-foreground-muted); font-weight: 600; cursor: default; }
 
-    /* ── Features ── */
-    .features {
-      background: var(--surface);
-      padding: 80px 40px;
-    }
-    .features-inner {
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-    .features-header {
-      text-align: center;
-      margin-bottom: 48px;
-    }
-    .features-header .section-label { margin-bottom: 12px; display: block; }
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-    }
-    .feature-card {
-      background: var(--bg);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .feature-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.06);
-    }
-    .feature-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: var(--radius-md);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 16px;
-    }
-    .feature-icon svg { width: 24px; height: 24px; }
-    .feature-icon.green { background: var(--primary); color: var(--primary-fg); }
-    .feature-icon.orange { background: var(--accent); color: var(--accent-fg); }
-    .feature-icon.gold { background: var(--secondary); color: var(--secondary-fg); }
-    .feature-icon.dark { background: #1A2B1F; color: var(--success); }
-    @media (prefers-color-scheme: dark) {
-      .feature-icon.dark { background: #2E3830; }
-    }
-    .feature-card h3 {
-      font-family: var(--font-display);
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--fg);
-      margin-bottom: 8px;
-    }
-    .feature-card p {
-      font-size: 14px;
-      line-height: 1.5;
-      color: var(--fg-secondary);
-    }
+    /* Footer founder quote + attributions */
+    .footer-quote { margin: 0 0 28px; padding: 0 0 24px; border-bottom: 1px solid var(--pp-border-subtle); }
+    .footer-quote p { font-style: italic; color: var(--pp-foreground-secondary); font-size: 14.5px; line-height: 1.5; max-width: 540px; margin: 0 0 6px; }
+    .footer-quote cite { font-style: normal; font-size: 12.5px; color: var(--pp-foreground-muted); }
+    .footer-attr { margin-bottom: 24px; }
+    .footer-attr h5 { font-family: var(--pp-font-body); font-weight: 600; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--pp-foreground-secondary); margin: 0 0 12px; }
+    .footer-attr ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 13px; color: var(--pp-foreground-secondary); }
+    .footer-attr li b { font-weight: 600; color: var(--pp-foreground); }
 
-    /* ── Screenshots ── */
-    .screenshots {
-      padding: 80px 40px;
-      background: var(--bg);
-    }
-    .screenshots-inner {
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-    .screenshots-header {
-      text-align: center;
-      margin-bottom: 48px;
-    }
-    .screenshots-header .section-label { margin-bottom: 12px; display: block; }
-    .screenshots-row {
-      display: flex;
-      gap: 24px;
-      justify-content: center;
-      overflow-x: auto;
-      overflow-y: visible;
-      padding: 24px 0 16px;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      perspective: 1200px;
-    }
-    .screenshots-row::-webkit-scrollbar { display: none; }
-
-    .screenshot-card {
-      flex-shrink: 0;
-      width: 230px;
-      border-radius: 32px;
-      overflow: hidden;
-      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-      will-change: transform, opacity;
-    }
-    .screenshot-card.fan-ready:nth-child(1) { transform: rotate(-2deg) translateY(12px); }
-    .screenshot-card.fan-ready:nth-child(2) { transform: rotate(-0.8deg) translateY(4px); }
-    .screenshot-card.fan-ready:nth-child(3) { transform: rotate(0deg) translateY(0px); }
-    .screenshot-card.fan-ready:nth-child(4) { transform: rotate(0.8deg) translateY(4px); }
-    .screenshot-card.fan-ready:nth-child(5) { transform: rotate(2deg) translateY(12px); }
-    .screenshot-card:hover {
-      transform: translateY(-12px) rotate(0deg) scale(1.04) !important;
-      box-shadow: 0 32px 80px rgba(0,0,0,0.22);
-      z-index: 10;
-    }
-    .screenshot-card img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 32px;
-    }
-
-    /* ── Pricing ── */
-    .pricing {
-      background: var(--surface);
-      padding: 80px 40px;
-    }
-    .pricing-inner {
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-    .pricing-header {
-      text-align: center;
-      margin-bottom: 32px;
-    }
-    .pricing-header .section-label { margin-bottom: 12px; display: block; }
-    .billing-toggle {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      margin: 0 auto 48px;
-      padding: 4px;
-      border-radius: var(--radius-pill);
-      background: var(--bg);
-      border: 1px solid var(--border);
-      width: fit-content;
-    }
-    .toggle-btn {
-      padding: 10px 24px;
-      border-radius: var(--radius-pill);
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--fg-secondary);
-      cursor: pointer;
-      border: none;
-      background: none;
-      font-family: var(--font-body);
-      transition: all 0.2s;
-    }
-    .toggle-btn.active {
-      background: var(--primary);
-      color: var(--primary-fg);
-      font-weight: 600;
-    }
-    .toggle-save {
-      padding: 4px 10px;
-      border-radius: var(--radius-pill);
-      background: var(--success);
-      color: #fff;
-      font-size: 11px;
-      font-weight: 600;
-    }
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      align-items: start;
-    }
-    .tier-card {
-      background: var(--bg);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      padding: 32px;
-    }
-    .tier-card.featured { border: 2px solid var(--primary); }
-    .tier-badge {
-      display: inline-block;
-      padding: 4px 12px;
-      border-radius: var(--radius-pill);
-      background: var(--primary);
-      color: var(--primary-fg);
-      font-size: 11px;
-      font-weight: 600;
-      margin-bottom: 16px;
-    }
-    .tier-name {
-      font-family: var(--font-display);
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--fg);
-      margin-bottom: 8px;
-    }
-    .tier-price {
-      display: flex;
-      align-items: baseline;
-      gap: 4px;
-      margin-bottom: 4px;
-    }
-    .tier-amount {
-      font-family: var(--font-display);
-      font-size: 40px;
-      font-weight: 800;
-      color: var(--fg);
-      letter-spacing: -1px;
-    }
-    .tier-period { font-size: 14px; color: var(--fg-muted); }
-    .tier-yearly {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--primary);
-      margin-bottom: 8px;
-    }
-    .tier-desc {
-      font-size: 14px;
-      color: var(--fg-secondary);
-      margin-bottom: 24px;
-    }
-    .tier-divider {
-      height: 1px;
-      background: var(--border-subtle);
-      margin-bottom: 24px;
-    }
-    .tier-features {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .tier-features li {
-      font-size: 14px;
-      color: var(--fg-secondary);
-    }
-    .tier-features li.highlight { color: var(--fg); }
-    .tier-features li::before {
-      content: '\2713';
-      margin-right: 8px;
-      color: var(--primary);
-      font-weight: 600;
-    }
-
-    /* Yearly toggle states */
-    .pricing-inner.yearly .tier-period-text { display: none; }
-    .pricing-inner.yearly .tier-yearly-text { display: inline; }
-    .pricing-inner.yearly .tier-yearly { display: none; }
-    .pricing-inner:not(.yearly) .tier-yearly-text { display: none; }
-
-    /* ── Footer ── */
-    footer {
-      background: var(--surface-secondary);
-      padding: 48px 40px;
-    }
-    .footer-inner {
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-    .footer-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: start;
-      margin-bottom: 32px;
-    }
-    .footer-brand {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .footer-logo {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-    }
-    .footer-logo img { width: 28px; height: 28px; border-radius: 6px; }
-    .footer-logo span {
-      font-family: var(--font-display);
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--fg);
-      letter-spacing: -0.5px;
-    }
-    .footer-tagline { font-size: 14px; color: var(--fg-muted); }
-    .footer-links { display: flex; gap: 48px; }
-    .footer-col h4 {
-      font-family: var(--font-body);
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--fg);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-    .footer-col a {
-      display: block;
-      font-size: 14px;
-      color: var(--fg-secondary);
-      text-decoration: none;
-      margin-bottom: 8px;
-      transition: color 0.2s;
-    }
-    .footer-col a:hover { color: var(--fg); }
-    .footer-divider {
-      height: 1px;
-      background: var(--border-subtle);
-      margin-bottom: 24px;
-    }
-    .footer-copyright { font-size: 12px; color: var(--fg-muted); }
-
-    /* ── Responsive ── */
-    @media (max-width: 900px) {
-      .features-grid { grid-template-columns: repeat(2, 1fr); }
-      .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
-      .nav-links { display: none; }
-      .nav-hamburger { display: block; }
-      .nav-cta { display: none; }
-      .mobile-menu { display: flex; }
-      .screenshot-card { width: 200px; }
-      .screenshot-card.fan-ready { transform: none; }
-      .footer-links { gap: 32px; }
-    }
-    @media (max-width: 600px) {
-      .features-grid { grid-template-columns: 1fr; }
-      nav { padding: 0 20px; }
-      .hero { padding: 60px 20px 40px; }
-      .features, .screenshots, .pricing { padding: 60px 20px; }
-      footer { padding: 40px 20px; }
-      .mobile-menu { padding-left: 20px; padding-right: 20px; }
-      .mobile-menu.open { padding: 16px 20px 24px; }
-      .hero h1 { letter-spacing: -1px; }
-      .sc-pollen .sc-score { font-size: 36px; }
-      .sc-today .sc-headline { font-size: 12px; }
-      .sc-ai .sc-ai-body { font-size: 11px; }
-      .footer-top { flex-direction: column; gap: 32px; }
-      .footer-links { flex-wrap: wrap; gap: 24px; }
-      .screenshot-card { width: 160px; }
-      .screenshots-row { justify-content: flex-start; }
-      .sc-weather-grid { flex-wrap: wrap; }
-      .sc-weather-card { flex: 1 1 calc(50% - 6px); min-width: calc(50% - 6px); }
-    }
-    /* Touch devices: disable hover stickiness */
-    @media (hover: none) {
-      .screenshot-card:hover {
-        transform: none !important;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-      }
-      .screenshot-card.fan-ready:hover {
-        transform: none !important;
-      }
-      .showcase-card:hover {
-        box-shadow: 0 4px 16px rgba(26, 43, 31, 0.08);
-        z-index: auto;
-      }
-      .feature-card:hover {
-        transform: none;
-        box-shadow: none;
-      }
-    }
+    /* ---- Launch gating --------------------------------------------------------*/
+    [data-show-when] { display: none; }
+    /* outrank the blanket `.mobile-menu a { display:block }` (0,1,1) so the
+       opposite-state mobile CTA stays hidden; reveal rules below (0,2,2) still win */
+    .mobile-menu a[data-show-when] { display: none; }
+    html[data-launch="pre"]  .btn[data-show-when="pre"],
+    html[data-launch="live"] .btn[data-show-when="live"]            { display: inline-flex; }
+    html[data-launch="pre"]  .appstore[data-show-when="pre"],
+    html[data-launch="live"] .appstore[data-show-when="live"]      { display: inline-flex; }
+    html[data-launch="pre"]  .coming-soon[data-show-when="pre"],
+    html[data-launch="live"] .coming-soon[data-show-when="live"]   { display: inline-flex; }
+    html[data-launch="pre"]  .coming-soon-mini[data-show-when="pre"],
+    html[data-launch="live"] .coming-soon-mini[data-show-when="live"] { display: inline-flex; }
+    html[data-launch="pre"]  .mm-soon[data-show-when="pre"],
+    html[data-launch="live"] a.mm-cta[data-show-when="live"]       { display: block; }
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
   </style>
 </head>
 <body>
 
-  <!-- Nav -->
-  <div class="nav-bar">
-    <nav class="animate">
-      <a href="/" class="nav-logo">
-        <img src="img/icon.png" alt="PollenPath" width="32" height="32">
-        <span>PollenPath</span>
-      </a>
-      <ul class="nav-links">
-        <li><a href="#features">Features</a></li>
-        <li><a href="#pricing">Pricing</a></li>
-        <li><a href="privacy-policy.html">Privacy</a></li>
-        <li><a href="terms-of-service.html">Terms</a></li>
-      </ul>
-      <button class="nav-hamburger" aria-label="Open menu">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
-      <a href="#pricing" class="nav-cta">Coming Soon</a>
-    </nav>
-    <div class="mobile-menu" id="mobileMenu">
+<svg width="0" height="0" class="sprite" aria-hidden="true">
+  <symbol id="leaf" viewBox="0 0 24 24">
+    <path d="M4.5 19.5C4.5 11 10.5 4.5 19.5 4.5C19.5 13 13.5 19.5 4.5 19.5Z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/>
+    <path d="M5 19C8.2 14 12.2 10 17.5 7" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="apple-logo" viewBox="0 0 24 24">
+    <path d="M17.05 12.54c-.02-2.05 1.68-3.04 1.76-3.09-.96-1.4-2.45-1.6-2.98-1.62-1.27-.13-2.48.75-3.12.75-.64 0-1.64-.73-2.7-.71-1.39.02-2.67.81-3.38 2.05-1.44 2.5-.37 6.2 1.04 8.23.69.99 1.51 2.1 2.58 2.06 1.04-.04 1.43-.67 2.69-.67 1.25 0 1.61.67 2.7.65 1.12-.02 1.82-1.01 2.5-2.01.79-1.15 1.11-2.27 1.13-2.32-.02-.01-2.17-.83-2.19-3.3zM15 6.27c.57-.69.95-1.65.85-2.6-.82.03-1.81.54-2.39 1.23-.52.61-.98 1.58-.86 2.51.91.07 1.84-.46 2.4-1.14z"/>
+  </symbol>
+</svg>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top">
+      <img src="img/icon.png" alt="" width="34" height="34" class="brand-icon">
+      PollenPath
+    </a>
+    <nav class="nav-links">
       <a href="#features">Features</a>
+      <a href="#privacy">Privacy</a>
       <a href="#pricing">Pricing</a>
-      <a href="privacy-policy.html">Privacy</a>
-      <a href="terms-of-service.html">Terms</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M4.5 4.5l1.5 1.5M18 18l1.5 1.5M2.5 12h2M19.5 12h2M4.5 19.5l1.5-1.5M18 6l1.5-1.5"/></svg>
+      </button>
+      <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+        <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <line x1="2" y1="4.5" x2="16" y2="4.5"/>
+          <line x1="2" y1="9" x2="16" y2="9"/>
+          <line x1="2" y1="13.5" x2="16" y2="13.5"/>
+        </svg>
+      </button>
+      <span class="coming-soon-mini" data-show-when="pre"><span class="dot"></span>Coming soon</span>
+      <a class="btn btn-primary" data-show-when="live" href="https://apps.apple.com/app/id6760616969">Get the app</a>
     </div>
   </div>
+</header>
+<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+  <a href="#features">Features</a>
+  <a href="#privacy">Privacy</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#faq">FAQ</a>
+  <span class="mm-soon" data-show-when="pre">Coming soon</span>
+  <a href="https://apps.apple.com/app/id6760616969" class="mm-cta" data-show-when="live">Download on the App Store</a>
+</nav>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-badge animate animate-delay-1">Coming soon to the App Store</div>
-      <h1 class="animate animate-delay-2">Finally understand your allergies.</h1>
-      <p class="hero-sub animate animate-delay-3">PollenPath connects your symptoms to real-time pollen, air quality, and weather data &mdash; then uses on-device AI to reveal your personal triggers.</p>
-      <div class="hero-ctas animate animate-delay-4">
-        <a href="#features" class="btn-primary">Coming Soon</a>
-        <a href="#screenshots" class="btn-secondary">Learn More</a>
+<main id="top">
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy reveal">
+      <div class="overline eyebrow-leaf"><svg width="16" height="16" class="ic-primary"><use href="#leaf"/></svg> Allergy Tracker · iOS</div>
+      <h1 class="display">Connect how you <span class="em">feel</span> to what's in the air.</h1>
+      <p class="lede">PollenPath pulls real-time pollen, air quality, and weather, lets you log symptoms in seconds, and finds your personal triggers — all on your device. No guessing, no tracking, no ads.</p>
+      <div class="hero-cta">
+        <span class="coming-soon" data-show-when="pre"><span class="dot"></span>Coming soon to the App Store</span>
+        <a class="appstore" data-show-when="live" href="https://apps.apple.com/app/id6760616969" aria-label="Download on the App Store">
+          <svg viewBox="0 0 24 24" fill="currentColor"><use href="#apple-logo"/></svg>
+          <span class="as-txt"><span class="as-small">Download on the</span><span class="as-big">App Store</span></span>
+        </a>
+        <a class="btn btn-ghost" href="#features">See how it works</a>
       </div>
-      <!-- Showcase -->
-      <div class="showcase animate animate-delay-5" aria-label="App feature showcase">
-        <!-- Pollen Hero Card -->
-        <div class="showcase-card showcase-card--gold sc-pollen">
-          <div class="sc-top">
-            <div>
-              <div class="sc-overline">TODAY'S POLLEN INDEX</div>
-              <div class="sc-score">72</div>
-            </div>
-            <div style="text-align:right">
-              <div class="sc-sev-text">Moderate</div>
-              <div class="sc-sev-sub">Pollen Level</div>
-            </div>
-          </div>
-          <div class="sc-details">
-            <div class="sc-detail"><div class="sc-detail-label">Grass</div><div class="sc-detail-value">High</div></div>
-            <div class="sc-detail"><div class="sc-detail-label">Tree</div><div class="sc-detail-value">Low</div></div>
-            <div class="sc-detail"><div class="sc-detail-label">Weed</div><div class="sc-detail-value">Moderate</div></div>
-          </div>
-        </div>
-        <!-- Today for You -->
-        <div class="showcase-card sc-today">
-          <div class="sc-header">
-            <svg class="sc-header-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-            <span class="sc-header-title">Today for You</span>
-          </div>
-          <div class="sc-headline">Tough conditions &mdash; Bermuda Grass is high and your symptoms reflect it</div>
-          <div class="sc-allergen-row">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="sc-allergen-icon"><path d="M12 20H2v-2c0 0 2-2 4-2 1 0 2 .5 3 1.5.4-1.3.8-3 .8-5.5 0-4-1.2-6.5-2.8-8C5.5 2.5 4 2 4 2s1.5-.5 3.5.5C9 3.2 10.5 5 11.3 7.5c.8-2.5 2.3-4.3 3.8-5C17 1.5 18.5 2 18.5 2s-1.5.5-3 2c-1.6 1.5-2.8 4-2.8 8 0 2.5.4 4.2.8 5.5 1-1 2-1.5 3-1.5 2 0 4 2 4 2v2H12z"/></svg>
-            <div><div class="sc-allergen-label">Bermuda Grass pollen is Very High today</div></div>
-          </div>
-          <div class="sc-rec-row">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="sc-rec-icon"><path d="M12 3l1.5 4.5H18l-3.6 2.6L15.9 15 12 12.2 8.1 15l1.5-4.9L6 7.5h4.5z"/></svg>
-            <span class="sc-rec-text">Peak season with elevated pollen &mdash; take preventive medication before heading out</span>
-          </div>
-        </div>
-        <!-- Today's Symptoms -->
-        <div class="showcase-card sc-symptoms">
-          <div class="sc-sym-header">
-            <span class="sc-sym-title">Today's Symptoms</span>
-            <span class="sc-sym-action">Log now</span>
-          </div>
-          <div class="sc-sym-grid">
-            <div class="sc-sym-chip"><div class="sc-sym-chip-name">Cough</div><div class="sc-sym-chip-sev moderate">Moderate</div></div>
-            <div class="sc-sym-chip"><div class="sc-sym-chip-name">Runny Nose</div><div class="sc-sym-chip-sev mild">Mild</div></div>
-            <div class="sc-sym-chip"><div class="sc-sym-chip-name">Congestion</div><div class="sc-sym-chip-sev none">None</div></div>
-          </div>
-        </div>
-        <!-- Top Correlations -->
-        <div class="showcase-card sc-corr">
-          <div class="sc-corr-header">
-            <span class="sc-corr-title">Top Correlations</span>
-            <span class="sc-corr-badge">14-day analysis</span>
-          </div>
-          <div class="sc-corr-rows">
-            <div class="sc-corr-row"><div class="sc-corr-bar"><div class="sc-corr-bar-fill green" style="width:78%"></div><span class="sc-corr-bar-text">Grass &rarr; Cough</span></div><span class="sc-corr-pct green">78%</span></div>
-            <div class="sc-corr-row"><div class="sc-corr-bar"><div class="sc-corr-bar-fill gold" style="width:64%"></div><span class="sc-corr-bar-text">Humidity &rarr; Sinus Congestion</span></div><span class="sc-corr-pct gold">64%</span></div>
-            <div class="sc-corr-row"><div class="sc-corr-bar"><div class="sc-corr-bar-fill orange" style="width:52%"></div><span class="sc-corr-bar-text">Wind &rarr; Runny Nose</span></div><span class="sc-corr-pct orange">52%</span></div>
-            <div class="sc-corr-row"><div class="sc-corr-bar"><div class="sc-corr-bar-fill orange" style="width:45%"></div><span class="sc-corr-bar-text">AQI &rarr; Sinus Congestion</span></div><span class="sc-corr-pct orange">45%</span></div>
-          </div>
-        </div>
-        <!-- AI Insights -->
-        <div class="showcase-card showcase-card--green-border sc-ai">
-          <div class="sc-ai-header">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="sc-ai-icon"><path d="M12 3l1.5 4.5H18l-3.6 2.6L15.9 15 12 12.2 8.1 15l1.5-4.9L6 7.5h4.5z"/></svg>
-            <span class="sc-ai-label">AI INSIGHTS</span>
-          </div>
-          <p class="sc-ai-body">This week, grass pollen drove most of your symptoms. Your cough peaked on Wednesday when levels hit Very High. Humidity also played a role &mdash; your sinus congestion was 64% correlated with moisture levels above 60%.</p>
-        </div>
-        <!-- Tomorrow's Prediction -->
-        <div class="showcase-card showcase-card--gold sc-pred">
-          <div class="sc-overline">TOMORROW'S PREDICTION</div>
-          <div class="sc-pred-title">High grass pollen expected</div>
-          <p class="sc-pred-body">Based on your history, you may experience cough and runny nose. Consider taking antihistamine tonight.</p>
-        </div>
-        <!-- Weather Row -->
-        <div class="showcase-card sc-weather">
-          <div class="sc-weather-grid">
-            <div class="sc-weather-card">
-              <span class="material-symbols-rounded sc-weather-ico temp">thermostat</span>
-              <div class="sc-weather-val">24°C</div><div class="sc-weather-lbl">Temperature</div>
-            </div>
-            <div class="sc-weather-card">
-              <span class="material-symbols-rounded sc-weather-ico humid">humidity_mid</span>
-              <div class="sc-weather-val">62%</div><div class="sc-weather-lbl">Humidity</div>
-            </div>
-            <div class="sc-weather-card">
-              <span class="material-symbols-rounded sc-weather-ico wind">air</span>
-              <div class="sc-weather-val">12 km/h</div><div class="sc-weather-lbl">Wind</div>
-            </div>
-            <div class="sc-weather-card">
-              <span class="material-symbols-rounded sc-weather-ico press">speed</span>
-              <div class="sc-weather-val">1014 hPa</div><div class="sc-weather-lbl">Pressure</div>
-            </div>
-          </div>
-        </div>
-        <!-- Weekly Trend -->
-        <div class="showcase-card sc-trend">
-          <div class="sc-trend-title">Weekly Trend</div>
-          <div class="sc-trend-bars">
-            <div class="sc-trend-col"><div class="sc-trend-bar low" style="height:30%"></div><span class="sc-trend-day">M</span></div>
-            <div class="sc-trend-col"><div class="sc-trend-bar mod" style="height:55%"></div><span class="sc-trend-day">T</span></div>
-            <div class="sc-trend-col"><div class="sc-trend-bar high" style="height:80%"></div><span class="sc-trend-day">W</span></div>
-            <div class="sc-trend-col"><div class="sc-trend-bar mod" style="height:50%"></div><span class="sc-trend-day">T</span></div>
-            <div class="sc-trend-col"><div class="sc-trend-bar low" style="height:25%"></div><span class="sc-trend-day">F</span></div>
-            <div class="sc-trend-col"><div class="sc-trend-bar mod today-bar" style="height:45%"></div><span class="sc-trend-day today">S</span></div>
-          </div>
-        </div>
+      <div class="hero-meta">
+        <span>Privacy-first</span><span class="dot"></span>
+        <span>Free to start</span><span class="dot"></span>
+        <span>Apple Health</span>
       </div>
     </div>
-  </section>
+    <div class="hero-stage reveal d1">
+      <div class="hero-glow"></div>
+      <svg class="hero-leaf-bg"><use href="#leaf"/></svg>
+      <img class="phone secondary" src="img/screens/insights-device.webp" alt="PollenPath Insights screen" loading="lazy" width="569" height="1028">
+      <img class="phone" src="img/screens/home-device.webp" alt="PollenPath Home screen — pollen index, weather, air quality" width="569" height="1028">
+    </div>
+  </div>
+</section>
 
-  <!-- Features -->
-  <section class="features" id="features">
-    <div class="features-inner">
-      <div class="features-header">
-        <span class="section-label">Why PollenPath</span>
-        <h2 class="section-title">Everything you need to manage allergies</h2>
+<section class="trust">
+  <div class="wrap trust-inner reveal">
+    <span class="trust-label">Environmental data from</span>
+    <span class="trust-item">Google Pollen API</span><span class="trust-sep">·</span>
+    <span class="trust-item">Google Air Quality API</span><span class="trust-sep">·</span>
+    <span class="trust-item">Apple WeatherKit</span><span class="trust-sep">·</span>
+    <span class="trust-item">On-device Core ML</span>
+  </div>
+</section>
+
+<!-- ============================ FEATURES ============================ -->
+<section class="sec" id="features">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <div class="overline">Everything in one calm place</div>
+      <h2 class="display">A health companion, not a&nbsp;dashboard.</h2>
+      <p class="lede">PollenPath turns scattered environmental data into a single, glanceable view — and quietly learns what actually sets you off.</p>
+    </div>
+
+    <!-- Feature row 1: Dashboard -->
+    <div class="feature-row">
+      <div class="feature-art reveal">
+        <div class="blob blob--low"></div>
+        <img class="phone" src="img/screens/home-device.webp" alt="PollenPath Home screen" loading="lazy" width="569" height="1028">
       </div>
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon green">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>
-          </div>
-          <h3>Real-Time Pollen &amp; Air Quality</h3>
-          <p>Check live pollen levels and air quality for your area. See which trees, grasses, and weeds are active &mdash; and what's coming next.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon orange">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg>
-          </div>
-          <h3>Log Symptoms in Seconds</h3>
-          <p>Quick tap-based logging synced to Apple Health. Track cough, congestion, runny nose, and dozens more throughout the day.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon gold">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/><path d="M12 18v-3"/></svg>
-          </div>
-          <h3>Discover Your Triggers</h3>
-          <p>On-device AI analyzes your symptom patterns alongside pollen and weather data to reveal personal correlations. No data leaves your device.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon dark">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
-          </div>
-          <h3>Privacy First</h3>
-          <p>Health data stays on your device and in Apple Health. Pollen lookups use city-level location only. No analytics, no tracking, no ads.</p>
-        </div>
+      <div class="feature-copy reveal d1">
+        <div class="overline">Home</div>
+        <h3>See your whole day at a glance.</h3>
+        <p>A single hero index tells you today's pollen level instantly. Temperature, humidity, wind, pressure, and air quality sit one tap below — pulled live for your location.</p>
+        <ul class="feature-list">
+          <li><span class="fi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#leaf"/></svg></span><span><b>Glanceable pollen index</b> — Grass, Tree, and Weed broken out, with out-of-season handled gracefully.</span></li>
+          <li><span class="fi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5h11.5a2.6 2.6 0 1 0-2.6-2.6M3 12h16.5a2.6 2.6 0 1 1-2.6 2.6M3 15.5h9.5a2.6 2.6 0 1 1-2.6 2.6"/></svg></span><span><b>Live weather &amp; air quality</b> — the conditions that drive your symptoms, always current.</span></li>
+          <li><span class="fi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg></span><span><b>Home-Screen widgets</b> — today's index without even opening the app.</span></li>
+        </ul>
       </div>
     </div>
-  </section>
 
-  <!-- Screenshots -->
-  <section class="screenshots" id="screenshots">
-    <div class="screenshots-inner">
-      <div class="screenshots-header">
-        <span class="section-label">See It In Action</span>
-        <h2 class="section-title">Designed to feel right at home on iOS</h2>
+    <!-- Feature row 2: Insights -->
+    <div class="feature-row flip">
+      <div class="feature-art reveal">
+        <div class="blob blob--secondary"></div>
+        <img class="phone" src="img/screens/insights-device.webp" alt="PollenPath Insights screen" loading="lazy" width="569" height="1028">
       </div>
-      <div class="screenshots-row" role="list" aria-label="App screenshots">
-        <div class="screenshot-card" role="listitem"><img src="img/screenshot-1.webp" alt="Dashboard showing pollen index, air quality, and weather" width="860" height="1864" loading="lazy"></div>
-        <div class="screenshot-card" role="listitem"><img src="img/screenshot-2.webp" alt="Symptom logger with quick-tap buttons" width="860" height="1864" loading="lazy"></div>
-        <div class="screenshot-card" role="listitem"><img src="img/screenshot-3.webp" alt="History calendar with color-coded days" width="860" height="1864" loading="lazy"></div>
-        <div class="screenshot-card" role="listitem"><img src="img/screenshot-4.webp" alt="AI-powered insights showing personal triggers" width="860" height="1864" loading="lazy"></div>
-        <div class="screenshot-card" role="listitem"><img src="img/screenshot-5.webp" alt="Alert notifications for high pollen levels" width="860" height="1864" loading="lazy"></div>
+      <div class="feature-copy reveal d1">
+        <div class="overline eyebrow-leaf"><svg viewBox="0 0 24 24" width="16" height="16" class="ic-secondary"><path d="M12 2.5c.5 3.7 1.8 5 5.5 5.5-3.7.5-5 1.8-5.5 5.5-.5-3.7-1.8-5-5.5-5.5 3.7-.5 5-1.8 5.5-5.5z" fill="currentColor"/></svg> Insights</div>
+        <h3>Find your triggers, on your device.</h3>
+        <p>On-device machine learning correlates how you feel with what's in the air, then surfaces it plainly — a real number, never a vague promise. Your data never leaves your phone.</p>
+        <ul class="feature-list">
+          <li><span class="fi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M5 20.5a7 7 0 0 1 14 0"/></svg></span><span><b>Today for You</b> — a calm, actionable read on your day.</span></li>
+          <li><span class="fi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 3.5v15a2 2 0 0 0 2 2h15"/><path d="m7.5 14.5 3.5-3.5 3 3 4.5-5"/></svg></span><span><b>Weekly AI summary</b> — concrete correlations like "grass pollen on 78% of bad days."</span></li>
+          <li><span class="fi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9.5" rx="2.2" fill="currentColor" stroke="none"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><span><b>Private by design</b> — no accounts, no servers, no ad networks.</span></li>
+        </ul>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Pricing -->
-  <section class="pricing" id="pricing">
-    <div class="pricing-inner">
-      <div class="pricing-header">
-        <span class="section-label">Pricing</span>
-        <h2 class="section-title">Start free. Upgrade when you're ready.</h2>
+<!-- ============================ SCREENSHOT GALLERY ============================ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <div class="overline">A look inside</div>
+      <h2 class="display">Four screens. One calm rhythm.</h2>
+      <p class="lede">Check today, see what's coming, log how you feel, and learn what sets you off — each its own quiet surface.</p>
+    </div>
+    <div class="gallery reveal">
+      <figure class="gallery-item"><img class="phone" src="img/screens/home-device.webp" alt="PollenPath Home screen" loading="lazy" width="569" height="1028"><figcaption>Today at a glance</figcaption></figure>
+      <figure class="gallery-item"><img class="phone" src="img/screens/forecast-device.webp" alt="PollenPath Forecast screen" loading="lazy" width="569" height="1028"><figcaption>Tomorrow's outlook</figcaption></figure>
+      <figure class="gallery-item"><img class="phone" src="img/screens/logger-device.webp" alt="PollenPath symptom logger screen" loading="lazy" width="569" height="1028"><figcaption>Log how you feel</figcaption></figure>
+      <figure class="gallery-item"><img class="phone" src="img/screens/insights-device.webp" alt="PollenPath Insights screen" loading="lazy" width="569" height="1028"><figcaption>Find your triggers</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FEATURE CARD GRID ============================ -->
+<section class="sec sec--flush-top">
+  <div class="wrap">
+    <div class="card-grid">
+      <div class="fcard reveal">
+        <div class="fc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8.2v7.6M8.2 12h7.6"/></svg></div>
+        <h4>Log in seconds</h4>
+        <p>Tap how you feel, pick your symptoms, add a note. No forms, no friction.</p>
       </div>
-      <div class="billing-toggle">
-        <button class="toggle-btn active" data-period="monthly">Monthly</button>
-        <button class="toggle-btn" data-period="yearly">Yearly</button>
-        <span class="toggle-save">Save up to 28%</span>
+      <div class="fcard reveal d1">
+        <div class="fc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg></div>
+        <h4>Look back</h4>
+        <p>A week strip and calendar tie each day's symptoms to the conditions behind them.</p>
       </div>
-      <div class="pricing-grid">
-        <!-- Free -->
-        <div class="tier-card">
-          <div class="tier-name">Free</div>
-          <div class="tier-price">
-            <span class="tier-amount">$0</span>
-          </div>
-          <p class="tier-desc">Get started with symptom tracking</p>
-          <div class="tier-divider"></div>
-          <ul class="tier-features">
-            <li>Symptom logging</li>
-            <li>Apple Health sync</li>
-            <li>Weather data</li>
-            <li>7-day history</li>
-          </ul>
-        </div>
-        <!-- Basic -->
-        <div class="tier-card featured">
-          <span class="tier-badge">Most Popular</span>
-          <div class="tier-name">Basic</div>
-          <div class="tier-price">
-            <span class="tier-amount" data-monthly="$1.99" data-yearly="$19.99">$1.99</span>
-            <span class="tier-period"><span class="tier-period-text">/month</span><span class="tier-yearly-text">/year</span></span>
-          </div>
-          <div class="tier-yearly">or $19.99/year (save 16%)</div>
-          <p class="tier-desc">Live pollen &amp; air quality data</p>
-          <div class="tier-divider"></div>
-          <ul class="tier-features">
-            <li>Everything in Free</li>
-            <li class="highlight">Daily pollen index</li>
-            <li class="highlight">Air quality data</li>
-            <li class="highlight">Pollen &amp; AQ alerts</li>
-            <li class="highlight">90-day history</li>
-          </ul>
-        </div>
-        <!-- Pro -->
-        <div class="tier-card">
-          <div class="tier-name">Pro</div>
-          <div class="tier-price">
-            <span class="tier-amount" data-monthly="$6.99" data-yearly="$59.99">$6.99</span>
-            <span class="tier-period"><span class="tier-period-text">/month</span><span class="tier-yearly-text">/year</span></span>
-          </div>
-          <div class="tier-yearly">or $59.99/year (save 28%)</div>
-          <p class="tier-desc">Full forecasts, species detail &amp; AI insights</p>
-          <div class="tier-divider"></div>
-          <ul class="tier-features">
-            <li>Everything in Basic</li>
-            <li class="highlight">5-day pollen forecast</li>
-            <li class="highlight">Species-level detail</li>
-            <li class="highlight">AI-powered insights</li>
-            <li class="highlight">Widgets &amp; export</li>
-            <li class="highlight">365-day history</li>
-          </ul>
-        </div>
+      <div class="fcard reveal d2">
+        <div class="fc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5a7 7 0 0 1 14 0"/><circle cx="12" cy="8" r="3.6"/></svg></div>
+        <h4>Apple Health</h4>
+        <p>Reads and writes the data you choose, so PollenPath fits your existing routine.</p>
+      </div>
+      <div class="fcard reveal d3">
+        <div class="fc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6.5 2 6.5H4S6 14 6 9z"/><path d="M10.2 19.5a2 2 0 0 0 3.6 0"/></svg></div>
+        <h4>Gentle alerts</h4>
+        <p>A heads-up when pollen climbs — actionable and calm, never alarmist.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Footer -->
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-top">
-        <div class="footer-brand">
-          <a href="/" class="footer-logo">
-            <img src="img/icon.png" alt="PollenPath" width="28" height="28">
-            <span>PollenPath</span>
-          </a>
-          <p class="footer-tagline">Track allergies. Understand triggers. Breathe easier.</p>
-        </div>
-        <div class="footer-links">
-          <div class="footer-col">
-            <h4>Legal</h4>
-            <a href="privacy-policy.html">Privacy Policy</a>
-            <a href="terms-of-service.html">Terms of Service</a>
-          </div>
-          <div class="footer-col">
-            <h4>Connect</h4>
-            <a href="https://instagram.com/pollenpath.app" target="_blank" rel="noopener">Instagram</a>
-            <a href="mailto:support@pollenpath.app">support@pollenpath.app</a>
-          </div>
-        </div>
-      </div>
-      <div class="footer-divider"></div>
-      <p class="footer-copyright">&copy; 2026 PollenPath. All rights reserved.</p>
+<!-- ============================ PRIVACY (DARK) ============================ -->
+<section class="privacy" id="privacy">
+  <svg class="privacy-leaf"><use href="#leaf"/></svg>
+  <div class="wrap">
+    <div class="sec-head reveal sec-head--flush">
+      <div class="overline">Privacy-first by design</div>
+      <h2 class="display">Your health data never leaves your phone.</h2>
+      <p class="lede">PollenPath was built on a simple promise: understand your body without handing it to anyone. The intelligence runs on-device — there's nothing to leak.</p>
     </div>
-  </footer>
+    <div class="privacy-grid">
+      <div class="pcard reveal">
+        <div class="pc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9.5" rx="2.2" fill="currentColor" stroke="none"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
+        <h4>On-device ML</h4>
+        <p>Trigger detection and predictions are computed locally. Your symptoms stay with you.</p>
+      </div>
+      <div class="pcard reveal d1">
+        <div class="pc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M5.5 5.5l13 13"/></svg></div>
+        <h4>No tracking</h4>
+        <p>No accounts, no analytics profiles, no third-party trackers following you around.</p>
+      </div>
+      <div class="pcard reveal d2">
+        <div class="pc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16v9H4z"/><path d="M9 19h6M12 15v4"/><path d="M6.5 8.5l3 3 5-5" /></svg></div>
+        <h4>No ads, ever</h4>
+        <p>PollenPath is funded by subscriptions, not attention. The screen is yours.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <script>
-    // Billing toggle
-    const toggleBtns = document.querySelectorAll('.toggle-btn');
-    const pricingInner = document.querySelector('.pricing-inner');
-    const amounts = document.querySelectorAll('.tier-amount[data-monthly]');
+<!-- ============================ PRICING ============================ -->
+<section class="sec" id="pricing">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <div class="overline">Choose your plan</div>
+      <h2 class="display">Start free. Upgrade when you're ready.</h2>
+      <p class="lede">Premium subscriptions help fund pollen and air quality data for everyone.</p>
+    </div>
 
-    toggleBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        toggleBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const period = btn.dataset.period;
-        if (period === 'yearly') {
-          pricingInner.classList.add('yearly');
-          amounts.forEach(el => el.textContent = el.dataset.yearly);
-        } else {
-          pricingInner.classList.remove('yearly');
-          amounts.forEach(el => el.textContent = el.dataset.monthly);
-        }
+    <div class="reveal center-text">
+      <div class="billing-toggle" id="billingToggle">
+        <button data-cycle="monthly">Monthly</button>
+        <button data-cycle="yearly" class="active">Yearly<span class="save-badge">2 months free</span></button>
+      </div>
+    </div>
+
+    <div class="price-grid">
+      <!-- Free -->
+      <div class="tier reveal">
+        <div class="tier-head"><span class="tier-name">Free</span></div>
+        <div class="tier-sub">The essentials, forever.</div>
+        <div class="tier-price"><span class="amt">$0</span><span class="per">/ always</span></div>
+        <a class="btn btn-ghost" href="#download">Get started</a>
+        <ul class="tier-feats">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 6.5"/></svg> Symptom logging</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 6.5"/></svg> Live weather conditions</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 6.5"/></svg> Apple Health integration</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 6.5"/></svg> Top Symptoms insight</li>
+        </ul>
+      </div>
+
+      <!-- Basic -->
+      <div class="tier reveal d1">
+        <div class="tier-head"><span class="tier-name">Basic</span></div>
+        <div class="tier-sub">Today's air, decoded.</div>
+        <div class="tier-price"><span class="amt" data-monthly="$2.99" data-yearly="$29.99">$29.99</span><span class="per" data-per-cycle>/ year</span></div>
+        <a class="btn btn-primary" href="#download">Choose Basic</a>
+        <ul class="tier-feats">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 6.5"/></svg> Today's pollen index</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 6.5"/></svg> Air quality data</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 6.5"/></svg> Today for You insights</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 6.5"/></svg> 90-day history</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 6.5"/></svg> Daily forecast alerts</li>
+        </ul>
+      </div>
+
+      <!-- Pro -->
+      <div class="tier featured reveal d2">
+        <div class="tier-head"><span class="tier-name">Pro</span><span class="best-value">Best Value</span></div>
+        <div class="tier-sub">Forecasts &amp; species detail.</div>
+        <div class="tier-price"><span class="amt" data-monthly="$7.99" data-yearly="$79.99">$79.99</span><span class="per" data-per-cycle>/ year</span></div>
+        <a class="btn btn-primary" href="#download">Choose Pro</a>
+        <ul class="tier-feats">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 6.5"/></svg> Everything in Basic</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 6.5"/></svg> 5-day pollen forecast</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 6.5"/></svg> Species-level detail</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 6.5"/></svg> 365-day history</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 6.5"/></svg> ML trigger predictions</li>
+        </ul>
+      </div>
+    </div>
+    <p class="price-note">Prices in USD; actual price varies by region — see the App Store. Auto-renews · Cancel anytime · 7-day free trial.</p>
+  </div>
+</section>
+
+<!-- ============================ FAQ ============================ -->
+<section class="sec sec--flush-top" id="faq">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <div class="overline">Good to know</div>
+      <h2 class="display">Questions, answered.</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item reveal" open>
+        <summary class="faq-q">Is PollenPath a medical app?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 9 12 15.5 18.5 9"/></svg></span></summary>
+        <div class="faq-a">No. PollenPath is a wellness and tracking tool — it helps you notice patterns between how you feel and what's in the air. It does not provide medical advice or diagnosis. For medical concerns, talk to a clinician.</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary class="faq-q">Where does the data come from?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 9 12 15.5 18.5 9"/></svg></span></summary>
+        <div class="faq-a">Environmental data is provided by the Google Pollen API, Google Air Quality API, and Apple WeatherKit. Species coverage varies by region and may not include every locally relevant allergen.</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary class="faq-q">How is my privacy protected?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 9 12 15.5 18.5 9"/></svg></span></summary>
+        <div class="faq-a">Your symptom logs and the machine learning that finds your triggers stay on your device. There are no accounts, no third-party trackers, and no ads. You're in control of what syncs to Apple Health.</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary class="faq-q">What do I get for free?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 9 12 15.5 18.5 9"/></svg></span></summary>
+        <div class="faq-a">Symptom logging, live weather, Apple Health integration, and your Top Symptoms insight are free forever. Basic and Pro add today's pollen index, air quality, longer history, forecasts, and on-device predictions.</div>
+      </details>
+      <details class="faq-item reveal">
+        <summary class="faq-q">Which devices are supported?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 9 12 15.5 18.5 9"/></svg></span></summary>
+        <div class="faq-a">PollenPath is a native iOS app for iPhone, with Home-Screen widgets. Download it free from the App Store and start logging in seconds.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================ CTA BANNER ============================ -->
+<section class="cta-banner" id="download">
+  <div class="wrap reveal">
+    <div class="cta-box">
+      <svg class="leaf-wm"><use href="#leaf"/></svg>
+      <svg class="leaf-wm r"><use href="#leaf"/></svg>
+      <h2 class="display">Breathe a little easier.</h2>
+      <p>Download PollenPath and connect how you feel to what's in the air — free to start, on your iPhone.</p>
+      <span class="coming-soon on-dark" data-show-when="pre"><span class="dot"></span>Coming soon to the App Store</span>
+      <a class="appstore" data-show-when="live" href="https://apps.apple.com/app/id6760616969">
+        <svg viewBox="0 0 24 24" fill="currentColor"><use href="#apple-logo"/></svg>
+        <span class="as-txt"><span class="as-small">Download on the</span><span class="as-big">App Store</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="brand"><img src="img/icon.png" alt="" width="34" height="34" class="brand-icon"> PollenPath</div>
+        <p>A warm, privacy-first allergy tracker that connects how you feel to what's in the air.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Product</h5>
+        <ul><li><a href="#features">Features</a></li><li><a href="#privacy">Privacy</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#faq">FAQ</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul><li><a href="press.html">Press</a></li><li><a href="changelog.html">Changelog</a></li><li><a href="https://instagram.com/pollenpath.app" target="_blank" rel="noopener">Instagram</a></li><li><a href="mailto:support@pollenpath.app">Contact</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <ul><li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="terms-of-service.html">Terms of Service</a></li></ul>
+      </div>
+    </div>
+    <blockquote class="footer-quote">
+      <p>"I wanted an allergy tracker I could trust with my own data. So I built one."</p>
+      <cite>— Miguel, founder</cite>
+    </blockquote>
+    <div class="footer-attr">
+      <h5>Data &amp; Attributions</h5>
+      <ul>
+        <li><b>Pollen &amp; Air Quality:</b> Google Maps Platform</li>
+        <li><b>Weather:</b> Apple WeatherKit</li>
+        <li><b>Health data:</b> Apple HealthKit — stored on your device</li>
+        <li><b>Maps &amp; Location:</b> Apple MapKit — city-level only</li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <p class="disclaimer">PollenPath is a wellness and tracking tool. It does not provide medical advice, diagnosis, or treatment. Species coverage varies by region.</p>
+      <span class="copy">© 2026 PollenPath</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  // Scroll reveal — content visible by default; hiding enabled only once JS runs.
+  document.documentElement.classList.add('anim');
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
+    revealEls.forEach(function (el) { io.observe(el); });
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        revealEls.forEach(function (el) { if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('in'); });
+      }, 200);
+    });
+  } else { revealEls.forEach(function (el) { el.classList.add('in'); }); }
+
+  // Nav shadow on scroll
+  var nav = document.getElementById('nav');
+  var onScroll = function () { nav.classList.toggle('scrolled', window.scrollY > 12); };
+  onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Billing toggle
+  var billing = document.getElementById('billingToggle');
+  if (billing) {
+    billing.addEventListener('click', function (e) {
+      var btn = e.target.closest('button'); if (!btn) return;
+      var cycle = btn.getAttribute('data-cycle');
+      billing.querySelectorAll('button').forEach(function (b) { b.classList.toggle('active', b === btn); });
+      document.querySelectorAll('[data-monthly]').forEach(function (amt) {
+        amt.textContent = amt.getAttribute(cycle === 'monthly' ? 'data-monthly' : 'data-yearly');
+      });
+      document.querySelectorAll('[data-per-cycle]').forEach(function (per) {
+        per.textContent = cycle === 'monthly' ? '/ month' : '/ year';
       });
     });
+  }
 
-    // Scroll-triggered animations
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.animationPlayState = 'running';
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
+  // Theme toggle
+  var sun = '<circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M4.5 4.5l1.5 1.5M18 18l1.5 1.5M2.5 12h2M19.5 12h2M4.5 19.5l1.5-1.5M18 6l1.5-1.5"/>';
+  var moon = '<path d="M20 14.5A8 8 0 0 1 9.5 4 7 7 0 1 0 20 14.5z"/>';
+  var themeIcon = document.getElementById('themeIcon');
+  function applyIcon(t) { themeIcon.innerHTML = t === 'dark' ? moon : sun; }
+  applyIcon(document.documentElement.getAttribute('data-theme'));
+  document.getElementById('themeToggle').addEventListener('click', function () {
+    var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.body.classList.add('theme-transition');
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('pp-theme', next); } catch (e) {}
+    applyIcon(next);
+    setTimeout(function () { document.body.classList.remove('theme-transition'); }, 500);
+  });
 
-    document.querySelectorAll('.feature-card, .tier-card').forEach((el, i) => {
-      el.style.opacity = '0';
-      el.style.animation = `fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${i * 0.08}s forwards`;
-      el.style.animationPlayState = 'paused';
-      observer.observe(el);
+  // Mobile hamburger menu
+  var hamburger = document.getElementById('navHamburger');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', function () {
+      var open = mobileMenu.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
-
-    // Screenshots: stacked deck deal — cards start stacked in center, deal out to fan positions
-    const screenshotCards = document.querySelectorAll('.screenshot-card');
-    const screenshotRow = document.querySelector('.screenshots-row');
-    const count = screenshotCards.length;
-
-    // Build deal order: center first, then alternating outward
-    const mid = Math.floor(count / 2);
-    const dealOrder = [mid];
-    for (let d = 1; d <= mid; d++) {
-      if (mid - d >= 0) dealOrder.push(mid - d);
-      if (mid + d < count) dealOrder.push(mid + d);
-    }
-
-    screenshotCards.forEach((el, i) => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateX(0) translateY(40px) scale(0.92) rotate(0deg)';
-      el.style.zIndex = String(count - i);
-    });
-
-    const screenshotObs = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          dealOrder.forEach((cardIdx, step) => {
-            const el = screenshotCards[cardIdx];
-            setTimeout(() => {
-              el.style.transition = 'opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1)';
-              el.style.opacity = '1';
-              el.classList.add('fan-ready');
-              el.style.transform = '';
-            }, step * 120);
-          });
-          screenshotObs.unobserve(entry.target);
-        }
+    mobileMenu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        mobileMenu.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
       });
-    }, { threshold: 0.15 });
-    screenshotObs.observe(screenshotRow);
-
-    // Mobile menu toggle
-    const hamburger = document.querySelector('.nav-hamburger');
-    const mobileMenu = document.getElementById('mobileMenu');
-    if (hamburger && mobileMenu) {
-        hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
-        mobileMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => mobileMenu.classList.remove('open'));
-        });
-    }
-  </script>
+    });
+  }
+})();
+</script>
 
 </body>
 </html>
