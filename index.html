@@ -339,18 +339,17 @@
       opacity: .96; filter: saturate(.98);
     }
 
-    /* ---- Phone mockup ---------------------------------------------------------*/
-    .phone {
-      width: 300px; flex: none;
-      background: #0e120f; border-radius: 46px; padding: 11px;
-      box-shadow: 0 30px 70px -20px rgba(26,43,31,.45), 0 8px 24px rgba(26,43,31,.18);
-    }
-    .phone-screen {
-      position: relative; background: var(--pp-background);
-      border-radius: 36px; overflow: hidden; height: 600px;
-      display: flex; flex-direction: column;
-    }
-    .phone-notch { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 84px; height: 26px; background: #0e120f; border-radius: 14px; z-index: 5; }
+    /* ---- Device mockup (iPhone frame + shadow baked into the PNG) -------------*/
+    /* Source: Design/pollenpath-redesign.pen §14 · Web refresh. Each PNG is a
+       full device render with transparent corners and a soft shadow already
+       composited, so no CSS frame/notch/box-shadow is needed. */
+    .phone { display: block; height: auto; width: 360px; flex: none; }
+
+    /* ---- Screenshot gallery ---------------------------------------------------*/
+    .gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; align-items: start; }
+    .gallery-item { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 18px; }
+    .gallery-item .phone { width: 100%; max-width: 280px; }
+    .gallery-item figcaption { font-family: var(--pp-font-display); font-weight: 600; font-size: 16px; letter-spacing: -.2px; color: var(--pp-foreground-secondary); text-align: center; }
 
     /* ---- Trust strip ----------------------------------------------------------*/
     .trust { padding: 22px 0 8px; }
@@ -484,9 +483,6 @@
     .footer-bottom .disclaimer { font-size: 12.5px; color: var(--pp-foreground-muted); max-width: 720px; line-height: 1.55; }
     .footer-bottom .copy { font-size: 12.5px; color: var(--pp-foreground-muted); white-space: nowrap; }
 
-    /* ---- Phone screenshot fill -----------------------------------------------*/
-    .phone-screen > img.app-screen { width:100%; height:100%; object-fit:cover; object-position:top center; display:block; }
-
     /* ---- Scroll reveal --------------------------------------------------------*/
     /* Content visible by default; hiding enabled only when <html> has .anim class */
     .anim .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
@@ -503,6 +499,7 @@
       .hero-copy { max-width: none; }
       .feature-row { grid-template-columns: 1fr; gap: 40px; }
       .feature-row.flip .feature-art { order: 0; }
+      .gallery { grid-template-columns: repeat(2, 1fr); gap: 40px 20px; }
       .card-grid { grid-template-columns: repeat(2, 1fr); }
       .privacy-grid, .price-grid { grid-template-columns: 1fr; }
       .footer-top { grid-template-columns: 1fr 1fr; }
@@ -541,6 +538,8 @@
     }
     @media (max-width: 560px) {
       .wrap { padding: 0 20px; }
+      .gallery { grid-template-columns: 1fr; gap: 36px; }
+      .gallery-item .phone { max-width: 260px; }
       .card-grid { grid-template-columns: 1fr; }
       .footer-top { grid-template-columns: 1fr; }
       .hero-stage .phone.secondary { display: none; }
@@ -697,8 +696,8 @@
     <div class="hero-stage reveal d1">
       <div class="hero-glow"></div>
       <svg class="hero-leaf-bg"><use href="#leaf"/></svg>
-      <div class="phone secondary"><div class="phone-screen"><div class="phone-notch"></div><img class="app-screen" src="img/screens/insights.webp" alt="PollenPath Insights screen" loading="lazy" width="786" height="2680"></div></div>
-      <div class="phone"><div class="phone-screen"><div class="phone-notch"></div><img class="app-screen" src="img/screens/home.webp" alt="PollenPath Home screen — pollen index, weather, air quality" width="786" height="2840"></div></div>
+      <img class="phone secondary" src="img/screens/insights-device.webp" alt="PollenPath Insights screen" loading="lazy" width="569" height="1028">
+      <img class="phone" src="img/screens/home-device.webp" alt="PollenPath Home screen — pollen index, weather, air quality" width="569" height="1028">
     </div>
   </div>
 </section>
@@ -726,7 +725,7 @@
     <div class="feature-row">
       <div class="feature-art reveal">
         <div class="blob blob--low"></div>
-        <div class="phone"><div class="phone-screen"><div class="phone-notch"></div><img class="app-screen" src="img/screens/home.webp" alt="PollenPath Home screen" loading="lazy" width="786" height="2840"></div></div>
+        <img class="phone" src="img/screens/home-device.webp" alt="PollenPath Home screen" loading="lazy" width="569" height="1028">
       </div>
       <div class="feature-copy reveal d1">
         <div class="overline">Home</div>
@@ -744,7 +743,7 @@
     <div class="feature-row flip">
       <div class="feature-art reveal">
         <div class="blob blob--secondary"></div>
-        <div class="phone"><div class="phone-screen"><div class="phone-notch"></div><img class="app-screen" src="img/screens/insights.webp" alt="PollenPath Insights screen" loading="lazy" width="786" height="2680"></div></div>
+        <img class="phone" src="img/screens/insights-device.webp" alt="PollenPath Insights screen" loading="lazy" width="569" height="1028">
       </div>
       <div class="feature-copy reveal d1">
         <div class="overline eyebrow-leaf"><svg viewBox="0 0 24 24" width="16" height="16" class="ic-secondary"><path d="M12 2.5c.5 3.7 1.8 5 5.5 5.5-3.7.5-5 1.8-5.5 5.5-.5-3.7-1.8-5-5.5-5.5 3.7-.5 5-1.8 5.5-5.5z" fill="currentColor"/></svg> Insights</div>
@@ -756,6 +755,23 @@
           <li><span class="fi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9.5" rx="2.2" fill="currentColor" stroke="none"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><span><b>Private by design</b> — no accounts, no servers, no ad networks.</span></li>
         </ul>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ SCREENSHOT GALLERY ============================ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <div class="overline">A look inside</div>
+      <h2 class="display">Four screens. One calm rhythm.</h2>
+      <p class="lede">Check today, see what's coming, log how you feel, and learn what sets you off — each its own quiet surface.</p>
+    </div>
+    <div class="gallery reveal">
+      <figure class="gallery-item"><img class="phone" src="img/screens/home-device.webp" alt="PollenPath Home screen" loading="lazy" width="569" height="1028"><figcaption>Today at a glance</figcaption></figure>
+      <figure class="gallery-item"><img class="phone" src="img/screens/forecast-device.webp" alt="PollenPath Forecast screen" loading="lazy" width="569" height="1028"><figcaption>Tomorrow's outlook</figcaption></figure>
+      <figure class="gallery-item"><img class="phone" src="img/screens/logger-device.webp" alt="PollenPath symptom logger screen" loading="lazy" width="569" height="1028"><figcaption>Log how you feel</figcaption></figure>
+      <figure class="gallery-item"><img class="phone" src="img/screens/insights-device.webp" alt="PollenPath Insights screen" loading="lazy" width="569" height="1028"><figcaption>Find your triggers</figcaption></figure>
     </div>
   </div>
 </section>
