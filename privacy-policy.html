@@ -61,10 +61,10 @@
 <a href="/" class="back-link">&larr; Back to PollenPath</a>
 
 <h1>Privacy Policy</h1>
-<p class="subtitle">Effective date: March 12, 2026 &middot; Last updated: March 12, 2026</p>
+<p class="subtitle">Effective date: March 12, 2026 &middot; Last updated: October 5, 2026</p>
 
 <div class="highlight">
-    <p><strong>The short version:</strong> PollenPath is designed with privacy at its core. Your health data never leaves your device. We don't track you, we don't run analytics, and we don't sell your data. Period.</p>
+    <p><strong>The short version:</strong> PollenPath has no servers, so we never receive your data. Your symptoms stay on your device, in Apple Health and in your own iCloud. We don't track you, we don't run analytics, and we don't sell your data.</p>
 </div>
 
 <p>This Privacy Policy describes how PollenPath ("we," "our," or "the app") collects, uses, and protects your information. By using PollenPath, you agree to the practices described below.</p>
@@ -72,10 +72,11 @@
 <h2>1. Information We Collect</h2>
 
 <h3>1.1 Health Data (Apple HealthKit)</h3>
-<p>PollenPath reads and writes allergy symptom data (type, severity, timestamps, optional notes) and reads respiratory metrics (peak flow, SpO₂, respiratory rate) through Apple HealthKit.</p>
+<p>PollenPath reads and writes allergy symptom data (type, severity, timestamps, optional notes) through Apple HealthKit.</p>
 <ul>
-    <li>All health data is stored exclusively in Apple HealthKit on your device.</li>
-    <li>Health data is <strong>never</strong> sent to our servers or any third-party service.</li>
+    <li>Symptoms from the app's built-in list are stored in Apple Health on your device.</li>
+    <li>Symptoms you create yourself and your daily check-ins are stored in the app. If iCloud is on, they sync to your other devices through your own private iCloud database, which we can't read.</li>
+    <li>Health data is <strong>never</strong> sent to us or to any third-party service.</li>
     <li>Health data is <strong>never</strong> used for advertising or marketing purposes.</li>
     <li>You control which HealthKit data types the app can access through iOS Settings.</li>
 </ul>
@@ -83,21 +84,22 @@
 <h3>1.2 Location Data</h3>
 <p>PollenPath requests "When In Use" location permission to provide local pollen, air quality, and weather data.</p>
 <ul>
-    <li>Your location is <strong>rounded to city level</strong> (~11 km precision) before being sent to any external service.</li>
-    <li>We never store or transmit your precise coordinates.</li>
-    <li>Location is used solely to look up environmental conditions for your area.</li>
+    <li>Before your location is sent to Google's pollen and air quality services, it is <strong>rounded to one decimal place</strong> (about 11 km).</li>
+    <li>Apple's WeatherKit (for the weather) and Apple's geocoder (for your city's name) receive your device's location. Apple handles it under <a href="https://www.apple.com/legal/privacy/">Apple's Privacy Policy</a>.</li>
+    <li>The app stores only the rounded location. If iCloud is on, it syncs to your own iCloud.</li>
+    <li>We never receive your location. It is used only to look up conditions where you are.</li>
 </ul>
 
 <h3>1.3 App Data</h3>
 <p>PollenPath stores the following on your device using Apple's SwiftData framework:</p>
 <ul>
     <li>Your display name (optional) and allergen preferences</li>
-    <li>Cached pollen, air quality, and weather snapshots (12-hour expiry)</li>
+    <li>Daily pollen, air quality, and weather records for your area, kept for up to 365 days (see Section 7.1)</li>
     <li>Generated insights and trend analysis results</li>
     <li>Alert preferences and notification settings</li>
     <li>Subscription status</li>
 </ul>
-<p>If you have iCloud enabled, app data (excluding health data) syncs across your devices via Apple CloudKit.</p>
+<p>If iCloud is on, everything above except your subscription status syncs across your devices through your own private iCloud database (Apple CloudKit), together with the custom symptoms and check-ins from Section 1.1. Your subscription status stays on the device.</p>
 
 <h3>1.4 Purchase Information</h3>
 <p>Subscription purchases are managed entirely by Apple through StoreKit 2. We store only your subscription tier and expiration date locally for feature access. We do not have access to your payment information.</p>
@@ -116,11 +118,11 @@
     </tbody>
 </table>
 
-<p>All machine learning analysis (trend detection, correlation analysis, trigger identification) runs <strong>entirely on your device</strong> using Apple's Core ML framework. No health or personal data is sent to cloud-based AI services.</p>
+<p>All machine learning analysis (trend detection, correlation analysis, trigger identification) runs <strong>entirely on your device</strong> using Apple's Core ML framework and, where available, Apple Intelligence's on-device model. No health or personal data is sent to cloud-based AI services.</p>
 
 <h2>3. Third-Party Services</h2>
 
-<p>PollenPath uses the following third-party services, sending only coarse location data:</p>
+<p>PollenPath uses the following services. Each receives only what it needs:</p>
 
 <table>
     <thead>
@@ -129,25 +131,31 @@
     <tbody>
         <tr>
             <td>Google Pollen API</td>
-            <td>Coarse latitude &amp; longitude</td>
+            <td>Location rounded to about 11 km</td>
             <td>Pollen index and species data</td>
             <td><a href="https://policies.google.com/privacy">Google Privacy Policy</a></td>
         </tr>
         <tr>
             <td>Google Air Quality API</td>
-            <td>Coarse latitude &amp; longitude</td>
+            <td>Location rounded to about 11 km</td>
             <td>Air quality index and pollutant data</td>
             <td><a href="https://policies.google.com/privacy">Google Privacy Policy</a></td>
         </tr>
         <tr>
             <td>Apple WeatherKit</td>
-            <td>Coarse latitude &amp; longitude</td>
+            <td>Your device's location</td>
             <td>Weather conditions</td>
             <td><a href="https://www.apple.com/legal/privacy/">Apple Privacy Policy</a></td>
         </tr>
         <tr>
-            <td>Apple CloudKit</td>
-            <td>App preferences and insights</td>
+            <td>Apple geocoder</td>
+            <td>Your device's location</td>
+            <td>Your city's name</td>
+            <td><a href="https://www.apple.com/legal/privacy/">Apple Privacy Policy</a></td>
+        </tr>
+        <tr>
+            <td>Apple CloudKit (your private iCloud database)</td>
+            <td>The app data in Section 1.3, custom symptoms and check-ins</td>
             <td>Cross-device sync</td>
             <td><a href="https://www.apple.com/legal/privacy/">Apple Privacy Policy</a></td>
         </tr>
@@ -183,18 +191,22 @@
     <li>App data is stored in Apple's SwiftData framework with standard iOS data protection</li>
     <li>CloudKit data is encrypted in transit and at rest by Apple</li>
     <li>API calls to Google services use HTTPS encryption</li>
-    <li>No custom backend servers — all data stays within the Apple ecosystem</li>
+    <li>No servers of our own. Apart from the rounded location sent to Google (Section 3), your data stays with Apple</li>
 </ul>
 
 <h2>7. Data Retention &amp; Deletion</h2>
 
 <h3>7.1 Automatic Expiry</h3>
-<p>Cached pollen, air quality, and weather data expires automatically after 12 hours.</p>
+<ul>
+    <li>Daily pollen, air quality, and weather records are deleted after 365 days.</li>
+    <li>The full air quality reading is deleted after 1 hour. The daily values stay in the record.</li>
+    <li>Pollen forecasts for other days are deleted after 24 hours.</li>
+</ul>
 
 <h3>7.2 Deleting Your Data</h3>
 <ul>
     <li><strong>Health data:</strong> Manage via iOS Settings &gt; Health &gt; Data Access &amp; Devices &gt; PollenPath. You can revoke access or delete specific records.</li>
-    <li><strong>App data:</strong> Delete all app data from PollenPath Settings &gt; Delete All Data. This removes all locally stored and iCloud-synced app data.</li>
+    <li><strong>Your history:</strong> PollenPath Settings &gt; Delete All History removes the symptoms PollenPath wrote to Apple Health, your custom symptoms and your check-ins, on this device and in iCloud. Pollen, air quality, and weather records are deleted on the schedule in Section 7.1.</li>
     <li><strong>Reinstallation:</strong> Deleting the app removes all local data. iCloud data can be removed via iOS Settings &gt; [Your Name] &gt; iCloud &gt; Manage Storage.</li>
     <li><strong>Subscriptions:</strong> Manage or cancel via the App Store. Apple handles all subscription billing data.</li>
 </ul>
@@ -205,7 +217,7 @@
 
 <h2>9. International Users</h2>
 
-<p>PollenPath operates without centralized servers. Your data is stored on your device and, if iCloud is enabled, in Apple's data centers according to <a href="https://www.apple.com/legal/privacy/">Apple's Privacy Policy</a>. Coarse location data sent to Google's APIs is processed according to <a href="https://policies.google.com/privacy">Google's Privacy Policy</a>.</p>
+<p>PollenPath operates without centralized servers. Your data is stored on your device and, if iCloud is enabled, in Apple's data centers according to <a href="https://www.apple.com/legal/privacy/">Apple's Privacy Policy</a>. Rounded location sent to Google's APIs is processed according to <a href="https://policies.google.com/privacy">Google's Privacy Policy</a>.</p>
 
 <h3>For European Users (GDPR)</h3>
 <ul>
