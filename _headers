@@ -21,9 +21,10 @@
 # ── CSP Hash Regeneration ──
 # When inline <style> or <script> blocks change in any page, recompute hashes.
 # Each page's style hash goes in style-src above; script + jsonld hashes are
-# from index.html only. style-src has 6 hashes (one per page).
+# from index.html only. style-src has 6 hashes: support.html reuses terms-of-service.html's <style> block
+# verbatim, so the two share one hash.
 # Save the script below to scripts/csp-hashes.py or paste inline; run from this dir:
 #   python3 -c "import hashlib,base64,re;\
-# files=['index.html','press.html','changelog.html','privacy-policy.html','terms-of-service.html','404.html'];\
+# files=['index.html','press.html','changelog.html','privacy-policy.html','terms-of-service.html','support.html','404.html'];\
 # patterns=[('style',r'<style>(.*?)</style>'),('script',r'<script>(.*?)</script>'),('jsonld',r'<script type=\"application/ld\+json\">(.*?)</script>')];\
 # [print(f'{f} {t}[{i}]: sha256-{base64.b64encode(hashlib.sha256(m.encode()).digest()).decode()}') for f in files for t,p in patterns for i,m in enumerate(re.findall(p,open(f).read(),re.DOTALL))]"
