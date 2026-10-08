@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Press kit · PollenPath</title>
   <meta name="description" content="Press materials, logos, descriptions, and contact for PollenPath — the honest allergy tracker.">
-  <link rel="icon" type="image/png" href="img/icon.png">
+  <link rel="icon" type="image/png" href="img/icon-1.0.png">
   <style>
     @font-face { font-family: 'Outfit'; src: url('/fonts/outfit-600.woff2') format('woff2'); font-weight: 600; font-display: swap; }
     @font-face { font-family: 'Outfit'; src: url('/fonts/outfit-700.woff2') format('woff2'); font-weight: 700; font-display: swap; }
@@ -113,6 +113,27 @@
     }
     .download-card a:hover { text-decoration: underline; }
     .download-card p { margin: 0; }
+    .facts {
+      display: grid;
+      grid-template-columns: max-content 1fr;
+      gap: 8px 20px;
+      margin: 0;
+    }
+    .facts dt { font-weight: 600; color: var(--fg-secondary); font-size: 0.9rem; }
+    .facts dd { margin: 0; }
+    .shots {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      gap: 12px;
+      margin: 16px 0 12px 0;
+    }
+    .shots figure { margin: 0; text-align: center; }
+    .shots img { width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--border-subtle); }
+    .shots figcaption { font-size: 0.85rem; color: var(--fg-secondary); margin-top: 6px; }
+    @media (max-width: 600px) {
+      .facts { grid-template-columns: 1fr; gap: 2px; }
+      .facts dd { margin-bottom: 10px; }
+    }
     .description-block {
       padding: 16px 20px;
       background: var(--surface-secondary);
@@ -156,43 +177,69 @@
   <main>
     <a href="/" class="back-link">&larr; Back to PollenPath</a>
     <h1>Press kit</h1>
-    <p class="subtitle">Logos, descriptions, and contact for PollenPath &mdash; the honest allergy tracker.</p>
+    <p class="subtitle">Icons, screenshots, descriptions and facts for anyone writing about PollenPath.</p>
+
+    <h2>Fact sheet</h2>
+    <div class="description-block">
+      <dl class="facts">
+        <dt>App</dt><dd>PollenPath: Allergy Tracker</dd>
+        <dt>Developer</dt><dd>Miguel Ross, independent developer</dd>
+        <dt>Platform</dt><dd>iPhone, iOS 26.4 or later</dd>
+        <dt>Languages</dt><dd>English, Spanish, French and Italian</dd>
+        <dt>Release</dt><dd>Coming soon to the App Store</dd>
+        <dt>Price</dt><dd>Free to download. Basic is $2.99 a month or $29.99 a year, and Pro is $7.99 a month or $79.99 a year (US prices; they vary by country). New subscribers get a one-week free trial on every plan.</dd>
+        <dt>Website</dt><dd><a href="/">pollenpath.app</a></dd>
+        <dt>Press contact</dt><dd><a href="mailto:support@pollenpath.app?subject=Press%20inquiry">support@pollenpath.app</a></dd>
+      </dl>
+    </div>
 
     <h2>Downloads</h2>
     <div class="downloads">
       <div class="download-card">
-        <img src="img/icon.png" alt="PollenPath app icon">
+        <img src="img/icon-1.0.png" alt="PollenPath app icon">
         <h3>App icon</h3>
-        <p><a href="img/icon.png" download>PNG &middot; 1024&times;1024</a></p>
+        <p><a href="img/icon-1.0.png" download="pollenpath-icon-light.png">Light &middot; PNG</a><a href="img/press/pollenpath-icon-dark-1.0.png" download="pollenpath-icon-dark.png">Dark &middot; PNG</a></p>
+        <p>1024&times;1024, square</p>
       </div>
       <div class="download-card">
-        <img src="img/icon.png" alt="" aria-hidden="true">
-        <h3>Wordmark</h3>
-        <p><em>Vector wordmark coming soon. Use the app icon above with the name &ldquo;PollenPath&rdquo; in Outfit Bold for now.</em></p>
+        <img src="img/press/pollenpath-mark-green.svg" alt="PollenPath leaf mark">
+        <h3>Leaf mark</h3>
+        <p><a href="img/press/pollenpath-mark-green.svg" download="pollenpath-mark-green.svg">Green &middot; SVG</a><a href="img/press/pollenpath-mark-white.svg" download="pollenpath-mark-white.svg">White &middot; SVG</a></p>
+        <p>Vector, any size</p>
       </div>
     </div>
-    <p><em>Usage: please don&rsquo;t recolor, distort, or crop the icon. Maintain clear space at least equal to the height of the leaf glyph.</em></p>
+    <p><em>Please don&rsquo;t recolor, distort or crop the icon or the mark. To write the name, set &ldquo;PollenPath&rdquo; in Outfit Bold next to the mark.</em></p>
+
+    <h3>Screenshots</h3>
+    <div class="shots">
+      <figure><img src="img/press/screens/01-log-1.0.webp" alt="PollenPath Log symptoms screen" loading="lazy" width="330" height="717"><figcaption>Log symptoms</figcaption></figure>
+      <figure><img src="img/press/screens/02-history-1.0.webp" alt="PollenPath History screen" loading="lazy" width="330" height="717"><figcaption>History</figcaption></figure>
+      <figure><img src="img/press/screens/03-home-1.0.webp" alt="PollenPath Home screen" loading="lazy" width="330" height="717"><figcaption>Home</figcaption></figure>
+      <figure><img src="img/press/screens/04-forecast-1.0.webp" alt="PollenPath Forecast screen" loading="lazy" width="330" height="717"><figcaption>Forecast</figcaption></figure>
+      <figure><img src="img/press/screens/05-pro-1.0.webp" alt="PollenPath Insights screen" loading="lazy" width="330" height="717"><figcaption>Insights</figcaption></figure>
+    </div>
+    <p><a href="press/pollenpath-1.0-screenshots.zip" download>Download all screenshots</a>: PNG, 1320&times;2868, in English, Spanish, French and Italian (ZIP, 15&nbsp;MB). They are real captures of version 1.0 with demo data.</p>
 
     <h2>About the app</h2>
     <div class="description-block">
       <div class="label">Short (one line)</div>
-      <p><strong>PollenPath: Allergy Tracker.</strong> Pollen forecast and air quality, with on-device AI insights that connect your symptoms to what&rsquo;s in the air. Always free, with optional Basic and Pro tiers.</p>
+      <p><strong>PollenPath: Allergy Tracker.</strong> Log allergy symptoms for free, keep them in Apple Health, and see which weather lines up with your worst days.</p>
     </div>
     <div class="description-block">
       <div class="label">Medium (~100 words)</div>
-      <p>Track allergy symptoms alongside real-time pollen forecasts and air quality data. Discover your personal triggers with on-device AI insights.</p>
-      <p>PollenPath connects your symptoms to real-time pollen, air quality, and weather data &mdash; then uses on-device AI to reveal your personal triggers. No guessing, no tracking, no ads. Symptom logging is always free and syncs to Apple Health; live pollen and air quality unlock with Basic, and Pro adds the 5-day forecast plus species-level detail.</p>
+      <p>PollenPath is an allergy diary for iPhone. You log how you feel, the app saves it to Apple Health, and over time it shows which conditions line up with your bad days. Logging and the weather analysis are free, with no account and no ads.</p>
+      <p>Basic adds live pollen levels for trees, grasses and weeds, current air quality and daily pollen alerts. Pro adds a 5-day pollen forecast, the plant species behind each reading, widgets, PDF and CSV export, and daily symptom predictions from a model trained on your iPhone.</p>
     </div>
     <div class="description-block">
-      <div class="label">Long (~250 words)</div>
-      <p>Finally understand your allergies. PollenPath connects your symptoms to real-time pollen, air quality, and weather data &mdash; then uses on-device AI to reveal your personal triggers. No guessing, no tracking, no ads.</p>
-      <p><strong>Know what&rsquo;s in the air.</strong> Check real-time pollen levels and air quality for your area. See which trees, grasses, and weeds are active right now &mdash; and what&rsquo;s coming in the next 5 days.</p>
-      <p><strong>Log symptoms in seconds.</strong> Quickly record how you&rsquo;re feeling with a tap-based logger. Cough, congestion, runny nose, and dozens more &mdash; all stored securely in Apple Health.</p>
-      <p><strong>Discover your triggers.</strong> PollenPath analyzes your symptom patterns alongside pollen and weather data &mdash; all on your device &mdash; to reveal personal correlations.</p>
-      <p><strong>Privacy first.</strong> Your health data never leaves your device. Pollen lookups use city-level location only &mdash; never your exact coordinates. No analytics, no tracking, no ads.</p>
-      <p><strong>Three plans:</strong> Free (symptom logging, weather, Apple Health), Basic (live pollen and air quality), Pro (5-day forecast, species-level detail, personalized insights).</p>
+      <div class="label">Long (~300 words)</div>
+      <p>PollenPath is an allergy diary for iPhone. You log how you feel, the app saves it to Apple Health, and over time it shows which conditions line up with your bad days. Logging and the weather analysis are free, with no account and no ads.</p>
+      <p><strong>Free.</strong> Log any of 25 common allergy symptoms in a couple of taps, or add your own. Symptoms from the built-in list are saved to Apple Health. After a week of logging, PollenPath compares your symptoms with temperature, humidity, wind, chance of rain, dew point and pressure changes, then shows the three conditions that track your symptoms most closely. The analysis runs on your iPhone. A weekly summary shows how the last seven days went and which symptoms came up most. The history calendar covers your last 30 days, and the Forecast tab gives you a weather outlook for tomorrow.</p>
+      <p><strong>Basic</strong> adds live pollen levels for trees, grasses and weeds, current air quality with a health tip, tomorrow&rsquo;s pollen outlook, daily pollen alerts and 90 days of history. Live pollen data isn&rsquo;t available in every country.</p>
+      <p><strong>Pro</strong> adds a 5-day pollen forecast, the plant species behind each reading, a year of history, your own pollen alert threshold, Home Screen and Lock Screen widgets, and PDF and CSV export. After three weeks of logging, Pro also predicts how strong your symptoms will be each day, using a model trained on your iPhone from your own history.</p>
+      <p><strong>Privacy.</strong> There&rsquo;s no account, no advertising and no tracking. PollenPath has no server of its own, so your data never reaches us. Symptoms from the built-in list stay in Apple Health. Custom symptoms, check-ins, settings, insights and saved pollen and weather readings sync between your devices through your own iCloud account. To show local conditions, the app sends your location to its weather, pollen and air quality providers.</p>
+      <p>PollenPath is a wellness and tracking tool. It does not provide medical advice, diagnosis or treatment.</p>
     </div>
-    <p><em>Descriptions pulled from the App Store listing; refresh on major releases.</em></p>
+    <p><em>These match the App Store listing for version 1.0.</em></p>
 
     <h2>About the founder</h2>
     <p>PollenPath is built by Miguel Ross &mdash; independent developer, longtime allergy sufferer, and the only person who works on the app.</p>
