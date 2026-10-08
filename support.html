@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PollenPath — Support</title>
+    <style>
+        @font-face { font-family: 'Outfit'; src: url('/fonts/outfit-600.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+        @font-face { font-family: 'Outfit'; src: url('/fonts/outfit-700.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+        @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-400.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+        @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-500.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+        :root {
+            --font-display: 'Outfit', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+            --bg: #FAFAF8;
+            --fg: #1A2B1F;
+            --fg-secondary: #5A6B5E;
+            --primary: #3A7D5C;
+            --border-subtle: #EBE8E3;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0F1410;
+                --fg: #E8EDE9;
+                --fg-secondary: #9CA89E;
+                --primary: #5FAD82;
+                --border-subtle: #232D25;
+            }
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--fg);
+            line-height: 1.7;
+            padding: 2rem 1.5rem;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+        h1 { font-family: var(--font-display); font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem; letter-spacing: -0.02em; }
+        h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 0.75rem; color: var(--primary); }
+        p, li { font-size: 1rem; margin-bottom: 0.75rem; }
+        .subtitle { color: var(--fg-secondary); font-size: 0.95rem; margin-bottom: 2rem; }
+        ul { padding-left: 1.25rem; margin-bottom: 1rem; }
+        li { margin-bottom: 0.4rem; }
+        a { color: var(--primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .back-link { display: inline-block; font-size: 0.95rem; margin-bottom: 2rem; font-weight: 500; }
+        .warning { background: #FFF3CD; color: #856404; padding: 1rem 1.25rem; border-radius: 12px; margin: 1.5rem 0; border: 1px solid #FFE69C; }
+        @media (prefers-color-scheme: dark) {
+            .warning { background: #332D1A; color: #FFD666; border-color: #554D2E; }
+        }
+        .warning p { margin-bottom: 0; }
+        hr { border: none; border-top: 1px solid var(--border-subtle); margin: 2rem 0; }
+        .copyright { color: var(--fg-secondary); font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+
+<a href="/" class="back-link">&larr; Back to PollenPath</a>
+
+<h1>Support</h1>
+<p class="subtitle">Get help with PollenPath</p>
+
+<h2>Contact us</h2>
+
+<p>Email <a href="mailto:support@pollenpath.app">support@pollenpath.app</a>. You can also tap <strong>Contact Support</strong> under <strong>About</strong> in the app's Settings.</p>
+
+<p>If something isn't working, tell us what you did just before it happened, your iPhone model and iOS version, and the PollenPath version shown in <strong>Settings &rarr; About</strong>.</p>
+
+<h2>Subscriptions</h2>
+
+<ul>
+    <li>New iPhone or reinstalled the app? Open Settings in PollenPath and tap <strong>Restore Purchases</strong>.</li>
+    <li>To change or cancel, tap <strong>Manage Subscription</strong> in PollenPath's Settings, or go to <strong>Settings &rarr; your name &rarr; Subscriptions</strong> on your iPhone.</li>
+    <li>Refunds go through Apple. Request one at <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>.</li>
+</ul>
+
+<h2>Your data</h2>
+
+<p>How PollenPath handles your data is in the <a href="privacy-policy.html">Privacy Policy</a>. The rules for using the app are in the <a href="terms-of-service.html">Terms of Service</a>.</p>
+
+<hr>
+<p class="copyright">&copy; 2026 PollenPath. All rights reserved.</p>
+
+</body>
+</html>
