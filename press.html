@@ -1,185 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-launch="pre">
 <head>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Press kit · PollenPath</title>
   <meta name="description" content="Press materials, logos, descriptions, and contact for PollenPath — the honest allergy tracker.">
   <link rel="icon" type="image/png" href="img/icon-1.0.png">
-  <style>
-    @font-face { font-family: 'Outfit'; src: url('/fonts/outfit-600.woff2') format('woff2'); font-weight: 600; font-display: swap; }
-    @font-face { font-family: 'Outfit'; src: url('/fonts/outfit-700.woff2') format('woff2'); font-weight: 700; font-display: swap; }
-    @font-face { font-family: 'Outfit'; src: url('/fonts/outfit-800.woff2') format('woff2'); font-weight: 800; font-display: swap; }
-    @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-400.woff2') format('woff2'); font-weight: 400; font-display: swap; }
-    @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-500.woff2') format('woff2'); font-weight: 500; font-display: swap; }
-    :root {
-      --font-display: 'Outfit', sans-serif;
-      --font-body: 'DM Sans', sans-serif;
-      --bg: #FAFAF8;
-      --surface: #FFFFFF;
-      --surface-secondary: #F2EFEB;
-      --fg: #1A2B1F;
-      --fg-secondary: #5A6B5E;
-      --primary: #3A7D5C;
-      --border-subtle: #EBE8E3;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0F1410;
-        --surface: #1E2620;
-        --surface-secondary: #283028;
-        --fg: #E8EDE9;
-        --fg-secondary: #9CA89E;
-        --primary: #5FAD82;
-        --border-subtle: #232D25;
-      }
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      padding: 64px 24px;
-      font-family: var(--font-body);
-      color: var(--fg);
-      background: var(--bg);
-      line-height: 1.6;
-    }
-    main { max-width: 720px; margin: 0 auto; }
-    h1 {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 2.5rem;
-      margin: 0 0 8px 0;
-      letter-spacing: -0.02em;
-    }
-    h2 {
-      font-family: var(--font-display);
-      font-weight: 600;
-      font-size: 1.5rem;
-      margin: 48px 0 16px 0;
-      color: var(--primary);
-    }
-    h3 {
-      font-family: var(--font-display);
-      font-weight: 600;
-      font-size: 1.05rem;
-      margin: 24px 0 8px 0;
-    }
-    p { margin: 0 0 16px 0; }
-    em { font-style: italic; color: var(--fg-secondary); }
-    .subtitle {
-      color: var(--fg-secondary);
-      font-size: 1rem;
-      margin-bottom: 40px;
-    }
-    .back-link {
-      display: inline-block;
-      color: var(--primary);
-      text-decoration: none;
-      font-size: 0.95rem;
-      margin-bottom: 32px;
-      font-weight: 500;
-    }
-    .back-link:hover { text-decoration: underline; }
-    .downloads {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      margin: 16px 0 24px 0;
-    }
-    .download-card {
-      padding: 20px;
-      border: 1px solid var(--border-subtle);
-      border-radius: 12px;
-      background: var(--surface);
-      text-align: center;
-    }
-    .download-card img {
-      width: 64px;
-      height: 64px;
-      margin-bottom: 12px;
-      border-radius: 14px;
-    }
-    .download-card h3 {
-      margin: 0 0 8px 0;
-      font-size: 1rem;
-    }
-    .download-card a {
-      display: inline-block;
-      margin: 4px 8px 0;
-      color: var(--primary);
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 0.9rem;
-    }
-    .download-card a:hover { text-decoration: underline; }
-    .download-card p { margin: 0; }
-    .facts {
-      display: grid;
-      grid-template-columns: max-content 1fr;
-      gap: 8px 20px;
-      margin: 0;
-    }
-    .facts dt { font-weight: 600; color: var(--fg-secondary); font-size: 0.9rem; }
-    .facts dd { margin: 0; }
-    .shots {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-      gap: 12px;
-      margin: 16px 0 12px 0;
-    }
-    .shots figure { margin: 0; text-align: center; }
-    .shots img { width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--border-subtle); }
-    .shots figcaption { font-size: 0.85rem; color: var(--fg-secondary); margin-top: 6px; }
-    @media (max-width: 600px) {
-      .facts { grid-template-columns: 1fr; gap: 2px; }
-      .facts dd { margin-bottom: 10px; }
-    }
-    .description-block {
-      padding: 16px 20px;
-      background: var(--surface-secondary);
-      border-radius: 12px;
-      margin-bottom: 16px;
-    }
-    .description-block .label {
-      font-size: 0.78rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--fg-secondary);
-      margin-bottom: 10px;
-    }
-    .description-block p { margin: 0; }
-    .description-block p + p { margin-top: 12px; }
-    .contact {
-      padding: 24px;
-      background: var(--surface-secondary);
-      border-radius: 12px;
-    }
-    .contact a {
-      color: var(--primary);
-      font-weight: 500;
-      text-decoration: none;
-    }
-    .contact a:hover { text-decoration: underline; }
-    .contact p:last-child { margin-bottom: 0; }
-    footer {
-      max-width: 720px;
-      margin: 64px auto 0;
-      padding: 32px 24px 0;
-      text-align: center;
-      color: var(--fg-secondary);
-      font-size: 0.85rem;
-      border-top: 1px solid var(--border-subtle);
-    }
-  </style>
+  <meta name="color-scheme" content="light dark">
+  <link rel="stylesheet" href="/site.css">
+  <noscript><link rel="stylesheet" href="/noscript.css"></noscript>
 </head>
-<body>
-  <main>
-    <a href="/" class="back-link">&larr; Back to PollenPath</a>
-    <h1>Press kit</h1>
-    <p class="subtitle">Icons, screenshots, descriptions and facts for anyone writing about PollenPath.</p>
-
-    <h2>Fact sheet</h2>
+<body class="doc press">
+<div class="progress" aria-hidden="true"></div>
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/"><img src="/img/icon-1.0.png" alt="">PollenPath</a>
+    <nav class="links" aria-label="Main"><a href="/#how">How it works</a><a href="/#features">Features</a><a href="/#privacy">Privacy</a><a href="/#pricing">Pricing</a><a href="/#faq">FAQ</a></nav>
+    <div class="nav-actions"><span class="soon" data-show-when="pre"><span class="dot"></span>Coming soon</span><a class="soon" data-show-when="live" href="https://apps.apple.com/app/id6760616969">Get the app</a><button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>
+  </div>
+</header>
+<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile"><a href="/#how">How it works</a><a href="/#features">Features</a><a href="/#privacy">Privacy</a><a href="/#pricing">Pricing</a><a href="/#faq">FAQ</a><a href="https://apps.apple.com/app/id6760616969" data-show-when="live">Download on the App Store</a></nav>
+<main>
+<section class="page-hero"><div class="wrap"><h1 class="in d1">Press kit</h1><p class="lede in d2">Icons, screenshots, descriptions and facts for anyone writing about PollenPath.</p></div></section><section class="doc-sec"><div class="wrap prose wide"><h2 class="rv" id="fact-sheet">Fact sheet</h2>
     <div class="description-block">
       <dl class="facts">
         <dt>App</dt><dd>PollenPath: Allergy Tracker</dd>
@@ -193,66 +36,73 @@
       </dl>
     </div>
 
-    <h2>Downloads</h2>
+    <h2 class="rv" id="downloads">Downloads</h2>
     <div class="downloads">
       <div class="download-card">
-        <img src="img/icon-1.0.png" alt="PollenPath app icon">
+        <img src="/img/icon-1.0.png" alt="PollenPath app icon">
         <h3>App icon</h3>
-        <p><a href="img/icon-1.0.png" download="pollenpath-icon-light.png">Light &middot; PNG</a><a href="img/press/pollenpath-icon-dark-1.0.png" download="pollenpath-icon-dark.png">Dark &middot; PNG</a></p>
+        <p><a href="/img/icon-1.0.png" download="pollenpath-icon-light.png">Light &middot; PNG</a><a href="/img/press/pollenpath-icon-dark-1.0.png" download="pollenpath-icon-dark.png">Dark &middot; PNG</a></p>
         <p>1024&times;1024, square</p>
       </div>
       <div class="download-card">
-        <img src="img/press/pollenpath-mark-green.svg" alt="PollenPath leaf mark">
+        <img src="/img/press/pollenpath-mark-green.svg" alt="PollenPath leaf mark">
         <h3>Leaf mark</h3>
-        <p><a href="img/press/pollenpath-mark-green.svg" download="pollenpath-mark-green.svg">Green &middot; SVG</a><a href="img/press/pollenpath-mark-white.svg" download="pollenpath-mark-white.svg">White &middot; SVG</a></p>
+        <p><a href="/img/press/pollenpath-mark-green.svg" download="pollenpath-mark-green.svg">Green &middot; SVG</a><a href="/img/press/pollenpath-mark-white.svg" download="pollenpath-mark-white.svg">White &middot; SVG</a></p>
         <p>Vector, any size</p>
       </div>
     </div>
     <p><em>Please don&rsquo;t recolor, distort or crop the icon or the mark. To write the name, set &ldquo;PollenPath&rdquo; in Outfit Bold next to the mark.</em></p>
 
     <h3>Screenshots</h3>
-    <div class="shots">
-      <figure><img src="img/press/screens/01-log-1.0.webp" alt="PollenPath Log symptoms screen" loading="lazy" width="330" height="717"><figcaption>Log symptoms</figcaption></figure>
-      <figure><img src="img/press/screens/02-history-1.0.webp" alt="PollenPath History screen" loading="lazy" width="330" height="717"><figcaption>History</figcaption></figure>
-      <figure><img src="img/press/screens/03-home-1.0.webp" alt="PollenPath Home screen" loading="lazy" width="330" height="717"><figcaption>Home</figcaption></figure>
-      <figure><img src="img/press/screens/04-forecast-1.0.webp" alt="PollenPath Forecast screen" loading="lazy" width="330" height="717"><figcaption>Forecast</figcaption></figure>
-      <figure><img src="img/press/screens/05-pro-1.0.webp" alt="PollenPath Insights screen" loading="lazy" width="330" height="717"><figcaption>Insights</figcaption></figure>
+    <div class="shots strip">
+      <figure><img src="/img/press/screens/01-log-1.0.webp" alt="PollenPath Log symptoms screen" loading="lazy" width="330" height="717"><figcaption>Log symptoms</figcaption></figure>
+      <figure><img src="/img/press/screens/02-history-1.0.webp" alt="PollenPath History screen" loading="lazy" width="330" height="717"><figcaption>History</figcaption></figure>
+      <figure><img src="/img/press/screens/03-home-1.0.webp" alt="PollenPath Home screen" loading="lazy" width="330" height="717"><figcaption>Home</figcaption></figure>
+      <figure><img src="/img/press/screens/04-forecast-1.0.webp" alt="PollenPath Forecast screen" loading="lazy" width="330" height="717"><figcaption>Forecast</figcaption></figure>
+      <figure><img src="/img/press/screens/05-pro-1.0.webp" alt="PollenPath Insights screen" loading="lazy" width="330" height="717"><figcaption>Insights</figcaption></figure>
     </div>
-    <p><a href="press/pollenpath-1.0-screenshots.zip" download>Download all screenshots</a>: PNG, 1320&times;2868, in English, Spanish, French and Italian (ZIP, 15&nbsp;MB). They are real captures of version 1.0 with demo data.</p>
+    <p><a href="/press/pollenpath-1.0-screenshots.zip" download>Download all screenshots</a>: PNG, 1320&times;2868, in English, Spanish, French and Italian (ZIP, 15&nbsp;MB). They are real captures of version 1.0 with demo data.</p>
 
-    <h2>About the app</h2>
-    <div class="description-block">
-      <div class="label">Short (one line)</div>
+    <h2 class="rv" id="about-the-app">About the app</h2>
+    <div class="copy-block"><div class="cb-head"><span class="label">Short (one line)</span><button type="button" class="copy-btn">Copy</button></div><div class="cb-text">
       <p><strong>PollenPath: Allergy Tracker.</strong> Log allergy symptoms for free, keep them in Apple Health, and see which weather lines up with your worst days.</p>
-    </div>
-    <div class="description-block">
-      <div class="label">Medium (~100 words)</div>
+    </div></div>
+    <div class="copy-block"><div class="cb-head"><span class="label">Medium (~100 words)</span><button type="button" class="copy-btn">Copy</button></div><div class="cb-text">
       <p>PollenPath is an allergy diary for iPhone. You log how you feel, the app saves it to Apple Health, and over time it shows which conditions line up with your bad days. Logging and the weather analysis are free, with no account and no ads.</p>
       <p>Basic adds live pollen levels for trees, grasses and weeds, current air quality and daily pollen alerts. Pro adds a 5-day pollen forecast, the plant species behind each reading, widgets, PDF and CSV export, and daily symptom predictions from a model trained on your iPhone.</p>
-    </div>
-    <div class="description-block">
-      <div class="label">Long (~300 words)</div>
+    </div></div>
+    <div class="copy-block"><div class="cb-head"><span class="label">Long (~300 words)</span><button type="button" class="copy-btn">Copy</button></div><div class="cb-text">
       <p>PollenPath is an allergy diary for iPhone. You log how you feel, the app saves it to Apple Health, and over time it shows which conditions line up with your bad days. Logging and the weather analysis are free, with no account and no ads.</p>
       <p><strong>Free.</strong> Log any of 25 common allergy symptoms in a couple of taps, or add your own. Symptoms from the built-in list are saved to Apple Health. After a week of logging, PollenPath compares your symptoms with temperature, humidity, wind, chance of rain, dew point and pressure changes, then shows the three conditions that track your symptoms most closely. The analysis runs on your iPhone. A weekly summary shows how the last seven days went and which symptoms came up most. The history calendar covers your last 30 days, and the Forecast tab gives you a weather outlook for tomorrow.</p>
       <p><strong>Basic</strong> adds live pollen levels for trees, grasses and weeds, current air quality with a health tip, tomorrow&rsquo;s pollen outlook, daily pollen alerts and 90 days of history. Live pollen data isn&rsquo;t available in every country.</p>
       <p><strong>Pro</strong> adds a 5-day pollen forecast, the plant species behind each reading, a year of history, your own pollen alert threshold, Home Screen and Lock Screen widgets, and PDF and CSV export. After three weeks of logging, Pro also predicts how strong your symptoms will be each day, using a model trained on your iPhone from your own history.</p>
       <p><strong>Privacy.</strong> There&rsquo;s no account, no advertising and no tracking. PollenPath has no server of its own, so your data never reaches us. Symptoms from the built-in list stay in Apple Health. Custom symptoms, check-ins, settings, insights and saved pollen and weather readings sync between your devices through your own iCloud account. To show local conditions, the app sends your location to its weather, pollen and air quality providers.</p>
       <p>PollenPath is a wellness and tracking tool. It does not provide medical advice, diagnosis or treatment.</p>
-    </div>
+    </div></div>
     <p><em>These match the App Store listing for version 1.0.</em></p>
 
-    <h2>About the founder</h2>
+    <h2 class="rv" id="about-the-founder">About the founder</h2>
     <p>PollenPath is built by Miguel Ross &mdash; independent developer, longtime allergy sufferer, and the only person who works on the app.</p>
     <p><em>&ldquo;I wanted an allergy tracker I could trust with my own data. So I built one.&rdquo;</em></p>
 
-    <h2>Contact</h2>
+    <h2 class="rv" id="contact">Contact</h2>
     <div class="contact">
       <p>For press inquiries: <a href="mailto:support@pollenpath.app?subject=Press%20inquiry">support@pollenpath.app</a></p>
       <p>Response time is typically within a few days &mdash; PollenPath is built and supported by one person.</p>
+    </div></div></section>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand"><a class="brand" href="/"><img src="/img/icon-1.0.png" alt="">PollenPath</a><p>An allergy diary for iPhone. Your data stays in Apple Health and your own iCloud.</p></div>
+      <nav aria-label="Product"><h4>Product</h4><a href="/#how">How it works</a><a href="/#features">Features</a><a href="/#pricing">Pricing</a><a href="/#faq">FAQ</a></nav>
+      <nav aria-label="Company"><h4>Company</h4><a href="/press.html">Press</a><a href="/changelog.html">Changelog</a><a href="https://instagram.com/pollenpath.app">Instagram</a><a href="/support.html">Support</a></nav>
+      <nav aria-label="Legal"><h4>Legal</h4><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms-of-service.html">Terms of Service</a></nav>
     </div>
-  </main>
-  <footer>
-    <p>&copy; 2026 PollenPath. All rights reserved.</p>
-  </footer>
+    <dl class="attrib"><div><dt>Pollen and air quality</dt><dd>Google Maps Platform</dd></div><div><dt>Weather</dt><dd>Apple WeatherKit</dd></div><div><dt>Health data</dt><dd>Apple HealthKit, on your device</dd></div><div><dt>Location</dt><dd>Apple MapKit, city level only</dd></div></dl>
+    <div class="foot-base"><p>PollenPath is a wellness and tracking tool. It does not provide medical advice, diagnosis or treatment. Species coverage varies by region.</p><p>© 2026 PollenPath</p></div>
+  </div>
+</footer>
+<script src="/site.js"></script>
 </body>
 </html>
