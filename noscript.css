@@ -1,0 +1,3 @@
+/* without JS nothing reveals on scroll: show everything, at rest */
+.rv,.in,.stage .rise{opacity:1!important;transform:none!important;filter:none!important;clip-path:none!important;animation:none!important}
+.cam .vec{opacity:1}.cam .dev{opacity:0}
