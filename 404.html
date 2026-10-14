@@ -1,46 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-launch="pre">
 <head>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>404 — PollenPath</title>
   <meta name="robots" content="noindex">
   <link rel="icon" type="image/png" sizes="32x32" href="/img/icon-1.0.png">
-  <style>
-    @font-face { font-family: 'Outfit'; src: url('/fonts/outfit-600.woff2') format('woff2'); font-weight: 600; font-display: swap; }
-    @font-face { font-family: 'Outfit'; src: url('/fonts/outfit-700.woff2') format('woff2'); font-weight: 700; font-display: swap; }
-    @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-400.woff2') format('woff2'); font-weight: 400; font-display: swap; }
-    @font-face { font-family: 'DM Sans'; src: url('/fonts/dm-sans-500.woff2') format('woff2'); font-weight: 500; font-display: swap; }
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --bg: #FAF8F5; --fg: #1A2B1F; --fg-secondary: #5A6B5E;
-      --primary: #3A7D5C; --primary-fg: #FFFFFF;
-      --font-display: 'Outfit', sans-serif; --font-body: 'DM Sans', sans-serif;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root { --bg: #0F1A13; --fg: #E8F0EA; --fg-secondary: #9AB3A0; --primary: #5AAE7F; }
-    }
-    body {
-      font-family: var(--font-body); background: var(--bg); color: var(--fg);
-      min-height: 100vh; display: flex; align-items: center; justify-content: center;
-      text-align: center; padding: 2rem;
-    }
-    h1 { font-family: var(--font-display); font-size: clamp(3rem, 8vw, 5rem); font-weight: 700; line-height: 1.1; }
-    p { color: var(--fg-secondary); font-size: 1.125rem; margin-top: 0.75rem; }
-    a {
-      display: inline-block; margin-top: 2rem; padding: 0.875rem 2rem;
-      background: var(--primary); color: var(--primary-fg); text-decoration: none;
-      font-family: var(--font-display); font-weight: 600; font-size: 1rem;
-      border-radius: 100px; transition: opacity 0.2s;
-    }
-    a:hover { opacity: 0.85; }
-  </style>
+  <meta name="color-scheme" content="light dark">
+  <link rel="stylesheet" href="/site.css">
+  <noscript><link rel="stylesheet" href="/noscript.css"></noscript>
 </head>
-<body>
-  <div>
-    <h1>404</h1>
-    <p>This page doesn't exist.</p>
-    <a href="/">Back to PollenPath</a>
+<body class="doc nf-page">
+<div class="progress" aria-hidden="true"></div>
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/"><img src="/img/icon-1.0.png" alt="">PollenPath</a>
+    <nav class="links" aria-label="Main"><a href="/#how">How it works</a><a href="/#features">Features</a><a href="/#privacy">Privacy</a><a href="/#pricing">Pricing</a><a href="/#faq">FAQ</a></nav>
+    <div class="nav-actions"><span class="soon" data-show-when="pre"><span class="dot"></span>Coming soon</span><a class="soon" data-show-when="live" href="https://apps.apple.com/app/id6760616969">Get the app</a><button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>
   </div>
+</header>
+<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile"><a href="/#how">How it works</a><a href="/#features">Features</a><a href="/#privacy">Privacy</a><a href="/#pricing">Pricing</a><a href="/#faq">FAQ</a><a href="https://apps.apple.com/app/id6760616969" data-show-when="live">Download on the App Store</a></nav>
+<main>
+<section class="nf"><div class="wrap nf-in"><p class="nf-code in d1">404</p><h1 class="in d2">This page isn't here.</h1><p class="lede in d3">The link may be old, or the page moved. Everything else is one tap away.</p><div class="cta-row in d4"><a class="btn" href="/">Back to PollenPath</a><a class="ghost" href="/support.html">Support</a></div></div><div class="nf-phone" aria-hidden="true"><picture><source media="(prefers-color-scheme: dark)" srcset="/img/screens/home-device-dark-1.0.webp"><img src="/img/screens/home-device-1.0.webp" alt="" width="1138" height="2056"></picture></div></section>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand"><a class="brand" href="/"><img src="/img/icon-1.0.png" alt="">PollenPath</a><p>An allergy diary for iPhone. Your data stays in Apple Health and your own iCloud.</p></div>
+      <nav aria-label="Product"><h4>Product</h4><a href="/#how">How it works</a><a href="/#features">Features</a><a href="/#pricing">Pricing</a><a href="/#faq">FAQ</a></nav>
+      <nav aria-label="Company"><h4>Company</h4><a href="/press.html">Press</a><a href="/changelog.html">Changelog</a><a href="https://instagram.com/pollenpath.app">Instagram</a><a href="/support.html">Support</a></nav>
+      <nav aria-label="Legal"><h4>Legal</h4><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms-of-service.html">Terms of Service</a></nav>
+    </div>
+    <dl class="attrib"><div><dt>Pollen and air quality</dt><dd>Google Maps Platform</dd></div><div><dt>Weather</dt><dd>Apple WeatherKit</dd></div><div><dt>Health data</dt><dd>Apple HealthKit, on your device</dd></div><div><dt>Location</dt><dd>Apple MapKit, city level only</dd></div></dl>
+    <div class="foot-base"><p>PollenPath is a wellness and tracking tool. It does not provide medical advice, diagnosis or treatment. Species coverage varies by region.</p><p>© 2026 PollenPath</p></div>
+  </div>
+</footer>
+<script src="/site.js"></script>
 </body>
 </html>
