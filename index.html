@@ -1,14 +1,9 @@
 <!DOCTYPE html>
 <!--
-  Launch-day flip: this site ships both pre-launch and live-launch CTA variants
-  in a single static build. The `data-launch` attribute below gates which set is
-  visible (CSS via `[data-show-when]` selectors). Pre-launch shows a static
-  "Coming soon" badge (no waitlist, no links); live shows the App Store CTAs.
-  To go live:
-    1. Flip `data-launch="pre"` → `data-launch="live"` on the <html> element of EVERY page (the nav CTA is on all of them):
-       sed -i '' 's/data-launch="pre"/data-launch="live"/' *.html
-    2. No CSP change needed.
-    3. Commit, push — Cloudflare Pages auto-deploys.
+  Launch state: the site went live with the 1.0 release on 2026-11-02 (POL-985).
+  Every page's <html> carries `data-launch="live"`, which shows the App Store
+  CTAs (CSS via `[data-show-when]` selectors). The `pre` variant ("Coming soon"
+  badge, no links) is still in the markup and CSS, but no page uses it.
 -->
 <html lang="en" data-launch="live">
 <head>

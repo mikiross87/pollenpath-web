@@ -256,9 +256,8 @@ a.btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px #3A7D5C40}
 .rel-body li{position:relative;padding:0 0 26px 32px;font-size:17.5px;line-height:1.65;color:var(--ink-body);max-width:700px}
 .rel-body li::before{content:"";position:absolute;left:-7px;top:9px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--green)}
 .rel-body li:first-child{font-size:22px;font-weight:600;color:var(--ink);line-height:1.4}
-.rel-phone{display:flex;justify-content:center;margin-top:24px}
+.rel-phone{display:flex;margin-top:24px}
 .rel-phone img{width:min(320px,70vw)}
-.rel-phone.duo{justify-content:flex-start}
 .rel-phone.duo img{width:min(680px,100%)}
 
 /* press */
